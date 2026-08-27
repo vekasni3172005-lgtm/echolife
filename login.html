@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Log In | EchoLife Memory Archive</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    rel="stylesheet">
+
+  <!-- EchoLife CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body class="auth-wrapper">
+
+  <!-- Background Glow -->
+  <div
+    class="hero-ambient-glow"
+    style="top: 20%; width: 500px; height: 500px;">
+  </div>
+
+
+  <!-- Login Card -->
+  <div
+    class="glass-card auth-card rounded-4 shadow-lg"
+    data-aos="zoom-in">
+
+    <!-- Logo -->
+    <div class="text-center mb-4">
+
+      <a
+        class="brand-logo justify-content-center mb-2"
+        href="index.html">
+
+        <i class="bi bi-clock-history"></i>
+
+        <span>EchoLife</span>
+
+      </a>
+
+      <p class="text-secondary-custom small">
+        Welcome back! Sign in to access your memory vault.
+      </p>
+
+    </div>
+
+
+    <!-- Login Form -->
+    <form id="loginForm">
+
+      <!-- Email -->
+      <div class="mb-3">
+
+        <label
+          class="form-label text-white small font-semibold"
+          for="loginEmail">
+
+          Email Address
+
+        </label>
+
+        <div class="input-group">
+
+          <span
+            class="input-group-text bg-transparent border-glass text-secondary-custom">
+
+            <i class="bi bi-envelope"></i>
+
+          </span>
+
+          <input
+            type="email"
+            id="loginEmail"
+            name="email"
+            class="form-control form-control-custom"
+            placeholder="alex@echolife.app"
+            autocomplete="email"
+            required>
+
+        </div>
+
+      </div>
+
+
+      <!-- Password -->
+      <div class="mb-3">
+
+        <div
+          class="d-flex justify-content-between align-items-center mb-1">
+
+          <label
+            class="form-label text-white small font-semibold mb-0"
+            for="loginPassword">
+
+            Password
+
+          </label>
+
+          <a
+            href="forgot-password.html"
+            class="small text-gradient">
+
+            Forgot Password?
+
+          </a>
+
+        </div>
+
+
+        <div class="input-group">
+
+          <span
+            class="input-group-text bg-transparent border-glass text-secondary-custom">
+
+            <i class="bi bi-lock"></i>
+
+          </span>
+
+          <input
+            type="password"
+            id="loginPassword"
+            name="password"
+            class="form-control form-control-custom"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required>
+
+          <button
+            type="button"
+            class="btn btn-glass"
+            id="toggleLoginPassword"
+            title="Show or hide password">
+
+            <i
+              class="bi bi-eye"
+              id="loginPasswordIcon">
+            </i>
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- Remember Me -->
+      <div class="form-check mb-4">
+
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="rememberMe">
+
+        <label
+          class="form-check-label text-secondary-custom small"
+          for="rememberMe">
+
+          Remember this browser
+
+        </label>
+
+      </div>
+
+
+      <!-- Error -->
+      <div
+        id="loginError"
+        class="alert alert-danger d-none"
+        role="alert">
+      </div>
+
+
+      <!-- Login Button -->
+      <button
+        type="submit"
+        id="loginButton"
+        class="btn btn-aurora w-100 py-2 mb-3">
+
+        <span id="loginButtonText">
+          Sign In to Workspace
+        </span>
+
+        <span
+          id="loginSpinner"
+          class="spinner-border spinner-border-sm d-none"
+          role="status">
+        </span>
+
+      </button>
+
+
+      <!-- Demo Button -->
+      <button
+        type="button"
+        onclick="window.location.href='dashboard.html'"
+        class="btn btn-glass w-100 py-2 mb-3">
+
+        <i class="bi bi-person-check me-2"></i>
+
+        Quick Demo Login
+
+      </button>
+
+    </form>
+
+
+    <!-- Register Link -->
+    <div
+      class="text-center border-top border-glass pt-3 mt-2">
+
+      <span class="text-secondary-custom small">
+
+        Don't have an account?
+
+      </span>
+
+      <a
+        href="register.html"
+        class="small text-gradient fw-bold">
+
+        Create Account
+
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- Bootstrap JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+  </script>
+
+
+  <!-- EchoLife JS -->
+  <script src="js/data.js"></script>
+  <script src="js/theme.js"></script>
+
+
+  <!-- Login Logic -->
+  <script>
+
+    const loginForm =
+      document.getElementById("loginForm");
+
+    const loginButton =
+      document.getElementById("loginButton");
+
+    const loginButtonText =
+      document.getElementById("loginButtonText");
+
+    const loginSpinner =
+      document.getElementById("loginSpinner");
+
+    const loginError =
+      document.getElementById("loginError");
+
+
+    /*
+     * Show / Hide Password
+     */
+    document
+      .getElementById("toggleLoginPassword")
+      .addEventListener("click", function () {
+
+        const password =
+          document.getElementById("loginPassword");
+
+        const icon =
+          document.getElementById("loginPasswordIcon");
+
+        if (password.type === "password") {
+
+          password.type = "text";
+
+          icon.classList.remove("bi-eye");
+          icon.classList.add("bi-eye-slash");
+
+        } else {
+
+          password.type = "password";
+
+          icon.classList.remove("bi-eye-slash");
+          icon.classList.add("bi-eye");
+
+        }
+
+      });
+
+
+    /*
+     * Login
+     */
+    loginForm.addEventListener(
+      "submit",
+      async function (event) {
+
+        event.preventDefault();
+
+        loginError.classList.add("d-none");
+
+
+        const email =
+          document
+            .getElementById("loginEmail")
+            .value
+            .trim();
+
+        const password =
+          document
+            .getElementById("loginPassword")
+            .value;
+
+
+        loginButton.disabled = true;
+
+        loginButtonText.textContent =
+          "Signing In...";
+
+        loginSpinner.classList.remove("d-none");
+
+
+        try {
+
+          const response =
+            await fetch(
+              "http://localhost:3000/api/auth/login",
+              {
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json"
+                },
+
+                credentials: "include",
+
+                body: JSON.stringify({
+                  email,
+                  password
+                })
+              }
+            );
+
+
+          const data =
+            await response.json();
+
+
+          if (!response.ok) {
+
+            throw new Error(
+              data.message ||
+              "Invalid email or password."
+            );
+
+          }
+
+
+          /*
+           * Login successful
+           */
+          window.location.href =
+            "dashboard.html";
+
+
+        } catch (error) {
+
+          console.error(
+            "Login error:",
+            error
+          );
+
+
+          loginError.textContent =
+            error.message ||
+            "Unable to sign in.";
+
+          loginError.classList.remove(
+            "d-none"
+          );
+
+
+          loginButton.disabled =
+            false;
+
+          loginButtonText.textContent =
+            "Sign In to Workspace";
+
+          loginSpinner.classList.add(
+            "d-none"
+          );
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>

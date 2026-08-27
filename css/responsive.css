@@ -1,0 +1,94 @@
+/* ==========================================================================
+   EchoLife Responsive Breakpoints & Mobile Optimization
+   ========================================================================== */
+
+/* Tablet & Smaller Screens (Under 1024px) */
+@media (max-width: 1024px) {
+  .app-sidebar {
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .app-sidebar.show {
+    transform: translateX(0);
+  }
+
+  .app-main {
+    margin-left: 0 !important;
+  }
+
+  .search-bar-trigger {
+    width: 180px;
+  }
+
+  .masonry-grid {
+    column-count: 3;
+  }
+
+  .timeline-container::before {
+    left: 20px;
+  }
+
+  .timeline-item {
+    width: 100% !important;
+    padding-left: 55px !important;
+    padding-right: 15px !important;
+    text-align: left !important;
+  }
+
+  .timeline-item.left, .timeline-item.right {
+    left: 0 !important;
+  }
+
+  .timeline-dot {
+    left: 10px !important;
+    right: auto !important;
+  }
+}
+
+/* Medium Mobile Devices (Under 768px) */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 120px 0 60px;
+  }
+
+  .masonry-grid {
+    column-count: 2;
+  }
+
+  .content-body {
+    padding: 20px 16px;
+  }
+
+  .topbar-left .search-bar-trigger {
+    display: none;
+  }
+
+  .calendar-day-cell {
+    min-height: 70px;
+    padding: 6px;
+  }
+
+  .day-memories-pill span {
+    display: none;
+  }
+
+  .auth-card {
+    padding: 24px;
+  }
+}
+
+/* Small Mobile Devices (Under 480px) */
+@media (max-width: 480px) {
+  .masonry-grid {
+    column-count: 1;
+  }
+
+  .app-topbar {
+    padding: 0 16px;
+  }
+
+  .user-profile-badge span {
+    display: none;
+  }
+}

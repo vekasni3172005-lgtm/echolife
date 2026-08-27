@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Memory | EchoLife Digital Memory Vault</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a class="brand-logo" href="index.html">
+          <i class="bi bi-clock-history"></i>
+          <span>EchoLife</span>
+        </a>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="nav-section-title">Main Workspace</div>
+        <a href="dashboard.html" class="sidebar-link"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
+        <a href="timeline.html" class="sidebar-link"><i class="bi bi-hourglass-split"></i> Timeline</a>
+        <a href="gallery.html" class="sidebar-link"><i class="bi bi-images"></i> Gallery</a>
+        <a href="calendar.html" class="sidebar-link"><i class="bi bi-calendar-event"></i> Calendar</a>
+        <a href="statistics.html" class="sidebar-link"><i class="bi bi-bar-chart-line-fill"></i> Statistics</a>
+
+        <div class="nav-section-title">Archival Tools</div>
+        <a href="add-memory.html" class="sidebar-link active"><i class="bi bi-plus-circle-fill"></i> Add Memory</a>
+        <a href="backup.html" class="sidebar-link"><i class="bi bi-cloud-arrow-down"></i> Backup & Sync</a>
+        <a href="notifications.html" class="sidebar-link"><i class="bi bi-bell"></i> Notifications</a>
+
+        <div class="nav-section-title">Account</div>
+        <a href="profile.html" class="sidebar-link"><i class="bi bi-person-circle"></i> Profile</a>
+        <a href="settings.html" class="sidebar-link"><i class="bi bi-gear"></i> Settings</a>
+        <a href="help.html" class="sidebar-link"><i class="bi bi-question-circle"></i> Help & FAQ</a>
+      </div>
+    </aside>
+
+    <main class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="btn btn-icon sidebar-toggle-btn d-lg-none"><i class="bi bi-list fs-4"></i></button>
+          <h5 class="text-white font-heading mb-0" id="pageFormTitle">Add New Memory</h5>
+        </div>
+
+        <div class="topbar-right">
+          <button class="btn btn-icon theme-toggle-btn"><i class="bi bi-moon-stars-fill theme-toggle-icon"></i></button>
+          <a href="profile.html" class="user-profile-badge">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" class="user-avatar" alt="Avatar">
+          </a>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <div class="max-w-900 mx-auto">
+          <form id="addMemoryForm" class="glass-card p-4 p-md-5 rounded-4">
+            
+            <!-- Drag & Drop Upload Zone -->
+            <div class="mb-4">
+              <label class="form-label text-white fw-bold">Cover Photo / Media</label>
+              <div id="dropZone" class="border border-2 border-dashed border-glass rounded-4 p-4 text-center cursor-pointer hover-lift">
+                <i class="bi bi-cloud-arrow-up display-4 text-gradient mb-2 d-block"></i>
+                <h6 class="text-white">Drag & drop your cover photo here, or browse</h6>
+                <p class="text-muted-custom small mb-0">Supports JPG, PNG, WEBP up to 25MB</p>
+                <input type="file" id="coverFileInput" accept="image/*" class="d-none">
+              </div>
+              <img id="uploadPreviewImg" src="" class="img-fluid rounded-4 mt-3 shadow-md" style="display: none; max-height: 250px; object-fit: cover; width: 100%;">
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-md-8">
+                <label class="form-label text-white fw-semibold">Memory Title *</label>
+                <input type="text" id="memoryTitle" class="form-control form-control-custom" placeholder="e.g. Sunset Over Kyoto Shrines" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-white fw-semibold">Date *</label>
+                <input type="date" id="memoryDate" class="form-control form-control-custom" required>
+              </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label text-white fw-semibold">Location</label>
+                <input type="text" id="memoryLocation" class="form-control form-control-custom" placeholder="e.g. Kyoto, Japan">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-white fw-semibold">Primary Emotion</label>
+                <select id="memoryEmotion" class="form-select form-control-custom">
+                  <option value="Joy">Joy ☀️</option>
+                  <option value="Nostalgia">Nostalgia 🌌</option>
+                  <option value="Adventure">Adventure 🏕️</option>
+                  <option value="Gratitude">Gratitude 💖</option>
+                  <option value="Serenity">Serenity 🌿</option>
+                  <option value="Milestone">Milestone 🏆</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label text-white fw-semibold">Category</label>
+                <select id="memoryCategory" class="form-select form-control-custom">
+                  <option value="Travel">Travel</option>
+                  <option value="Family">Family</option>
+                  <option value="Friends">Friends</option>
+                  <option value="Birthday">Birthday</option>
+                  <option value="Graduation">Graduation</option>
+                  <option value="College">College</option>
+                  <option value="Festivals">Festivals</option>
+                  <option value="Achievements">Achievements</option>
+                  <option value="Work">Work</option>
+                  <option value="Vacations">Vacations</option>
+                  <option value="Journal">Journal Entry</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label text-white fw-semibold">Privacy Scope</label>
+                <select id="memoryPrivacy" class="form-select form-control-custom">
+                  <option value="Private">Private (Only Me)</option>
+                  <option value="Shared">Shared with Family</option>
+                  <option value="Public">Public Timeline</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label text-white fw-semibold">Tags (comma-separated)</label>
+                <input type="text" id="memoryTags" class="form-control form-control-custom" placeholder="Japan, Sunset, SoloTrip">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-white fw-semibold">Tagged People (comma-separated)</label>
+                <input type="text" id="memoryPeople" class="form-control form-control-custom" placeholder="Elena, Mom, Self">
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label text-white fw-semibold">Journal Description / Story *</label>
+              <textarea id="memoryDescription" class="form-control form-control-custom" rows="4" placeholder="Write about what made this moment special..." required></textarea>
+            </div>
+
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="checkbox" id="memoryFavorite">
+              <label class="form-check-label text-white fw-semibold" for="memoryFavorite">
+                <i class="bi bi-star-fill text-warning me-1"></i> Add to Favorite Memories
+              </label>
+            </div>
+
+            <div class="d-flex justify-content-end gap-3 border-top border-glass pt-4">
+              <a href="timeline.html" class="btn btn-glass px-4">Cancel</a>
+              <button type="submit" class="btn btn-aurora px-4 py-2"><i class="bi bi-cloud-arrow-up-fill me-1"></i> Save to Timeline Archive</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/add-memory.js"></script>
+</body>
+</html>

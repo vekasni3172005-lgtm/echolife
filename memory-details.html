@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Details | EchoLife Memory Vault</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <a class="brand-logo" href="index.html">
+          <i class="bi bi-clock-history"></i>
+          <span>EchoLife</span>
+        </a>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="nav-section-title">Main Workspace</div>
+        <a href="dashboard.html" class="sidebar-link"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
+        <a href="timeline.html" class="sidebar-link active"><i class="bi bi-hourglass-split"></i> Timeline</a>
+        <a href="gallery.html" class="sidebar-link"><i class="bi bi-images"></i> Gallery</a>
+        <a href="calendar.html" class="sidebar-link"><i class="bi bi-calendar-event"></i> Calendar</a>
+        <a href="statistics.html" class="sidebar-link"><i class="bi bi-bar-chart-line-fill"></i> Statistics</a>
+
+        <div class="nav-section-title">Archival Tools</div>
+        <a href="add-memory.html" class="sidebar-link"><i class="bi bi-plus-circle-fill"></i> Add Memory</a>
+        <a href="backup.html" class="sidebar-link"><i class="bi bi-cloud-arrow-down"></i> Backup & Sync</a>
+        <a href="notifications.html" class="sidebar-link"><i class="bi bi-bell"></i> Notifications</a>
+
+        <div class="nav-section-title">Account</div>
+        <a href="profile.html" class="sidebar-link"><i class="bi bi-person-circle"></i> Profile</a>
+        <a href="settings.html" class="sidebar-link"><i class="bi bi-gear"></i> Settings</a>
+        <a href="help.html" class="sidebar-link"><i class="bi bi-question-circle"></i> Help & FAQ</a>
+      </div>
+    </aside>
+
+    <main class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="btn btn-icon sidebar-toggle-btn d-lg-none"><i class="bi bi-list fs-4"></i></button>
+          <a href="timeline.html" class="btn btn-glass btn-sm"><i class="bi bi-arrow-left me-1"></i> Back to Timeline</a>
+        </div>
+
+        <div class="topbar-right">
+          <button class="btn btn-icon theme-toggle-btn"><i class="bi bi-moon-stars-fill theme-toggle-icon"></i></button>
+          <a href="profile.html" class="user-profile-badge">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" class="user-avatar" alt="Avatar">
+          </a>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <div class="max-w-1000 mx-auto" id="singleMemoryDetailContainer">
+          <!-- Populated by JS script -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const memories = EchoLifeStore.getMemories();
+      const memory = memories[0]; // Load first memory
+      const container = document.getElementById('singleMemoryDetailContainer');
+
+      if (container && memory) {
+        container.innerHTML = `
+          <div class="glass-card overflow-hidden rounded-4 p-0 mb-4">
+            <div class="position-relative">
+              <img src="${memory.coverImage}" class="w-100" style="max-height: 420px; object-fit: cover;">
+              <span class="position-absolute top-0 end-0 m-4 badge-emotion badge-${memory.emotion.toLowerCase()} fs-6">${memory.emotion}</span>
+            </div>
+            <div class="p-4 p-md-5">
+              <div class="d-flex align-items-center justify-content-between text-muted-custom small mb-3 flex-wrap gap-2">
+                <span><i class="bi bi-calendar3 me-1 text-gradient"></i>${memory.date}</span>
+                <span><i class="bi bi-geo-alt me-1 text-gradient"></i>${memory.location}</span>
+                <span><i class="bi bi-shield-lock me-1"></i>${memory.privacy}</span>
+              </div>
+              <h2 class="text-white font-heading display-6 mb-3">${memory.title}</h2>
+              <p class="text-secondary-custom fs-5 leading-relaxed mb-4">${memory.description}</p>
+              
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <div class="p-3 glass-card rounded-3">
+                    <h6 class="text-white mb-2"><i class="bi bi-people text-gradient me-2"></i>Tagged Friends</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                      ${memory.people.map(p => `<span class="badge bg-primary bg-opacity-20 text-white px-3 py-2">${p}</span>`).join('')}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="p-3 glass-card rounded-3">
+                    <h6 class="text-white mb-2"><i class="bi bi-tags text-gradient me-2"></i>Tags & Category</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                      <span class="badge bg-danger bg-opacity-20 text-danger px-3 py-2">${memory.category}</span>
+                      ${memory.tags.map(t => `<span class="badge bg-secondary text-secondary-custom px-3 py-2">#${t}</span>`).join('')}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between border-top border-glass pt-4">
+                <button class="btn btn-glass" onclick="showToast('Print', 'Generating memory PDF report...', 'info')"><i class="bi bi-printer me-1"></i> Print Memory</button>
+                <a href="timeline.html" class="btn btn-aurora">Back to Timeline</a>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>

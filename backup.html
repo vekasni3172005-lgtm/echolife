@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Backup & Export | EchoLife Digital Memory Vault
+  </title>
+
+
+  <!-- Google Fonts -->
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+
+  <!-- Bootstrap -->
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+
+
+  <!-- Bootstrap Icons -->
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    rel="stylesheet">
+
+
+  <!-- EchoLife CSS -->
+
+  <link
+    rel="stylesheet"
+    href="css/style.css">
+
+  <link
+    rel="stylesheet"
+    href="css/animations.css">
+
+  <link
+    rel="stylesheet"
+    href="css/responsive.css">
+
+</head>
+
+
+<body>
+
+
+  <div class="app-container">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="app-sidebar">
+
+      <div class="sidebar-header">
+
+        <a
+          class="brand-logo"
+          href="index.html">
+
+          <i class="bi bi-clock-history"></i>
+
+          <span>
+            EchoLife
+          </span>
+
+        </a>
+
+      </div>
+
+
+      <div class="sidebar-nav">
+
+
+        <div class="nav-section-title">
+          Main Workspace
+        </div>
+
+
+        <a
+          href="dashboard.html"
+          class="sidebar-link">
+
+          <i class="bi bi-grid-1x2-fill"></i>
+
+          Dashboard
+
+        </a>
+
+
+        <a
+          href="timeline.html"
+          class="sidebar-link">
+
+          <i class="bi bi-hourglass-split"></i>
+
+          Timeline
+
+        </a>
+
+
+        <a
+          href="gallery.html"
+          class="sidebar-link">
+
+          <i class="bi bi-images"></i>
+
+          Gallery
+
+        </a>
+
+
+        <a
+          href="calendar.html"
+          class="sidebar-link">
+
+          <i class="bi bi-calendar-event"></i>
+
+          Calendar
+
+        </a>
+
+
+        <a
+          href="statistics.html"
+          class="sidebar-link">
+
+          <i class="bi bi-bar-chart-line-fill"></i>
+
+          Statistics
+
+        </a>
+
+
+
+        <div class="nav-section-title">
+          Archival Tools
+        </div>
+
+
+        <a
+          href="add-memory.html"
+          class="sidebar-link">
+
+          <i class="bi bi-plus-circle-fill"></i>
+
+          Add Memory
+
+        </a>
+
+
+        <a
+          href="backup.html"
+          class="sidebar-link active">
+
+          <i class="bi bi-cloud-arrow-down"></i>
+
+          Backup & Sync
+
+        </a>
+
+
+        <a
+          href="notifications.html"
+          class="sidebar-link">
+
+          <i class="bi bi-bell"></i>
+
+          Notifications
+
+        </a>
+
+
+
+        <div class="nav-section-title">
+          Account
+        </div>
+
+
+        <a
+          href="profile.html"
+          class="sidebar-link">
+
+          <i class="bi bi-person-circle"></i>
+
+          Profile
+
+        </a>
+
+
+        <a
+          href="settings.html"
+          class="sidebar-link">
+
+          <i class="bi bi-gear"></i>
+
+          Settings
+
+        </a>
+
+
+        <a
+          href="help.html"
+          class="sidebar-link">
+
+          <i class="bi bi-question-circle"></i>
+
+          Help & FAQ
+
+        </a>
+
+      </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="app-main">
+
+
+      <!-- TOP BAR -->
+
+      <header class="app-topbar">
+
+        <div class="topbar-left">
+
+          <button
+            class="btn btn-icon sidebar-toggle-btn d-lg-none">
+
+            <i class="bi bi-list fs-4"></i>
+
+          </button>
+
+
+          <h5
+            class="text-white font-heading mb-0">
+
+            Backup & Data Ownership
+
+          </h5>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+          <button
+            class="btn btn-icon theme-toggle-btn">
+
+            <i
+              class="bi bi-moon-stars-fill theme-toggle-icon">
+            </i>
+
+          </button>
+
+
+          <a
+            href="profile.html"
+            class="user-profile-badge">
+
+            <img
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+              class="user-avatar"
+              alt="Avatar">
+
+          </a>
+
+        </div>
+
+      </header>
+
+
+
+      <!-- =====================================================
+           PAGE
+           ===================================================== -->
+
+      <div class="content-body">
+
+
+        <div class="max-w-900 mx-auto">
+
+
+          <!-- HEADER -->
+
+          <div
+            class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+              <h2
+                class="text-white font-heading mb-1">
+
+                <i
+                  class="bi bi-cloud-arrow-down me-2 text-gradient">
+                </i>
+
+                Vault Backup & Export
+
+              </h2>
+
+
+              <p
+                class="text-secondary-custom mb-0">
+
+                Download or restore your personal memory archive.
+
+              </p>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- =================================================
+               BACKUP SUMMARY
+               ================================================= -->
+
+          <div
+            class="glass-card p-4 rounded-4 mb-4">
+
+
+            <div
+              class="row align-items-center">
+
+
+              <div
+                class="col-md-8">
+
+
+                <div
+                  class="d-flex align-items-center gap-3 mb-2">
+
+                  <span
+                    class="badge bg-success bg-opacity-20 text-success rounded-pill px-3 py-2">
+
+                    <i
+                      class="bi bi-shield-check me-1">
+                    </i>
+
+                    Personal Archive
+
+                  </span>
+
+
+                  <span
+                    id="backupStatus"
+                    class="small text-muted-custom">
+
+                    Loading...
+
+                  </span>
+
+                </div>
+
+
+                <h4
+                  class="text-white font-heading mb-1">
+
+                  Your personal memory vault
+
+                </h4>
+
+
+                <p
+                  id="backupDescription"
+                  class="text-secondary-custom small mb-0">
+
+                  Your backup contains only the memories belonging
+                  to your currently signed-in account.
+
+                </p>
+
+
+              </div>
+
+
+              <div
+                class="col-md-4 text-md-end mt-3 mt-md-0">
+
+
+                <button
+                  id="exportBackupBtn"
+                  class="btn btn-aurora py-2 px-4"
+                  onclick="exportArchive()">
+
+                  <i
+                    class="bi bi-download me-1">
+                  </i>
+
+                  Export JSON Archive
+
+                </button>
+
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+
+          <!-- =================================================
+               BACKUP INFORMATION
+               ================================================= -->
+
+          <div
+            class="row g-4 mb-4">
+
+
+            <div
+              class="col-md-4">
+
+              <div
+                class="glass-card p-4 h-100">
+
+                <i
+                  class="bi bi-database-check fs-2 text-primary mb-3 d-block">
+                </i>
+
+
+                <h5
+                  class="text-white font-heading">
+
+                  Memories
+
+                </h5>
+
+
+                <h2
+                  id="backupMemoryCount"
+                  class="text-gradient font-heading">
+
+                  0
+
+                </h2>
+
+
+                <p
+                  class="text-secondary-custom small mb-0">
+
+                  Memories in your archive
+
+                </p>
+
+              </div>
+
+            </div>
+
+
+
+            <div
+              class="col-md-4">
+
+              <div
+                class="glass-card p-4 h-100">
+
+                <i
+                  class="bi bi-images fs-2 text-info mb-3 d-block">
+                </i>
+
+
+                <h5
+                  class="text-white font-heading">
+
+                  Media
+
+                </h5>
+
+
+                <h2
+                  id="backupMediaCount"
+                  class="text-gradient font-heading">
+
+                  0
+
+                </h2>
+
+
+                <p
+                  class="text-secondary-custom small mb-0">
+
+                  Memories containing media
+
+                </p>
+
+              </div>
+
+            </div>
+
+
+
+            <div
+              class="col-md-4">
+
+              <div
+                class="glass-card p-4 h-100">
+
+                <i
+                  class="bi bi-person-check fs-2 text-success mb-3 d-block">
+                </i>
+
+
+                <h5
+                  class="text-white font-heading">
+
+                  Ownership
+
+                </h5>
+
+
+                <h2
+                  class="text-gradient font-heading">
+
+                  100%
+
+                </h2>
+
+
+                <p
+                  class="text-secondary-custom small mb-0">
+
+                  Your archive belongs to your account
+
+                </p>
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+
+
+          <!-- =================================================
+               IMPORT
+               ================================================= -->
+
+          <div
+            class="glass-card p-4 rounded-4 mb-4">
+
+
+            <div
+              class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+
+
+              <div>
+
+                <h5
+                  class="text-white font-heading mb-1">
+
+                  <i
+                    class="bi bi-file-earmark-arrow-up text-gradient me-2">
+                  </i>
+
+                  Restore Archive
+
+                </h5>
+
+
+                <p
+                  class="text-secondary-custom small mb-0">
+
+                  Import a previously exported EchoLife JSON archive.
+
+                </p>
+
+              </div>
+
+
+              <button
+                class="btn btn-glass"
+                onclick="document.getElementById('importFileInput').click()">
+
+                <i
+                  class="bi bi-folder2-open me-1">
+                </i>
+
+                Choose JSON File
+
+              </button>
+
+
+              <input
+                type="file"
+                id="importFileInput"
+                accept=".json,application/json"
+                class="d-none"
+                onchange="importArchive(this)">
+
+
+            </div>
+
+
+            <div
+              class="p-4 rounded-3 border border-glass text-center">
+
+
+              <i
+                class="bi bi-cloud-arrow-up display-5 text-gradient mb-2 d-block">
+              </i>
+
+
+              <h6
+                class="text-white">
+
+                Restore your memories
+
+              </h6>
+
+
+              <p
+                class="text-secondary-custom small mb-0">
+
+                Imported memories will be added to the
+                currently logged-in user's account.
+
+              </p>
+
+            </div>
+
+
+          </div>
+
+
+
+          <!-- =================================================
+               PDF SECTION
+               ================================================= -->
+
+          <div
+            class="glass-card p-4 rounded-4">
+
+
+            <div
+              class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+
+              <div>
+
+                <h5
+                  class="text-white font-heading mb-1">
+
+                  <i
+                    class="bi bi-journal-richtext text-warning me-2">
+                  </i>
+
+                  Memory Book
+
+                </h5>
+
+
+                <p
+                  class="text-secondary-custom small mb-0">
+
+                  PDF generation can be added after the
+                  database backup system is complete.
+
+                </p>
+
+              </div>
+
+
+              <button
+                class="btn btn-glass"
+                onclick="showToast('Memory Book', 'PDF generation will be connected next.', 'info')">
+
+                <i
+                  class="bi bi-printer me-1">
+                </i>
+
+                Generate PDF
+
+              </button>
+
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+    </main>
+
+
+  </div>
+
+
+
+  <!-- =======================================================
+       JAVASCRIPT
+       ======================================================= -->
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+  </script>
+
+
+  <script
+    src="js/data.js">
+  </script>
+
+
+  <script
+    src="js/theme.js">
+  </script>
+
+
+  <script
+    src="js/app.js">
+  </script>
+
+
+  <script
+    src="js/backup.js">
+  </script>
+
+
+</body>
+
+</html>

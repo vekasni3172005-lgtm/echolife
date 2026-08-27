@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Profile | EchoLife Digital Memory Vault
+    </title>
+
+
+    <!-- =====================================================
+         GOOGLE FONTS
+         ===================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         BOOTSTRAP
+         ===================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         BOOTSTRAP ICONS
+         ===================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         ECHOLIFE CSS
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/animations.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/responsive.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <div class="app-container">
+
+
+        <!-- =================================================
+             SIDEBAR
+             ================================================= -->
+
+        <aside class="app-sidebar">
+
+
+            <div class="sidebar-header">
+
+                <a
+                    class="brand-logo"
+                    href="index.html"
+                >
+
+                    <i class="bi bi-clock-history"></i>
+
+                    <span>
+                        EchoLife
+                    </span>
+
+                </a>
+
+            </div>
+
+
+
+            <div class="sidebar-nav">
+
+
+                <!-- MAIN WORKSPACE -->
+
+                <div class="nav-section-title">
+                    Main Workspace
+                </div>
+
+
+                <a
+                    href="dashboard.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-grid-1x2-fill"></i>
+
+                    Dashboard
+
+                </a>
+
+
+                <a
+                    href="timeline.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-hourglass-split"></i>
+
+                    Timeline
+
+                </a>
+
+
+                <a
+                    href="gallery.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-images"></i>
+
+                    Gallery
+
+                </a>
+
+
+                <a
+                    href="calendar.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-calendar-event"></i>
+
+                    Calendar
+
+                </a>
+
+
+                <a
+                    href="statistics.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-bar-chart-line-fill"></i>
+
+                    Statistics
+
+                </a>
+
+
+
+                <!-- ARCHIVAL TOOLS -->
+
+                <div class="nav-section-title">
+                    Archival Tools
+                </div>
+
+
+                <a
+                    href="add-memory.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-plus-circle-fill"></i>
+
+                    Add Memory
+
+                </a>
+
+
+                <a
+                    href="backup.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-cloud-arrow-down"></i>
+
+                    Backup & Sync
+
+                </a>
+
+
+                <a
+                    href="notifications.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-bell"></i>
+
+                    Notifications
+
+                </a>
+
+
+
+                <!-- ACCOUNT -->
+
+                <div class="nav-section-title">
+                    Account
+                </div>
+
+
+                <a
+                    href="profile.html"
+                    class="sidebar-link active"
+                >
+
+                    <i class="bi bi-person-circle"></i>
+
+                    Profile
+
+                </a>
+
+
+                <a
+                    href="settings.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-gear"></i>
+
+                    Settings
+
+                </a>
+
+
+                <a
+                    href="help.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-question-circle"></i>
+
+                    Help & FAQ
+
+                </a>
+
+            </div>
+
+
+
+            <!-- LOGOUT -->
+
+            <div class="sidebar-footer">
+
+                <a
+                    href="#"
+                    id="logoutButton"
+                    class="sidebar-link text-danger mb-0"
+                >
+
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    Log Out
+
+                </a>
+
+            </div>
+
+
+        </aside>
+
+
+
+        <!-- =================================================
+             MAIN CONTENT
+             ================================================= -->
+
+        <main class="app-main">
+
+
+            <!-- =================================================
+                 TOPBAR
+                 ================================================= -->
+
+            <header class="app-topbar">
+
+
+                <div class="topbar-left">
+
+
+                    <button
+                        class="btn btn-icon sidebar-toggle-btn d-lg-none"
+                        type="button"
+                    >
+
+                        <i class="bi bi-list fs-4"></i>
+
+                    </button>
+
+
+                    <h5
+                        class="text-white font-heading mb-0"
+                    >
+
+                        Archivist Profile
+
+                    </h5>
+
+
+                </div>
+
+
+
+                <div class="topbar-right">
+
+
+                    <button
+                        class="btn btn-icon theme-toggle-btn"
+                        type="button"
+                        title="Toggle Theme"
+                    >
+
+                        <i
+                            class="bi bi-moon-stars-fill theme-toggle-icon"
+                        ></i>
+
+                    </button>
+
+
+                    <!-- TOP EDIT PROFILE -->
+
+                    <a
+                        href="#"
+                        class="btn btn-glass btn-sm edit-profile-btn"
+                    >
+
+                        <i class="bi bi-gear me-1"></i>
+
+                        Edit Profile
+
+                    </a>
+
+
+                </div>
+
+            </header>
+
+
+
+            <!-- =================================================
+                 PROFILE CONTENT
+                 ================================================= -->
+
+            <div class="content-body">
+
+
+                <div class="max-w-1000 mx-auto">
+
+
+                    <!-- =================================================
+                         PROFILE CARD
+                         ================================================= -->
+
+                    <div
+                        class="glass-card overflow-hidden rounded-4 mb-4 p-0"
+                    >
+
+
+                        <!-- BANNER -->
+
+                        <div
+                            class="position-relative"
+                            style="height: 200px;"
+                        >
+
+                            <img
+                                id="profileBanner"
+                                src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80"
+                                class="w-100 h-100"
+                                style="object-fit: cover;"
+                                alt="Profile Banner"
+                            >
+
+                        </div>
+
+
+
+                        <!-- PROFILE BODY -->
+
+                        <div
+                            class="p-4 pt-0 position-relative"
+                        >
+
+
+                            <div
+                                class="d-flex justify-content-between align-items-end flex-wrap gap-3"
+                                style="margin-top: -60px;"
+                            >
+
+
+                                <!-- AVATAR -->
+
+                                <img
+                                    id="profileAvatar"
+                                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+                                    class="rounded-circle border border-4 border-dark shadow-lg"
+                                    style="width: 120px; height: 120px; object-fit: cover;"
+                                    alt="Profile Avatar"
+                                >
+
+
+                                <!-- SECOND EDIT BUTTON -->
+
+                                <button
+                                    type="button"
+                                    class="btn btn-aurora btn-sm edit-profile-btn"
+                                >
+
+                                    <i class="bi bi-pencil me-1"></i>
+
+                                    Edit Profile
+
+                                </button>
+
+
+                            </div>
+
+
+
+                            <!-- USER DETAILS -->
+
+                            <div class="mt-3">
+
+
+                                <!-- FULL NAME -->
+
+                                <h3
+                                    id="profileFullName"
+                                    class="text-white font-heading mb-1"
+                                >
+
+                                    Loading...
+
+                                </h3>
+
+
+                                <!-- USERNAME -->
+
+                                <p
+                                    id="profileUsername"
+                                    class="text-gradient fw-semibold small mb-2"
+                                >
+
+                                    Loading...
+
+                                </p>
+
+
+                                <!-- BIO -->
+
+                                <p
+                                    id="profileBio"
+                                    class="text-secondary-custom mb-3 max-w-600"
+                                >
+
+                                    Loading profile...
+
+                                </p>
+
+
+
+                                <!-- PROFILE STATS -->
+
+                                <div
+                                    class="d-flex flex-wrap gap-4 text-secondary-custom small"
+                                >
+
+
+                                    <!-- LOCATION -->
+
+                                    <div>
+
+                                        <i
+                                            class="bi bi-geo-alt me-1 text-gradient"
+                                        ></i>
+
+                                        <span
+                                            id="profileLocation"
+                                        >
+
+                                            Not specified
+
+                                        </span>
+
+                                    </div>
+
+
+
+                                    <!-- MEMORY COUNT -->
+
+                                    <div>
+
+                                        <i
+                                            class="bi bi-journal-album me-1 text-gradient"
+                                        ></i>
+
+                                        <span
+                                            id="profileMemoryCount"
+                                        >
+                                            0
+                                        </span>
+
+                                        Memories
+
+                                    </div>
+
+
+
+                                    <!-- FAVORITES -->
+
+                                    <div>
+
+                                        <i
+                                            class="bi bi-star-fill text-warning me-1"
+                                        ></i>
+
+                                        <span
+                                            id="profileFavoriteCount"
+                                        >
+                                            0
+                                        </span>
+
+                                        Favorites
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <!-- EMAIL -->
+
+                                <div
+                                    class="mt-3 small text-secondary-custom"
+                                >
+
+                                    <i
+                                        class="bi bi-envelope me-1 text-gradient"
+                                    ></i>
+
+                                    <span
+                                        id="profileEmail"
+                                    >
+
+                                        Loading...
+
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         ACHIEVEMENTS
+                         ================================================= -->
+
+                    <h4
+                        class="text-white font-heading mb-3"
+                    >
+
+                        <i
+                            class="bi bi-award-fill text-gradient me-2"
+                        ></i>
+
+                        Vault Achievements
+
+                    </h4>
+
+
+
+                    <div
+                        class="row g-3 mb-4"
+                    >
+
+
+                        <!-- TIME TRAVELER -->
+
+                        <div
+                            class="col-md-6 col-lg-3"
+                        >
+
+                            <div
+                                class="glass-card p-3 text-center glass-card-hover"
+                            >
+
+                                <div
+                                    class="feature-icon-box mx-auto mb-2"
+                                    style="width: 48px; height: 48px;"
+                                >
+
+                                    <i
+                                        class="bi bi-hourglass-split"
+                                    ></i>
+
+                                </div>
+
+
+                                <h6
+                                    class="text-white font-heading mb-1"
+                                >
+
+                                    Time Traveler
+
+                                </h6>
+
+
+                                <p
+                                    id="achievementTimeTraveler"
+                                    class="text-muted-custom small mb-0"
+                                >
+
+                                    Building your archive
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- MASTER CURATOR -->
+
+                        <div
+                            class="col-md-6 col-lg-3"
+                        >
+
+                            <div
+                                class="glass-card p-3 text-center glass-card-hover"
+                            >
+
+                                <div
+                                    class="feature-icon-box mx-auto mb-2"
+                                    style="width: 48px; height: 48px;"
+                                >
+
+                                    <i
+                                        class="bi bi-award"
+                                    ></i>
+
+                                </div>
+
+
+                                <h6
+                                    class="text-white font-heading mb-1"
+                                >
+
+                                    Master Curator
+
+                                </h6>
+
+
+                                <p
+                                    id="achievementCurator"
+                                    class="text-muted-custom small mb-0"
+                                >
+
+                                    Start creating memories
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- GLOBE TROTTER -->
+
+                        <div
+                            class="col-md-6 col-lg-3"
+                        >
+
+                            <div
+                                class="glass-card p-3 text-center glass-card-hover"
+                            >
+
+                                <div
+                                    class="feature-icon-box mx-auto mb-2"
+                                    style="width: 48px; height: 48px;"
+                                >
+
+                                    <i
+                                        class="bi bi-globe-americas"
+                                    ></i>
+
+                                </div>
+
+
+                                <h6
+                                    class="text-white font-heading mb-1"
+                                >
+
+                                    Globe Trotter
+
+                                </h6>
+
+
+                                <p
+                                    id="achievementGlobe"
+                                    class="text-muted-custom small mb-0"
+                                >
+
+                                    Explore your memories
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- STREAK -->
+
+                        <div
+                            class="col-md-6 col-lg-3"
+                        >
+
+                            <div
+                                class="glass-card p-3 text-center glass-card-hover"
+                            >
+
+                                <div
+                                    class="feature-icon-box mx-auto mb-2"
+                                    style="width: 48px; height: 48px;"
+                                >
+
+                                    <i
+                                        class="bi bi-fire"
+                                    ></i>
+
+                                </div>
+
+
+                                <h6
+                                    class="text-white font-heading mb-1"
+                                >
+
+                                    Streak Champion
+
+                                </h6>
+
+
+                                <p
+                                    id="achievementStreak"
+                                    class="text-muted-custom small mb-0"
+                                >
+
+                                    Keep archiving
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         EDIT PROFILE MODAL
+         ===================================================== -->
+
+    <div
+        class="modal fade"
+        id="editProfileModal"
+        tabindex="-1"
+        aria-labelledby="editProfileModalLabel"
+        aria-hidden="true"
+    >
+
+
+        <div
+            class="modal-dialog modal-dialog-centered"
+        >
+
+
+            <div
+                class="modal-content glass-modal"
+            >
+
+
+                <!-- HEADER -->
+
+                <div
+                    class="modal-header border-0"
+                >
+
+                    <h5
+                        class="modal-title text-white font-heading"
+                        id="editProfileModalLabel"
+                    >
+
+                        <i
+                            class="bi bi-person-gear text-gradient me-2"
+                        ></i>
+
+                        Edit Profile
+
+                    </h5>
+
+
+                    <button
+                        type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+
+                </div>
+
+
+
+                <!-- BODY -->
+
+                <div
+                    class="modal-body"
+                >
+
+
+                    <!-- ERROR -->
+
+                    <div
+                        id="editProfileError"
+                        class="alert alert-danger d-none"
+                        role="alert"
+                    ></div>
+
+
+                    <!-- SUCCESS -->
+
+                    <div
+                        id="editProfileSuccess"
+                        class="alert alert-success d-none"
+                        role="alert"
+                    ></div>
+
+
+
+                    <!-- FULL NAME -->
+
+                    <div
+                        class="mb-3"
+                    >
+
+                        <label
+                            for="editFullName"
+                            class="form-label text-white"
+                        >
+
+                            Full Name
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="editFullName"
+                            class="form-control form-control-custom"
+                            placeholder="Your full name"
+                            maxlength="100"
+                        >
+
+                    </div>
+
+
+
+                    <!-- BIO -->
+
+                    <div
+                        class="mb-3"
+                    >
+
+                        <label
+                            for="editBio"
+                            class="form-label text-white"
+                        >
+
+                            Bio
+
+                        </label>
+
+
+                        <textarea
+                            id="editBio"
+                            class="form-control form-control-custom"
+                            rows="4"
+                            maxlength="500"
+                            placeholder="Tell your story..."
+                        ></textarea>
+
+
+                        <small
+                            class="text-secondary-custom"
+                        >
+
+                            Maximum 500 characters.
+
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- LOCATION -->
+
+                    <div
+                        class="mb-3"
+                    >
+
+                        <label
+                            for="editLocation"
+                            class="form-label text-white"
+                        >
+
+                            Location
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="editLocation"
+                            class="form-control form-control-custom"
+                            placeholder="City, Country"
+                            maxlength="100"
+                        >
+
+                    </div>
+
+
+
+                    <!-- PROFILE IMAGE -->
+
+                    <div
+                        class="mb-3"
+                    >
+
+                        <label
+                            for="editProfileImage"
+                            class="form-label text-white"
+                        >
+
+                            Profile Image URL
+
+                        </label>
+
+
+                        <input
+                            type="url"
+                            id="editProfileImage"
+                            class="form-control form-control-custom"
+                            placeholder="https://example.com/photo.jpg"
+                        >
+
+
+                        <small
+                            class="text-secondary-custom"
+                        >
+
+                            Paste a direct image URL.
+
+                        </small>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- FOOTER -->
+
+                <div
+                    class="modal-footer border-0"
+                >
+
+
+                    <button
+                        type="button"
+                        class="btn btn-glass"
+                        data-bs-dismiss="modal"
+                    >
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="saveProfileButton"
+                        class="btn btn-aurora"
+                        onclick="saveProfileChanges()"
+                    >
+
+                        <i
+                            class="bi bi-check-circle me-1"
+                        ></i>
+
+                        Save Changes
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+    <script
+        src="js/theme.js"
+    ></script>
+
+
+    <script
+        src="js/app.js"
+    ></script>
+
+
+    <script
+        src="js/profile.js"
+    ></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Register Account | EchoLife Memory Archive</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    rel="stylesheet">
+
+  <!-- EchoLife CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body class="auth-wrapper">
+
+  <!-- Background Glow -->
+  <div
+    class="hero-ambient-glow"
+    style="top: 20%; width: 500px; height: 500px;">
+  </div>
+
+
+  <!-- Registration Card -->
+  <div
+    class="glass-card auth-card rounded-4 shadow-lg"
+    data-aos="zoom-in">
+
+    <!-- Logo / Heading -->
+    <div class="text-center mb-4">
+
+      <a
+        class="brand-logo justify-content-center mb-2"
+        href="index.html">
+
+        <i class="bi bi-clock-history"></i>
+
+        <span>EchoLife</span>
+
+      </a>
+
+      <p class="text-secondary-custom small">
+        Create your digital life archive in under 60 seconds.
+      </p>
+
+    </div>
+
+
+    <!-- Registration Form -->
+    <form id="registerForm">
+
+      <!-- Full Name -->
+      <div class="mb-3">
+
+        <label
+          class="form-label text-white small font-semibold"
+          for="fullName">
+
+          Full Name
+
+        </label>
+
+        <input
+          type="text"
+          id="fullName"
+          name="fullName"
+          class="form-control form-control-custom"
+          placeholder="Alexandre Mercer"
+          autocomplete="name"
+          maxlength="100"
+          required>
+
+      </div>
+
+
+      <!-- Email -->
+      <div class="mb-3">
+
+        <label
+          class="form-label text-white small font-semibold"
+          for="email">
+
+          Email Address
+
+        </label>
+
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control form-control-custom"
+          placeholder="alex@domain.com"
+          autocomplete="email"
+          maxlength="150"
+          required>
+
+      </div>
+
+
+      <!-- Username -->
+      <div class="mb-3">
+
+        <label
+          class="form-label text-white small font-semibold"
+          for="username">
+
+          Username
+
+        </label>
+
+        <input
+          type="text"
+          id="username"
+          name="username"
+          class="form-control form-control-custom"
+          placeholder="Choose a username"
+          autocomplete="username"
+          minlength="3"
+          maxlength="30"
+          pattern="[A-Za-z0-9_.]+"
+          title="Username can contain letters, numbers, underscores, and periods."
+          required>
+
+        <div class="form-text text-secondary-custom">
+          3–30 characters. Letters, numbers, underscores, and periods only.
+        </div>
+
+      </div>
+
+
+      <!-- Password -->
+      <div class="mb-3">
+
+        <label
+          class="form-label text-white small font-semibold"
+          for="password">
+
+          Create Password
+
+        </label>
+
+        <div class="input-group">
+
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control form-control-custom"
+            placeholder="At least 8 characters"
+            autocomplete="new-password"
+            minlength="8"
+            maxlength="128"
+            required>
+
+          <button
+            type="button"
+            class="btn btn-glass"
+            id="togglePassword"
+            title="Show or hide password"
+            aria-label="Show or hide password">
+
+            <i class="bi bi-eye" id="passwordIcon"></i>
+
+          </button>
+
+        </div>
+
+        <div class="form-text text-secondary-custom">
+          Use at least 8 characters.
+        </div>
+
+      </div>
+
+
+      <!-- Confirm Password -->
+      <div class="mb-3">
+
+        <label
+          class="form-label text-white small font-semibold"
+          for="confirmPassword">
+
+          Confirm Password
+
+        </label>
+
+        <div class="input-group">
+
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            class="form-control form-control-custom"
+            placeholder="Enter your password again"
+            autocomplete="new-password"
+            minlength="8"
+            maxlength="128"
+            required>
+
+          <button
+            type="button"
+            class="btn btn-glass"
+            id="toggleConfirmPassword"
+            title="Show or hide password"
+            aria-label="Show or hide password">
+
+            <i
+              class="bi bi-eye"
+              id="confirmPasswordIcon">
+            </i>
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- Terms -->
+      <div class="form-check mb-4">
+
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="terms"
+          required
+          checked>
+
+        <label
+          class="form-check-label text-secondary-custom small"
+          for="terms">
+
+          I agree to the
+
+          <a
+            href="#"
+            class="text-gradient">
+
+            Terms of Service
+
+          </a>
+
+          & Privacy Policy
+
+        </label>
+
+      </div>
+
+
+      <!-- Error Message -->
+      <div
+        id="registerError"
+        class="alert alert-danger d-none"
+        role="alert">
+      </div>
+
+
+      <!-- Success Message -->
+      <div
+        id="registerSuccess"
+        class="alert alert-success d-none"
+        role="alert">
+      </div>
+
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        id="registerButton"
+        class="btn btn-aurora w-100 py-2 mb-3">
+
+        <span id="registerButtonText">
+          Create Memory Archive
+        </span>
+
+        <span
+          id="registerSpinner"
+          class="spinner-border spinner-border-sm d-none"
+          role="status"
+          aria-hidden="true">
+        </span>
+
+      </button>
+
+    </form>
+
+
+    <!-- Login Link -->
+    <div
+      class="text-center border-top border-glass pt-3 mt-2">
+
+      <span class="text-secondary-custom small">
+
+        Already have an account?
+
+      </span>
+
+      <a
+        href="login.html"
+        class="small text-gradient fw-bold">
+
+        Sign In
+
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- Bootstrap JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+  </script>
+
+
+  <!-- EchoLife JS -->
+  <script src="js/data.js"></script>
+  <script src="js/theme.js"></script>
+
+
+  <!-- Registration Logic -->
+  <script>
+
+    const registerForm =
+      document.getElementById("registerForm");
+
+    const registerButton =
+      document.getElementById("registerButton");
+
+    const registerButtonText =
+      document.getElementById("registerButtonText");
+
+    const registerSpinner =
+      document.getElementById("registerSpinner");
+
+    const registerError =
+      document.getElementById("registerError");
+
+    const registerSuccess =
+      document.getElementById("registerSuccess");
+
+
+    /*
+     * Show / Hide Password
+     */
+    document
+      .getElementById("togglePassword")
+      .addEventListener("click", function () {
+
+        const password =
+          document.getElementById("password");
+
+        const icon =
+          document.getElementById("passwordIcon");
+
+        if (password.type === "password") {
+
+          password.type = "text";
+
+          icon.classList.remove("bi-eye");
+          icon.classList.add("bi-eye-slash");
+
+        } else {
+
+          password.type = "password";
+
+          icon.classList.remove("bi-eye-slash");
+          icon.classList.add("bi-eye");
+
+        }
+
+      });
+
+
+    /*
+     * Show / Hide Confirm Password
+     */
+    document
+      .getElementById("toggleConfirmPassword")
+      .addEventListener("click", function () {
+
+        const password =
+          document.getElementById("confirmPassword");
+
+        const icon =
+          document.getElementById("confirmPasswordIcon");
+
+        if (password.type === "password") {
+
+          password.type = "text";
+
+          icon.classList.remove("bi-eye");
+          icon.classList.add("bi-eye-slash");
+
+        } else {
+
+          password.type = "password";
+
+          icon.classList.remove("bi-eye-slash");
+          icon.classList.add("bi-eye");
+
+        }
+
+      });
+
+
+    /*
+     * Registration
+     */
+    registerForm.addEventListener(
+      "submit",
+      async function (event) {
+
+        event.preventDefault();
+
+
+        // Hide previous messages
+        registerError.classList.add("d-none");
+        registerSuccess.classList.add("d-none");
+
+
+        // Get values
+        const fullName =
+          document
+            .getElementById("fullName")
+            .value
+            .trim();
+
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
+
+        const username =
+          document
+            .getElementById("username")
+            .value
+            .trim();
+
+        const password =
+          document
+            .getElementById("password")
+            .value;
+
+        const confirmPassword =
+          document
+            .getElementById("confirmPassword")
+            .value;
+
+
+        // Confirm passwords
+        if (password !== confirmPassword) {
+
+          registerError.textContent =
+            "Passwords do not match.";
+
+          registerError.classList.remove("d-none");
+
+          return;
+        }
+
+
+        // Basic password validation
+        if (password.length < 8) {
+
+          registerError.textContent =
+            "Password must contain at least 8 characters.";
+
+          registerError.classList.remove("d-none");
+
+          return;
+        }
+
+
+        // Disable button
+        registerButton.disabled = true;
+
+        registerButtonText.textContent =
+          "Creating Account...";
+
+        registerSpinner.classList.remove("d-none");
+
+
+        try {
+
+          const response =
+            await fetch(
+              "http://localhost:3000/api/auth/register",
+              {
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json"
+                },
+
+                body: JSON.stringify({
+                  fullName,
+                  email,
+                  username,
+                  password
+                })
+              }
+            );
+
+
+          const data =
+            await response.json();
+
+
+          if (!response.ok) {
+
+            throw new Error(
+              data.message ||
+              "Registration failed."
+            );
+
+          }
+
+
+          // Show success
+          registerSuccess.textContent =
+            "Account created successfully! Redirecting to login...";
+
+          registerSuccess.classList.remove("d-none");
+
+
+          // Redirect
+          setTimeout(() => {
+
+            window.location.href =
+              "login.html";
+
+          }, 1500);
+
+
+        } catch (error) {
+
+          console.error(
+            "Registration error:",
+            error
+          );
+
+
+          registerError.textContent =
+            error.message ||
+            "Unable to create your account.";
+
+          registerError.classList.remove(
+            "d-none"
+          );
+
+
+          // Re-enable button
+          registerButton.disabled =
+            false;
+
+          registerButtonText.textContent =
+            "Create Memory Archive";
+
+          registerSpinner.classList.add(
+            "d-none"
+          );
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>

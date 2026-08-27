@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        EchoLife | Live Demo
+    </title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/animations.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/responsive.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <div class="app-container">
+
+
+        <!-- =====================================================
+             DEMO SIDEBAR
+             ===================================================== -->
+
+        <aside class="app-sidebar">
+
+
+            <div class="sidebar-header">
+
+                <a
+                    href="index.html"
+                    class="brand-logo"
+                >
+
+                    <i class="bi bi-clock-history"></i>
+
+                    <span>
+                        EchoLife
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <div class="sidebar-nav">
+
+
+                <div class="nav-section-title">
+                    Demo Workspace
+                </div>
+
+
+                <a
+                    href="demo.html"
+                    class="sidebar-link active"
+                >
+
+                    <i class="bi bi-grid-1x2-fill"></i>
+
+                    Demo Dashboard
+
+                </a>
+
+
+                <a
+                    href="demo.html"
+                    class="sidebar-link"
+                    onclick="demoNotice(event)"
+                >
+
+                    <i class="bi bi-hourglass-split"></i>
+
+                    Timeline
+
+                </a>
+
+
+                <a
+                    href="demo.html"
+                    class="sidebar-link"
+                    onclick="demoNotice(event)"
+                >
+
+                    <i class="bi bi-images"></i>
+
+                    Gallery
+
+                </a>
+
+
+                <a
+                    href="demo.html"
+                    class="sidebar-link"
+                    onclick="demoNotice(event)"
+                >
+
+                    <i class="bi bi-calendar-event"></i>
+
+                    Calendar
+
+                </a>
+
+
+                <a
+                    href="demo.html"
+                    class="sidebar-link"
+                    onclick="demoNotice(event)"
+                >
+
+                    <i class="bi bi-bar-chart-line-fill"></i>
+
+                    Statistics
+
+                </a>
+
+
+                <div class="nav-section-title">
+                    Explore
+                </div>
+
+
+                <a
+                    href="register.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-person-plus-fill"></i>
+
+                    Create Your Account
+
+                </a>
+
+
+                <a
+                    href="login.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-box-arrow-in-right"></i>
+
+                    Sign In
+
+                </a>
+
+            </div>
+
+
+        </aside>
+
+
+
+        <!-- =====================================================
+             MAIN CONTENT
+             ===================================================== -->
+
+        <main class="app-main">
+
+
+            <!-- TOPBAR -->
+
+            <header class="app-topbar">
+
+
+                <div class="topbar-left">
+
+                    <button
+                        class="btn btn-icon sidebar-toggle-btn d-lg-none"
+                        type="button"
+                    >
+
+                        <i class="bi bi-list fs-4"></i>
+
+                    </button>
+
+
+                    <div>
+
+                        <h5
+                            class="text-white font-heading mb-0"
+                        >
+
+                            EchoLife Live Demo
+
+                        </h5>
+
+
+                        <span
+                            class="text-secondary-custom small"
+                        >
+
+                            Preview experience
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+
+                    <span
+                        class="badge rounded-pill bg-warning text-dark px-3 py-2"
+                    >
+
+                        <i
+                            class="bi bi-play-circle me-1">
+                        </i>
+
+                        DEMO MODE
+
+                    </span>
+
+
+                    <button
+                        class="btn btn-icon theme-toggle-btn"
+                        type="button"
+                    >
+
+                        <i
+                            class="bi bi-moon-stars-fill theme-toggle-icon">
+                        </i>
+
+                    </button>
+
+
+                </div>
+
+            </header>
+
+
+
+            <!-- =====================================================
+                 CONTENT
+                 ===================================================== -->
+
+            <div class="content-body">
+
+
+                <div
+                    class="max-w-1100 mx-auto"
+                >
+
+
+                    <!-- DEMO NOTICE -->
+
+                    <div
+                        class="glass-card p-4 rounded-4 mb-4 border border-warning border-opacity-25"
+                    >
+
+                        <div
+                            class="d-flex align-items-center gap-3"
+                        >
+
+                            <div
+                                class="feature-icon-box"
+                            >
+
+                                <i
+                                    class="bi bi-play-circle-fill">
+                                </i>
+
+                            </div>
+
+
+                            <div>
+
+                                <h5
+                                    class="text-white font-heading mb-1"
+                                >
+
+                                    Welcome to the EchoLife Demo
+
+                                </h5>
+
+
+                                <p
+                                    class="text-secondary-custom mb-0"
+                                >
+
+                                    This page contains sample memories
+                                    only. It is completely separate from
+                                    your personal account.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         DEMO PROFILE
+                         ================================================= -->
+
+                    <div
+                        class="glass-card rounded-4 p-4 mb-4"
+                    >
+
+                        <div
+                            class="d-flex flex-wrap align-items-center gap-4"
+                        >
+
+
+                            <img
+                                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+                                class="rounded-circle"
+                                style="
+                                    width:100px;
+                                    height:100px;
+                                    object-fit:cover;
+                                "
+                                alt="Demo Profile"
+                            >
+
+
+                            <div>
+
+                                <span
+                                    class="text-secondary-custom small"
+                                >
+
+                                    Demo Archivist
+
+                                </span>
+
+
+                                <h3
+                                    class="text-white font-heading mb-1"
+                                >
+
+                                    Alex Morgan
+
+                                </h3>
+
+
+                                <p
+                                    class="text-gradient fw-semibold mb-2"
+                                >
+
+                                    @demo_archivist
+
+                                </p>
+
+
+                                <p
+                                    class="text-secondary-custom mb-0"
+                                >
+
+                                    Exploring the EchoLife memory
+                                    experience with sample content.
+
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         METRICS
+                         ================================================= -->
+
+                    <div
+                        class="row g-3 mb-4"
+                    >
+
+
+                        <div class="col-6 col-md-3">
+
+                            <div
+                                class="glass-card p-3 glass-card-hover h-100"
+                            >
+
+                                <span
+                                    class="text-secondary-custom small"
+                                >
+
+                                    Memories
+
+                                </span>
+
+
+                                <h3
+                                    id="demoMemoryCount"
+                                    class="text-white font-heading mt-2 mb-0"
+                                >
+
+                                    0
+
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6 col-md-3">
+
+                            <div
+                                class="glass-card p-3 glass-card-hover h-100"
+                            >
+
+                                <span
+                                    class="text-secondary-custom small"
+                                >
+
+                                    Favorites
+
+                                </span>
+
+
+                                <h3
+                                    id="demoFavoriteCount"
+                                    class="text-white font-heading mt-2 mb-0"
+                                >
+
+                                    0
+
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6 col-md-3">
+
+                            <div
+                                class="glass-card p-3 glass-card-hover h-100"
+                            >
+
+                                <span
+                                    class="text-secondary-custom small"
+                                >
+
+                                    Photos
+
+                                </span>
+
+
+                                <h3
+                                    id="demoPhotoCount"
+                                    class="text-white font-heading mt-2 mb-0"
+                                >
+
+                                    0
+
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6 col-md-3">
+
+                            <div
+                                class="glass-card p-3 glass-card-hover h-100"
+                            >
+
+                                <span
+                                    class="text-secondary-custom small"
+                                >
+
+                                    Categories
+
+                                </span>
+
+
+                                <h3
+                                    id="demoCategoryCount"
+                                    class="text-white font-heading mt-2 mb-0"
+                                >
+
+                                    0
+
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         DEMO MEMORIES
+                         ================================================= -->
+
+                    <div
+                        class="d-flex justify-content-between align-items-center mb-3"
+                    >
+
+                        <div>
+
+                            <h4
+                                class="text-white font-heading mb-1"
+                            >
+
+                                Sample Memory Archive
+
+                            </h4>
+
+
+                            <p
+                                class="text-secondary-custom small mb-0"
+                            >
+
+                                These records are demo content.
+
+                            </p>
+
+                        </div>
+
+
+                        <a
+                            href="register.html"
+                            class="btn btn-aurora btn-sm"
+                        >
+
+                            Start Your Archive
+
+                            <i
+                                class="bi bi-arrow-right ms-1">
+                            </i>
+
+                        </a>
+
+                    </div>
+
+
+                    <div
+                        id="demoMemoryGrid"
+                        class="row g-4"
+                    >
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         SCRIPTS
+         ===================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+    <!-- Demo data ONLY -->
+
+    <script
+        src="js/data.js"
+    ></script>
+
+
+    <script
+        src="js/theme.js"
+    ></script>
+
+
+    <script
+        src="js/app.js"
+    ></script>
+
+
+    <script>
+
+        /* =====================================================
+           DEMO INITIALIZATION
+           ===================================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            () => {
+
+                loadDemoData();
+
+            }
+        );
+
+
+        function loadDemoData() {
+
+            /*
+             * data.js supplies the demonstration records.
+             * This page intentionally does NOT call:
+             *
+             * /api/profile
+             * /api/memories
+             * /api/auth/me
+             *
+             * Therefore the user's personal database data
+             * cannot replace the demo data here.
+             */
+
+            const memories =
+                typeof EchoLifeStore !==
+                "undefined"
+                    ? EchoLifeStore.getMemories()
+                    : [];
+
+
+            const grid =
+                document.getElementById(
+                    "demoMemoryGrid"
+                );
+
+
+            const memoryCount =
+                document.getElementById(
+                    "demoMemoryCount"
+                );
+
+
+            const favoriteCount =
+                document.getElementById(
+                    "demoFavoriteCount"
+                );
+
+
+            const photoCount =
+                document.getElementById(
+                    "demoPhotoCount"
+                );
+
+
+            const categoryCount =
+                document.getElementById(
+                    "demoCategoryCount"
+                );
+
+
+            if (
+                memoryCount
+            ) {
+
+                memoryCount.textContent =
+                    memories.length;
+
+            }
+
+
+            if (
+                favoriteCount
+            ) {
+
+                favoriteCount.textContent =
+                    memories.filter(
+                        memory =>
+                            memory.isFavorite
+                    ).length;
+
+            }
+
+
+            if (
+                photoCount
+            ) {
+
+                photoCount.textContent =
+                    memories.filter(
+                        memory =>
+                            memory.type ===
+                            "Photo" ||
+                            memory.coverImage
+                    ).length;
+
+            }
+
+
+            if (
+                categoryCount
+            ) {
+
+                categoryCount.textContent =
+                    new Set(
+                        memories
+                            .map(
+                                memory =>
+                                    memory.category
+                            )
+                            .filter(
+                                Boolean
+                            )
+                    ).size;
+
+            }
+
+
+            if (
+                !grid
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                memories.length ===
+                0
+            ) {
+
+                grid.innerHTML = `
+
+                    <div
+                        class="col-12"
+                    >
+
+                        <div
+                            class="glass-card p-5 text-center"
+                        >
+
+                            <i
+                                class="bi bi-images fs-1 text-muted-custom"
+                            ></i>
+
+                            <h5
+                                class="text-white mt-3"
+                            >
+
+                                No demo memories found
+
+                            </h5>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            grid.innerHTML =
+                memories
+                    .slice(
+                        0,
+                        6
+                    )
+                    .map(
+                        memory => `
+
+                            <div
+                                class="col-md-6 col-lg-4"
+                            >
+
+                                <div
+                                    class="glass-card glass-card-hover rounded-4 overflow-hidden h-100"
+                                >
+
+                                    ${
+                                        memory.coverImage
+                                            ? `
+
+                                                <img
+                                                    src="${escapeDemo(
+                                                        memory.coverImage
+                                                    )}"
+                                                    class="w-100"
+                                                    style="
+                                                        height:190px;
+                                                        object-fit:cover;
+                                                    "
+                                                    alt="${escapeDemo(
+                                                        memory.title
+                                                    )}"
+                                                >
+
+                                            `
+                                            :
+                                            `
+
+                                                <div
+                                                    class="w-100 d-flex align-items-center justify-content-center bg-tertiary"
+                                                    style="
+                                                        height:190px;
+                                                    "
+                                                >
+
+                                                    <i
+                                                        class="bi bi-image fs-1 text-muted-custom"
+                                                    ></i>
+
+                                                </div>
+
+                                            `
+                                    }
+
+
+                                    <div
+                                        class="p-3"
+                                    >
+
+                                        <div
+                                            class="d-flex justify-content-between align-items-start gap-2 mb-2"
+                                        >
+
+                                            <h5
+                                                class="text-white font-heading mb-0"
+                                            >
+
+                                                ${escapeDemo(
+                                                    memory.title
+                                                )}
+
+                                            </h5>
+
+
+                                            ${
+                                                memory.isFavorite
+                                                    ? `
+
+                                                        <i
+                                                            class="bi bi-star-fill text-warning"
+                                                        ></i>
+
+                                                    `
+                                                    : ""
+                                            }
+
+                                        </div>
+
+
+                                        <p
+                                            class="text-secondary-custom small mb-2"
+                                        >
+
+                                            <i
+                                                class="bi bi-calendar3 me-1"
+                                            ></i>
+
+                                            ${escapeDemo(
+                                                memory.date
+                                            )}
+
+                                        </p>
+
+
+                                        <p
+                                            class="text-secondary-custom small mb-3"
+                                        >
+
+                                            ${escapeDemo(
+                                                memory.description
+                                            )}
+
+                                        </p>
+
+
+                                        <div
+                                            class="d-flex flex-wrap gap-2"
+                                        >
+
+                                            <span
+                                                class="badge rounded-pill bg-primary bg-opacity-25 text-white"
+                                            >
+
+                                                ${escapeDemo(
+                                                    memory.category ||
+                                                    "Memory"
+                                                )}
+
+                                            </span>
+
+
+                                            <span
+                                                class="badge rounded-pill bg-secondary bg-opacity-25 text-secondary-custom"
+                                            >
+
+                                                ${escapeDemo(
+                                                    memory.emotion ||
+                                                    "Memory"
+                                                )}
+
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        `
+                    )
+                    .join("");
+
+        }
+
+
+        /* =====================================================
+           DEMO NAVIGATION
+           ===================================================== */
+
+        function demoNotice(
+            event
+        ) {
+
+            event.preventDefault();
+
+
+            showToast(
+                "Demo Mode",
+                "This is a preview. Create an account to use the full feature.",
+                "info"
+            );
+
+        }
+
+
+        /* =====================================================
+           SAFE HTML
+           ===================================================== */
+
+        function escapeDemo(
+            value
+        ) {
+
+            return String(
+                value ?? ""
+            )
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

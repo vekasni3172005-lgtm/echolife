@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>EchoLife | Interactive Digital Life Archive & Memory Timeline</title>
+
+  <meta name="description"
+    content="Preserve your life's precious moments with EchoLife - an interactive digital life archive featuring glassmorphism design, emotion analytics, and vertical memory timelines.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    rel="stylesheet">
+
+  <!-- AOS Animations -->
+  <link
+    href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+    rel="stylesheet">
+
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+  <!-- ==================== NAVBAR ==================== -->
+
+  <nav class="navbar navbar-expand-lg landing-navbar">
+
+    <div class="container">
+
+      <a class="brand-logo" href="index.html">
+
+        <i class="bi bi-clock-history"></i>
+
+        <span>EchoLife</span>
+
+      </a>
+
+
+      <button
+        class="navbar-toggler text-white border-0"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#landingNav">
+
+        <i class="bi bi-list fs-2"></i>
+
+      </button>
+
+
+      <div class="collapse navbar-collapse" id="landingNav">
+
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-3">
+
+          <li class="nav-item">
+
+            <a
+              class="nav-link text-secondary-custom fw-semibold"
+              href="#features">
+
+              Features
+
+            </a>
+
+          </li>
+
+
+          <li class="nav-item">
+
+            <a
+              class="nav-link text-secondary-custom fw-semibold"
+              href="#how-it-works">
+
+              How It Works
+
+            </a>
+
+          </li>
+
+
+          <li class="nav-item">
+
+            <a
+              class="nav-link text-secondary-custom fw-semibold"
+              href="#faq">
+
+              FAQ
+
+            </a>
+
+          </li>
+
+        </ul>
+
+
+        <div class="d-flex align-items-center gap-3">
+
+          <button
+            class="btn btn-icon theme-toggle-btn"
+            title="Toggle Theme">
+
+            <i class="bi bi-moon-stars-fill theme-toggle-icon"></i>
+
+          </button>
+
+
+          <a
+            href="login.html"
+            class="btn btn-glass">
+
+            Log In
+
+          </a>
+
+
+          <a
+            href="dashboard.html"
+            class="btn btn-aurora">
+
+            Launch App
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </nav>
+
+
+  <!-- ==================== HERO SECTION ==================== -->
+
+  <section class="hero-section">
+
+    <div class="hero-ambient-glow"></div>
+
+    <div class="container position-relative z-1">
+
+      <div class="row align-items-center g-5">
+
+
+        <div
+          class="col-lg-6"
+          data-aos="fade-right">
+
+          <span
+            class="badge bg-primary bg-opacity-20 text-gradient px-3 py-2 rounded-pill fw-bold mb-3 d-inline-flex align-items-center gap-2">
+
+            <i class="bi bi-stars"></i>
+
+            Next-Gen Memory Archival System
+
+          </span>
+
+
+          <h1
+            class="display-3 font-heading text-white fw-bold mb-4">
+
+            Archive Your Life's Journey in
+
+            <span class="text-gradient">
+
+              Interactive Detail.
+
+            </span>
+
+          </h1>
+
+
+          <p
+            class="fs-5 text-secondary-custom mb-4 leading-relaxed">
+
+            EchoLife turns your photos, videos, audio notes, and journal
+            entries into a beautiful, searchable vertical timeline enriched
+            with emotion analytics and interactive throwbacks.
+
+          </p>
+
+
+          <div
+            class="d-flex flex-wrap gap-3 mb-4">
+
+            <a
+              href="register.html"
+              class="btn btn-aurora btn-lg">
+
+              Start Archiving 
+
+              <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+
+            <a
+              href="demo.html"
+              class="btn btn-glass btn-lg">
+
+              <i class="bi bi-play-circle me-1"></i>
+
+              Live Demo
+
+            </a>
+
+          </div>
+
+
+          <div
+            class="d-flex align-items-center gap-4 text-secondary-custom small">
+
+            <div>
+
+              <i
+                class="bi bi-shield-check text-success me-1">
+              </i>
+
+              End-to-End Encrypted
+
+            </div>
+
+
+            <div>
+
+              <i
+                class="bi bi-hdd-network text-primary me-1">
+              </i>
+
+              Local Archive Sync
+
+            </div>
+
+
+            <div>
+
+              <i
+                class="bi bi-star-fill text-warning me-1">
+              </i>
+
+              4.9/5 Rating
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="col-lg-6"
+          data-aos="fade-left">
+
+          <div class="hero-card-preview">
+
+            <img
+              src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80"
+              alt="EchoLife Hero Preview"
+              class="hero-preview-img">
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ==================== STATISTICS ==================== -->
+
+  <section
+    class="py-5 border-y border-glass">
+
+    <div class="container">
+
+      <div
+        class="row text-center g-4">
+
+
+        <div
+          class="col-6 col-md-3"
+          data-aos="zoom-in">
+
+          <h2
+            class="text-gradient display-5 font-heading fw-bold">
+
+            50,000+
+
+          </h2>
+
+          <p
+            class="text-secondary-custom mb-0">
+
+            Memories Saved
+
+          </p>
+
+        </div>
+
+
+        <div
+          class="col-6 col-md-3"
+          data-aos="zoom-in"
+          data-aos-delay="100">
+
+          <h2
+            class="text-gradient display-5 font-heading fw-bold">
+
+            99.9%
+
+          </h2>
+
+          <p
+            class="text-secondary-custom mb-0">
+
+            Privacy Encryption
+
+          </p>
+
+        </div>
+
+
+        <div
+          class="col-6 col-md-3"
+          data-aos="zoom-in"
+          data-aos-delay="200">
+
+          <h2
+            class="text-gradient display-5 font-heading fw-bold">
+
+            120+
+
+          </h2>
+
+          <p
+            class="text-secondary-custom mb-0">
+
+            Countries Tagged
+
+          </p>
+
+        </div>
+
+
+        <div
+          class="col-6 col-md-3"
+          data-aos="zoom-in"
+          data-aos-delay="300">
+
+          <h2
+            class="text-gradient display-5 font-heading fw-bold">
+
+            100%
+
+          </h2>
+
+          <p
+            class="text-secondary-custom mb-0">
+
+            Data Ownership
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ==================== FEATURES ==================== -->
+
+  <section
+    id="features"
+    class="py-5 my-5">
+
+    <div class="container">
+
+
+      <div
+        class="text-center max-w-700 mx-auto mb-5"
+        data-aos="fade-up">
+
+        <h2
+          class="display-5 font-heading text-white fw-bold">
+
+          Crafted for
+
+          <span class="text-gradient">
+
+            Cherished Moments
+
+          </span>
+
+        </h2>
+
+
+        <p
+          class="text-secondary-custom fs-5">
+
+          Designed with Apple-level simplicity, Notion-style organization,
+          and Spotify-smooth analytics.
+
+        </p>
+
+      </div>
+
+
+      <div class="row g-4">
+
+
+        <!-- FEATURE 1 -->
+
+        <div
+          class="col-md-4"
+          data-aos="fade-up">
+
+          <div
+            class="glass-card glass-card-hover p-4 h-100">
+
+            <div class="feature-icon-box">
+
+              <i class="bi bi-clock-history"></i>
+
+            </div>
+
+
+            <h4
+              class="text-white font-heading mb-3">
+
+              Interactive Vertical Timeline
+
+            </h4>
+
+
+            <p
+              class="text-secondary-custom">
+
+              Scroll through your life chronologically with smooth fluid
+              animations, emotion tags, location pins, and media cards.
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- FEATURE 2 -->
+
+        <div
+          class="col-md-4"
+          data-aos="fade-up"
+          data-aos-delay="100">
+
+          <div
+            class="glass-card glass-card-hover p-4 h-100">
+
+            <div class="feature-icon-box">
+
+              <i class="bi bi-pie-chart-fill"></i>
+
+            </div>
+
+
+            <h4
+              class="text-white font-heading mb-3">
+
+              Emotion Analytics
+
+            </h4>
+
+
+            <p
+              class="text-secondary-custom">
+
+              Gain insights into your emotional journey over time.
+              Powered by Chart.js for beautiful distribution breakdowns.
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- FEATURE 3 -->
+
+        <div
+          class="col-md-4"
+          data-aos="fade-up"
+          data-aos-delay="200">
+
+          <div
+            class="glass-card glass-card-hover p-4 h-100">
+
+            <div class="feature-icon-box">
+
+              <i class="bi bi-grid-3x3-gap-fill"></i>
+
+            </div>
+
+
+            <h4
+              class="text-white font-heading mb-3">
+
+              Masonry Photo & Video Grid
+
+            </h4>
+
+
+            <p
+              class="text-secondary-custom">
+
+              Pinterest-inspired fluid media gallery with category filtering,
+              instant search, and full-screen lightbox previews.
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- FEATURE 4 -->
+
+        <div
+          class="col-md-4"
+          data-aos="fade-up">
+
+          <div
+            class="glass-card glass-card-hover p-4 h-100">
+
+            <div class="feature-icon-box">
+
+              <i class="bi bi-calendar-heart-fill"></i>
+
+            </div>
+
+
+            <h4
+              class="text-white font-heading mb-3">
+
+              On This Day Throwbacks
+
+            </h4>
+
+
+            <p
+              class="text-secondary-custom">
+
+              Automatically rediscover memories from 1, 3, or 5 years ago
+              right on your calendar and dashboard feed.
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- FEATURE 5 -->
+
+        <div
+          class="col-md-4"
+          data-aos="fade-up"
+          data-aos-delay="100">
+
+          <div
+            class="glass-card glass-card-hover p-4 h-100">
+
+            <div class="feature-icon-box">
+
+              <i class="bi bi-cloud-arrow-down-fill"></i>
+
+            </div>
+
+
+            <h4
+              class="text-white font-heading mb-3">
+
+              Local Archive Backup
+
+            </h4>
+
+
+            <p
+              class="text-secondary-custom">
+
+              Export your entire memory database in a single click as an
+              encrypted JSON archive or print-ready PDF summary.
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- FEATURE 6 -->
+
+        <div
+          class="col-md-4"
+          data-aos="fade-up"
+          data-aos-delay="200">
+
+          <div
+            class="glass-card glass-card-hover p-4 h-100">
+
+            <div class="feature-icon-box">
+
+              <i class="bi bi-brightness-high-fill"></i>
+
+            </div>
+
+
+            <h4
+              class="text-white font-heading mb-3">
+
+              Light & Dark Glass UI
+
+            </h4>
+
+
+            <p
+              class="text-secondary-custom">
+
+              Sleek glassmorphism aesthetics tailored for both high-contrast
+              dark mode and clean daylight themes.
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ==================== HOW IT WORKS ==================== -->
+
+  <!-- IMPORTANT:
+       bg-secondary has been removed to prevent gray background -->
+
+  <section
+    id="how-it-works"
+    class="py-5 border-y border-glass">
+
+    <div class="container">
+
+
+      <div
+        class="text-center mb-5"
+        data-aos="fade-up">
+
+        <h2
+          class="display-5 font-heading text-white fw-bold">
+
+          How
+
+          <span class="text-gradient">
+
+            EchoLife Works
+
+          </span>
+
+        </h2>
+
+
+        <p
+          class="text-secondary-custom fs-5">
+
+          Three simple steps to build your lifelong personal memory vault.
+
+        </p>
+
+      </div>
+
+
+      <div class="row g-4 text-center">
+
+
+        <!-- STEP 1 -->
+
+        <div
+          class="col-md-4"
+          data-aos="fade-up">
+
+          <div class="p-4">
+
+            <div
+              class="display-4 fw-bold text-gradient mb-3">
+
+              01
+
+            </div>
+
+
+            <h4
+              class="text-white font-heading mb-2">
+
+              Capture & Upload
+
+            </h4>
+
+
+            <p
+              class="text-secondary-custom">
+
+              Drag and drop your photos, videos, or record quick voice
+              notes with custom tags and location pins.
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- STEP 2 -->
+
+        <div
+          class="col-md-4"
+          data-aos="fade-up"
+          data-aos-delay="100">
+
+          <div class="p-4">
+
+            <div
+              class="display-4 fw-bold text-gradient mb-3">
+
+              02
+
+            </div>
+
+
+            <h4
+              class="text-white font-heading mb-2">
+
+              Tag Your Emotions
+
+            </h4>
+
+
+            <p
+              class="text-secondary-custom">
+
+              Assign emotional badges like Joy, Nostalgia, Gratitude,
+              or Serenity to map your psychological journey.
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- STEP 3 -->
+
+        <div
+          class="col-md-4"
+          data-aos="fade-up"
+          data-aos-delay="200">
+
+          <div class="p-4">
+
+            <div
+              class="display-4 fw-bold text-gradient mb-3">
+
+              03
+
+            </div>
+
+
+            <h4
+              class="text-white font-heading mb-2">
+
+              Relive & Preserve
+
+            </h4>
+
+
+            <p
+              class="text-secondary-custom">
+
+              Relive memories through the vertical timeline, interactive
+              calendar, or automated anniversary notifications.
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ==================== FAQ ==================== -->
+
+  <!-- IMPORTANT:
+       bg-secondary has been removed here too -->
+
+  <section
+    id="faq"
+    class="py-5 border-y border-glass">
+
+    <div class="container max-w-800">
+
+
+      <div
+        class="text-center mb-5"
+        data-aos="fade-up">
+
+        <h2
+          class="display-5 font-heading text-white fw-bold">
+
+          Frequently Asked
+
+          <span class="text-gradient">
+
+            Questions
+
+          </span>
+
+        </h2>
+
+      </div>
+
+
+      <div
+        class="accordion accordion-flush"
+        id="faqAccordion"
+        data-aos="fade-up">
+
+
+        <!-- FAQ 1 -->
+
+        <div
+          class="accordion-item glass-card mb-3 border-0">
+
+          <h2 class="accordion-header">
+
+            <button
+              class="accordion-button bg-transparent text-white fw-semibold collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#faq1">
+
+              Is my personal memory data private and secure?
+
+            </button>
+
+          </h2>
+
+
+          <div
+            id="faq1"
+            class="accordion-collapse collapse"
+            data-bs-parent="#faqAccordion">
+
+            <div
+              class="accordion-body text-secondary-custom">
+
+              Yes, EchoLife is designed with privacy in mind.
+              EchoLife processes and stores data using client-side
+              LocalStorage and local JSON archives, giving users control
+              over their personal memory data.
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- FAQ 2 -->
+
+        <div
+          class="accordion-item glass-card mb-3 border-0">
+
+          <h2 class="accordion-header">
+
+            <button
+              class="accordion-button bg-transparent text-white fw-semibold collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#faq2">
+
+              Can I export my memories if I want to switch devices?
+
+            </button>
+
+          </h2>
+
+
+          <div
+            id="faq2"
+            class="accordion-collapse collapse"
+            data-bs-parent="#faqAccordion">
+
+            <div
+              class="accordion-body text-secondary-custom">
+
+              Absolutely! Navigate to the Backup page in the app
+              to download your entire archive as a structured JSON file,
+              which can be restored on another device.
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- FAQ 3 -->
+
+        <div
+          class="accordion-item glass-card mb-3 border-0">
+
+          <h2 class="accordion-header">
+
+            <button
+              class="accordion-button bg-transparent text-white fw-semibold collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#faq3">
+
+              Does EchoLife support audio notes and video clips?
+
+            </button>
+
+          </h2>
+
+
+          <div
+            id="faq3"
+            class="accordion-collapse collapse"
+            data-bs-parent="#faqAccordion">
+
+            <div
+              class="accordion-body text-secondary-custom">
+
+              Yes, memories can include photos, HD video links,
+              audio voice notes, text journals, emotion badges,
+              and location tags.
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ==================== FOOTER ==================== -->
+
+  <footer
+    class="py-5 bg-dark border-top border-glass text-secondary-custom">
+
+    <div class="container">
+
+
+      <div class="row g-4 mb-4">
+
+
+        <!-- BRAND -->
+
+        <div class="col-lg-4">
+
+          <a
+            class="brand-logo mb-3 d-inline-block"
+            href="index.html">
+
+            <i class="bi bi-clock-history"></i>
+
+            <span>
+              EchoLife
+            </span>
+
+          </a>
+
+
+          <p
+            class="small text-muted-custom">
+
+            An Interactive Digital Life Archive and Memory Timeline
+            System designed for human stories.
+
+          </p>
+
+        </div>
+
+
+        <!-- PRODUCT -->
+
+        <div class="col-6 col-lg-2">
+
+          <h6
+            class="text-white font-heading mb-3">
+
+            Product
+
+          </h6>
+
+
+          <ul
+            class="list-unstyled small gap-2 d-flex flex-column">
+
+            <li>
+
+              <a
+                href="dashboard.html"
+                class="text-secondary-custom">
+
+                Dashboard
+
+              </a>
+
+            </li>
+
+
+            <li>
+
+              <a
+                href="timeline.html"
+                class="text-secondary-custom">
+
+                Timeline
+
+              </a>
+
+            </li>
+
+
+            <li>
+
+              <a
+                href="gallery.html"
+                class="text-secondary-custom">
+
+                Gallery
+
+              </a>
+
+            </li>
+
+
+            <li>
+
+              <a
+                href="calendar.html"
+                class="text-secondary-custom">
+
+                Calendar
+
+              </a>
+
+            </li>
+
+          </ul>
+
+        </div>
+
+
+        <!-- RESOURCES -->
+
+        <div class="col-6 col-lg-2">
+
+          <h6
+            class="text-white font-heading mb-3">
+
+            Resources
+
+          </h6>
+
+
+          <ul
+            class="list-unstyled small gap-2 d-flex flex-column">
+
+            <li>
+
+              <a
+                href="help.html"
+                class="text-secondary-custom">
+
+                Help & FAQ
+
+              </a>
+
+            </li>
+
+
+            <li>
+
+              <a
+                href="backup.html"
+                class="text-secondary-custom">
+
+                Backup & Export
+
+              </a>
+
+            </li>
+
+
+            <li>
+
+              <a
+                href="statistics.html"
+                class="text-secondary-custom">
+
+                Analytics
+
+              </a>
+
+            </li>
+
+          </ul>
+
+        </div>
+
+
+        <!-- SUBSCRIBE -->
+
+        <div class="col-lg-4">
+
+          <h6
+            class="text-white font-heading mb-3">
+
+            Stay Connected
+
+          </h6>
+
+
+          <p class="small">
+
+            Subscribe to get tips on memory curation
+            and digital archiving.
+
+          </p>
+
+
+          <div class="d-flex gap-2">
+
+            <input
+              type="email"
+              class="form-control form-control-custom"
+              placeholder="Enter your email">
+
+
+            <button
+              class="btn btn-aurora">
+
+              Subscribe
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- FOOTER BOTTOM -->
+
+      <div
+        class="d-flex flex-column flex-md-row justify-content-between align-items-center pt-4 border-top border-glass small text-muted-custom">
+
+
+        <p class="mb-0">
+
+          &copy; 2026 EchoLife.
+          All rights reserved.
+          Built with Vanilla JS & Bootstrap 5.
+
+        </p>
+
+
+        <div
+          class="d-flex gap-3 fs-5 mt-3 mt-md-0">
+
+
+          <a
+            href="#"
+            class="text-secondary-custom">
+
+            <i class="bi bi-twitter-x"></i>
+
+          </a>
+
+
+          <a
+            href="#"
+            class="text-secondary-custom">
+
+            <i class="bi bi-instagram"></i>
+
+          </a>
+
+
+          <a
+            href="#"
+            class="text-secondary-custom">
+
+            <i class="bi bi-github"></i>
+
+          </a>
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- ==================== SCRIPTS ==================== -->
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+  </script>
+
+
+  <script
+    src="https://unpkg.com/aos@2.3.1/dist/aos.js">
+  </script>
+
+
+  <script src="js/data.js"></script>
+
+  <script src="js/theme.js"></script>
+
+  <script src="js/app.js"></script>
+
+
+</body>
+
+</html>
