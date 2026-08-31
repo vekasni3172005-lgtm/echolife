@@ -1,26 +1,984 @@
 /* ==========================================================================
    EchoLife User Statistics & Analytics Controller
-   ========================================================================== */
 
-let statisticsMemories = [];
+   Database-backed version
+
+   DESIGN PATTERN:
+   Builder Pattern
+
+   StatisticsReportBuilder incrementally constructs a complete
+   StatisticsReport from the current user's memories.
+
+   Existing functionality preserved:
+   - User-specific database loading
+   - Longest archiving streak
+   - Dominant emotion
+   - Most active month
+   - Total media
+   - Monthly Chart
+   - Emotion Chart
+   - Category Chart
+   - Storage / Media Chart
+   - Empty-state handling
+   ========================================================================== */
 
 
 /* =========================================================
-   INITIALIZE
+   GLOBAL STATE
+   ========================================================= */
+
+let statisticsMemories = [];
+
+let statisticsReport = null;
+
+
+/* =========================================================
+   BUILDER PATTERN
+   ========================================================= */
+
+
+/* =========================================================
+   PRODUCT
+   ========================================================= */
+
+/*
+ * StatisticsReport is the final product constructed
+ * by StatisticsReportBuilder.
+ */
+
+class StatisticsReport {
+
+    constructor() {
+
+        /* Basic summary */
+
+        this.totalMedia =
+            0;
+
+        this.longestStreak =
+            0;
+
+        this.dominantEmotion =
+            null;
+
+        this.dominantEmotionCount =
+            0;
+
+        this.dominantEmotionPercentage =
+            0;
+
+        this.activeMonth =
+            null;
+
+
+        /* Monthly statistics */
+
+        this.monthLabels =
+            [];
+
+        this.monthlyCounts =
+            [];
+
+
+        /* Emotion statistics */
+
+        this.emotionLabels =
+            [];
+
+        this.emotionValues =
+            [];
+
+
+        /* Category statistics */
+
+        this.categoryLabels =
+            [];
+
+        this.categoryValues =
+            [];
+
+
+        /* Media statistics */
+
+        this.mediaLabels =
+            [];
+
+        this.mediaValues =
+            [];
+
+
+        /* Additional summary */
+
+        this.totalCategories =
+            0;
+
+        this.totalPeople =
+            0;
+
+        this.totalLocations =
+            0;
+
+        this.favoriteCount =
+            0;
+
+        this.photoCount =
+            0;
+
+        this.videoCount =
+            0;
+
+        this.audioCount =
+            0;
+
+        this.textCount =
+            0;
+
+    }
+
+}
+
+
+/* =========================================================
+   BUILDER
+   ========================================================= */
+
+/*
+ * StatisticsReportBuilder
+ *
+ * Each build method constructs one part of the final
+ * statistics report and returns "this" so methods can
+ * be chained.
+ */
+
+class StatisticsReportBuilder {
+
+    constructor(
+        memories
+    ) {
+
+        this.memories =
+            Array.isArray(
+                memories
+            )
+                ? memories
+                : [];
+
+
+        this.report =
+            new StatisticsReport();
+
+    }
+
+
+    /* -------------------------------------------------------
+       TOTAL MEDIA
+       ------------------------------------------------------- */
+
+    buildTotalMedia() {
+
+        this.report.totalMedia =
+            this.memories.length;
+
+
+        return this;
+
+    }
+
+
+    /* -------------------------------------------------------
+       LONGEST ARCHIVING STREAK
+       ------------------------------------------------------- */
+
+    buildLongestStreak() {
+
+        const uniqueDates = [
+
+            ...new Set(
+
+                this.memories
+
+                    .map(
+                        memory =>
+                            memory.date
+                    )
+
+                    .filter(
+                        Boolean
+                    )
+
+            )
+
+        ]
+        .sort(
+            (a, b) =>
+                new Date(a) -
+                new Date(b)
+        );
+
+
+        if (
+            uniqueDates.length ===
+            0
+        ) {
+
+            this.report.longestStreak =
+                0;
+
+
+            return this;
+
+        }
+
+
+        let longestStreak =
+            1;
+
+
+        let currentStreak =
+            1;
+
+
+        for (
+            let index = 1;
+            index <
+            uniqueDates.length;
+            index++
+        ) {
+
+            const previous =
+                new Date(
+                    uniqueDates[
+                        index - 1
+                    ]
+                );
+
+
+            const current =
+                new Date(
+                    uniqueDates[
+                        index
+                    ]
+                );
+
+
+            const difference =
+                Math.round(
+
+                    (
+                        current -
+                        previous
+                    )
+                    /
+                    (
+                        1000 *
+                        60 *
+                        60 *
+                        24
+                    )
+
+                );
+
+
+            if (
+                difference ===
+                1
+            ) {
+
+                currentStreak++;
+
+
+                longestStreak =
+                    Math.max(
+                        longestStreak,
+                        currentStreak
+                    );
+
+            } else {
+
+                currentStreak =
+                    1;
+
+            }
+
+        }
+
+
+        this.report.longestStreak =
+            longestStreak;
+
+
+        return this;
+
+    }
+
+
+    /* -------------------------------------------------------
+       EMOTION STATISTICS
+       ------------------------------------------------------- */
+
+    buildEmotionStatistics() {
+
+        const counts = {};
+
+
+        this.memories.forEach(
+            memory => {
+
+                const emotion =
+                    String(
+                        memory.emotion ||
+                        "Unspecified"
+                    )
+                        .trim();
+
+
+                counts[emotion] =
+                    (
+                        counts[emotion] ||
+                        0
+                    ) + 1;
+
+            }
+        );
+
+
+        const entries =
+            Object.entries(
+                counts
+            )
+            .sort(
+                (a, b) =>
+                    b[1] -
+                    a[1]
+            );
+
+
+        this.report.emotionLabels =
+            entries.map(
+                entry =>
+                    entry[0]
+            );
+
+
+        this.report.emotionValues =
+            entries.map(
+                entry =>
+                    entry[1]
+            );
+
+
+        if (
+            entries.length >
+            0
+        ) {
+
+            const dominantEmotion =
+                entries[0][0];
+
+
+            const dominantCount =
+                entries[0][1];
+
+
+            this.report.dominantEmotion =
+                dominantEmotion;
+
+
+            this.report.dominantEmotionCount =
+                dominantCount;
+
+
+            this.report.dominantEmotionPercentage =
+                this.memories.length
+                    ? Math.round(
+                        (
+                            dominantCount /
+                            this.memories.length
+                        ) *
+                        100
+                    )
+                    : 0;
+
+        }
+
+
+        return this;
+
+    }
+
+
+    /* -------------------------------------------------------
+       MOST ACTIVE MONTH
+       ------------------------------------------------------- */
+
+    buildActiveMonth() {
+
+        const monthCounts =
+            new Array(
+                12
+            ).fill(
+                0
+            );
+
+
+        this.memories.forEach(
+            memory => {
+
+                if (
+                    !memory.date
+                ) {
+
+                    return;
+
+                }
+
+
+                const date =
+                    new Date(
+                        memory.date
+                    );
+
+
+                if (
+                    Number.isNaN(
+                        date.getTime()
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                monthCounts[
+                    date.getMonth()
+                ]++;
+
+            }
+        );
+
+
+        const monthNames = [
+
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+
+        ];
+
+
+        let mostActiveMonthIndex =
+            -1;
+
+
+        let highestMonthCount =
+            0;
+
+
+        monthCounts.forEach(
+            (
+                count,
+                index
+            ) => {
+
+                if (
+                    count >
+                    highestMonthCount
+                ) {
+
+                    highestMonthCount =
+                        count;
+
+
+                    mostActiveMonthIndex =
+                        index;
+
+                }
+
+            }
+        );
+
+
+        this.report.activeMonth =
+            mostActiveMonthIndex >= 0
+                ? monthNames[
+                    mostActiveMonthIndex
+                ]
+                : null;
+
+
+        return this;
+
+    }
+
+
+    /* -------------------------------------------------------
+       MONTHLY STATISTICS
+       ------------------------------------------------------- */
+
+    buildMonthlyStatistics() {
+
+        const monthlyCounts =
+            new Array(
+                12
+            ).fill(
+                0
+            );
+
+
+        this.memories.forEach(
+            memory => {
+
+                if (
+                    !memory.date
+                ) {
+
+                    return;
+
+                }
+
+
+                const date =
+                    new Date(
+                        memory.date
+                    );
+
+
+                if (
+                    Number.isNaN(
+                        date.getTime()
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                monthlyCounts[
+                    date.getMonth()
+                ]++;
+
+            }
+        );
+
+
+        this.report.monthLabels = [
+
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+
+        ];
+
+
+        this.report.monthlyCounts =
+            monthlyCounts;
+
+
+        return this;
+
+    }
+
+
+    /* -------------------------------------------------------
+       CATEGORY STATISTICS
+       ------------------------------------------------------- */
+
+    buildCategoryStatistics() {
+
+        const categoryCounts =
+            {};
+
+
+        this.memories.forEach(
+            memory => {
+
+                const category =
+                    String(
+                        memory.category ||
+                        "Uncategorized"
+                    )
+                        .trim();
+
+
+                categoryCounts[
+                    category
+                ] =
+                    (
+                        categoryCounts[
+                            category
+                        ] ||
+                        0
+                    ) + 1;
+
+            }
+        );
+
+
+        const entries =
+            Object.entries(
+                categoryCounts
+            )
+            .sort(
+                (a, b) =>
+                    b[1] -
+                    a[1]
+            );
+
+
+        this.report.categoryLabels =
+            entries.map(
+                entry =>
+                    entry[0]
+            );
+
+
+        this.report.categoryValues =
+            entries.map(
+                entry =>
+                    entry[1]
+            );
+
+
+        this.report.totalCategories =
+            entries.length;
+
+
+        return this;
+
+    }
+
+
+    /* -------------------------------------------------------
+       MEDIA / STORAGE STATISTICS
+       ------------------------------------------------------- */
+
+    buildMediaStatistics() {
+
+        const photoCount =
+            this.memories.filter(
+                memory =>
+                    String(
+                        memory.type ||
+                        ""
+                    )
+                        .toLowerCase() ===
+                    "photo"
+            ).length;
+
+
+        const videoCount =
+            this.memories.filter(
+                memory =>
+                    String(
+                        memory.type ||
+                        ""
+                    )
+                        .toLowerCase() ===
+                    "video"
+            ).length;
+
+
+        const audioCount =
+            this.memories.filter(
+                memory =>
+                    Boolean(
+                        memory.audioNote
+                    )
+            ).length;
+
+
+        const textCount =
+            this.memories.filter(
+                memory =>
+                    Boolean(
+                        memory.description
+                    )
+            ).length;
+
+
+        this.report.photoCount =
+            photoCount;
+
+
+        this.report.videoCount =
+            videoCount;
+
+
+        this.report.audioCount =
+            audioCount;
+
+
+        this.report.textCount =
+            textCount;
+
+
+        const labels =
+            [];
+
+
+        const values =
+            [];
+
+
+        if (
+            photoCount >
+            0
+        ) {
+
+            labels.push(
+                "Photos"
+            );
+
+
+            values.push(
+                photoCount
+            );
+
+        }
+
+
+        if (
+            videoCount >
+            0
+        ) {
+
+            labels.push(
+                "Videos"
+            );
+
+
+            values.push(
+                videoCount
+            );
+
+        }
+
+
+        if (
+            audioCount >
+            0
+        ) {
+
+            labels.push(
+                "Audio Notes"
+            );
+
+
+            values.push(
+                audioCount
+            );
+
+        }
+
+
+        if (
+            textCount >
+            0
+        ) {
+
+            labels.push(
+                "Journal / Text"
+            );
+
+
+            values.push(
+                textCount
+            );
+
+        }
+
+
+        this.report.mediaLabels =
+            labels;
+
+
+        this.report.mediaValues =
+            values;
+
+
+        return this;
+
+    }
+
+
+    /* -------------------------------------------------------
+       FAVORITES
+       ------------------------------------------------------- */
+
+    buildFavorites() {
+
+        this.report.favoriteCount =
+            this.memories.filter(
+                memory =>
+                    Boolean(
+                        memory.isFavorite
+                    )
+            ).length;
+
+
+        return this;
+
+    }
+
+
+    /* -------------------------------------------------------
+       PEOPLE
+       ------------------------------------------------------- */
+
+    buildPeopleStatistics() {
+
+        const people =
+            new Set();
+
+
+        this.memories.forEach(
+            memory => {
+
+                if (
+                    !Array.isArray(
+                        memory.people
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                memory.people.forEach(
+                    person => {
+
+                        const value =
+                            String(
+                                person ||
+                                ""
+                            ).trim();
+
+
+                        if (
+                            value
+                        ) {
+
+                            people.add(
+                                value
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        this.report.totalPeople =
+            people.size;
+
+
+        return this;
+
+    }
+
+
+    /* -------------------------------------------------------
+       LOCATIONS
+       ------------------------------------------------------- */
+
+    buildLocationStatistics() {
+
+        const locations =
+            new Set();
+
+
+        this.memories.forEach(
+            memory => {
+
+                const location =
+                    String(
+                        memory.location ||
+                        ""
+                    ).trim();
+
+
+                if (
+                    location
+                ) {
+
+                    locations.add(
+                        location
+                    );
+
+                }
+
+            }
+        );
+
+
+        this.report.totalLocations =
+            locations.size;
+
+
+        return this;
+
+    }
+
+
+    /* -------------------------------------------------------
+       FINAL PRODUCT
+       ------------------------------------------------------- */
+
+    build() {
+
+        return this.report;
+
+    }
+
+}
+
+
+/* =========================================================
+   INITIALIZE PAGE
    ========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
     async () => {
 
-        if (typeof Chart === "undefined") {
+        if (
+            typeof Chart ===
+            "undefined"
+        ) {
 
             console.error(
                 "Chart.js is not loaded."
             );
 
+
             return;
+
         }
+
 
         await loadStatisticsMemories();
 
@@ -36,23 +994,31 @@ async function loadStatisticsMemories() {
 
     try {
 
-        const response = await fetch(
-            "/api/memories",
-            {
-                method: "GET",
-                credentials: "include"
-            }
-        );
+        const response =
+            await fetch(
+                "/api/memories",
+                {
+                    method:
+                        "GET",
+
+                    credentials:
+                        "include"
+                }
+            );
 
 
-        /* ---------------------------------------------
-           Not logged in
-           --------------------------------------------- */
+        /* ---------------------------------------------------
+           NOT LOGGED IN
+           --------------------------------------------------- */
 
-        if (response.status === 401) {
+        if (
+            response.status ===
+            401
+        ) {
 
             window.location.href =
                 "login.html";
+
 
             return;
 
@@ -63,9 +1029,9 @@ async function loadStatisticsMemories() {
             await response.json();
 
 
-        /* ---------------------------------------------
-           API error
-           --------------------------------------------- */
+        /* ---------------------------------------------------
+           API ERROR
+           --------------------------------------------------- */
 
         if (
             !response.ok ||
@@ -80,19 +1046,56 @@ async function loadStatisticsMemories() {
         }
 
 
-        /* ---------------------------------------------
-           Save user's memories
-           --------------------------------------------- */
+        /* ---------------------------------------------------
+           SAVE USER MEMORIES
+           --------------------------------------------------- */
 
         statisticsMemories =
-            Array.isArray(data.memories)
+            Array.isArray(
+                data.memories
+            )
                 ? data.memories
                 : [];
 
 
-        /* ---------------------------------------------
-           Render everything
-           --------------------------------------------- */
+        /* ===================================================
+           BUILDER PATTERN
+           ===================================================
+           
+           Build one complete StatisticsReport step by step.
+        */
+
+        statisticsReport =
+            new StatisticsReportBuilder(
+                statisticsMemories
+            )
+
+                .buildTotalMedia()
+
+                .buildLongestStreak()
+
+                .buildEmotionStatistics()
+
+                .buildActiveMonth()
+
+                .buildMonthlyStatistics()
+
+                .buildCategoryStatistics()
+
+                .buildMediaStatistics()
+
+                .buildFavorites()
+
+                .buildPeopleStatistics()
+
+                .buildLocationStatistics()
+
+                .build();
+
+
+        /* ---------------------------------------------------
+           RENDER EVERYTHING
+           --------------------------------------------------- */
 
         initStatisticsCharts();
 
@@ -123,6 +1126,8 @@ function initStatisticsCharts() {
 
     renderSummaryCards();
 
+    renderBuilderSummary();
+
     renderMonthlyChart();
 
     renderEmotionChart();
@@ -139,6 +1144,15 @@ function initStatisticsCharts() {
    ========================================================= */
 
 function renderSummaryCards() {
+
+    if (
+        !statisticsReport
+    ) {
+
+        return;
+
+    }
+
 
     const streakElement =
         document.getElementById(
@@ -168,7 +1182,9 @@ function renderSummaryCards() {
        TOTAL MEDIA
        ===================================================== */
 
-    if (totalElement) {
+    if (
+        totalElement
+    ) {
 
         totalElement.innerHTML = `
 
@@ -176,8 +1192,14 @@ function renderSummaryCards() {
                 class="bi bi-file-earmark-image text-info me-2">
             </i>
 
-            ${statisticsMemories.length}
-            File${statisticsMemories.length === 1 ? "" : "s"}
+            ${statisticsReport.totalMedia}
+
+            File${
+                statisticsReport.totalMedia ===
+                1
+                    ? ""
+                    : "s"
+            }
 
         `;
 
@@ -188,9 +1210,14 @@ function renderSummaryCards() {
        EMPTY ACCOUNT
        ===================================================== */
 
-    if (!statisticsMemories.length) {
+    if (
+        statisticsReport.totalMedia ===
+        0
+    ) {
 
-        if (streakElement) {
+        if (
+            streakElement
+        ) {
 
             streakElement.innerHTML = `
 
@@ -205,7 +1232,9 @@ function renderSummaryCards() {
         }
 
 
-        if (emotionElement) {
+        if (
+            emotionElement
+        ) {
 
             emotionElement.innerHTML = `
 
@@ -220,7 +1249,9 @@ function renderSummaryCards() {
         }
 
 
-        if (monthElement) {
+        if (
+            monthElement
+        ) {
 
             monthElement.innerHTML = `
 
@@ -241,90 +1272,12 @@ function renderSummaryCards() {
 
 
     /* =====================================================
-       LONGEST ARCHIVING STREAK
+       LONGEST STREAK
        ===================================================== */
 
-    const uniqueDates = [
-        ...new Set(
-
-            statisticsMemories
-                .map(
-                    memory =>
-                        memory.date
-                )
-                .filter(Boolean)
-
-        )
-    ]
-    .sort(
-        (a, b) =>
-            new Date(a) -
-            new Date(b)
-    );
-
-
-    let longestStreak = 1;
-
-    let currentStreak = 1;
-
-
-    for (
-        let i = 1;
-        i < uniqueDates.length;
-        i++
+    if (
+        streakElement
     ) {
-
-        const previous =
-            new Date(
-                uniqueDates[i - 1]
-            );
-
-
-        const current =
-            new Date(
-                uniqueDates[i]
-            );
-
-
-        const difference =
-            Math.round(
-
-                (
-                    current -
-                    previous
-                )
-                /
-                (
-                    1000 *
-                    60 *
-                    60 *
-                    24
-                )
-
-            );
-
-
-        if (difference === 1) {
-
-            currentStreak++;
-
-
-            longestStreak =
-                Math.max(
-                    longestStreak,
-                    currentStreak
-                );
-
-        } else {
-
-            currentStreak = 1;
-
-        }
-
-    }
-
-
-    if (streakElement) {
 
         streakElement.innerHTML = `
 
@@ -332,8 +1285,14 @@ function renderSummaryCards() {
                 class="bi bi-fire text-danger me-2">
             </i>
 
-            ${longestStreak}
-            Day${longestStreak === 1 ? "" : "s"}
+            ${statisticsReport.longestStreak}
+
+            Day${
+                statisticsReport.longestStreak ===
+                1
+                    ? ""
+                    : "s"
+            }
 
         `;
 
@@ -344,76 +1303,43 @@ function renderSummaryCards() {
        DOMINANT EMOTION
        ===================================================== */
 
-    const emotionCounts = {};
-
-
-    statisticsMemories.forEach(
-        memory => {
-
-            const emotion =
-                String(
-                    memory.emotion ||
-                    "Unspecified"
-                ).trim();
-
-
-            emotionCounts[emotion] =
-                (
-                    emotionCounts[emotion] ||
-                    0
-                ) + 1;
-
-        }
-    );
-
-
-    const emotionEntries =
-        Object.entries(
-            emotionCounts
-        )
-        .sort(
-            (a, b) =>
-                b[1] - a[1]
-        );
-
-
     if (
-        emotionElement &&
-        emotionEntries.length
+        emotionElement
     ) {
 
-        const dominantEmotion =
-            emotionEntries[0][0];
+        if (
+            statisticsReport.dominantEmotion
+        ) {
 
+            emotionElement.innerHTML = `
 
-        const dominantCount =
-            emotionEntries[0][1];
+                <i
+                    class="bi bi-sun text-warning me-2">
+                </i>
 
-
-        const percentage =
-            Math.round(
+                ${escapeHtml(
+                    statisticsReport.dominantEmotion
+                )}
 
                 (
-                    dominantCount /
-                    statisticsMemories.length
-                ) * 100
+                    ${statisticsReport.dominantEmotionPercentage}%
+                )
 
-            );
+            `;
 
+        } else {
 
-        emotionElement.innerHTML = `
+            emotionElement.innerHTML = `
 
-            <i
-                class="bi bi-sun text-warning me-2">
-            </i>
+                <i
+                    class="bi bi-sun text-warning me-2">
+                </i>
 
-            ${escapeHtml(
-                dominantEmotion
-            )}
+                No Data
 
-            (${percentage}%)
+            `;
 
-        `;
+        }
 
     }
 
@@ -422,95 +1348,8 @@ function renderSummaryCards() {
        MOST ACTIVE MONTH
        ===================================================== */
 
-    const monthCounts =
-        new Array(12).fill(0);
-
-
-    statisticsMemories.forEach(
-        memory => {
-
-            if (!memory.date) {
-
-                return;
-
-            }
-
-
-            const date =
-                new Date(
-                    memory.date
-                );
-
-
-            if (
-                Number.isNaN(
-                    date.getTime()
-                )
-            ) {
-
-                return;
-
-            }
-
-
-            monthCounts[
-                date.getMonth()
-            ]++;
-
-        }
-    );
-
-
-    const monthNames = [
-
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-
-    ];
-
-
-    let mostActiveMonthIndex =
-        -1;
-
-
-    let highestMonthCount =
-        0;
-
-
-    monthCounts.forEach(
-        (count, index) => {
-
-            if (
-                count >
-                highestMonthCount
-            ) {
-
-                highestMonthCount =
-                    count;
-
-
-                mostActiveMonthIndex =
-                    index;
-
-            }
-
-        }
-    );
-
-
     if (
-        monthElement &&
-        mostActiveMonthIndex >= 0
+        monthElement
     ) {
 
         monthElement.innerHTML = `
@@ -519,11 +1358,95 @@ function renderSummaryCards() {
                 class="bi bi-calendar2-check text-primary me-2">
             </i>
 
-            ${monthNames[
-                mostActiveMonthIndex
-            ]}
+            ${
+                escapeHtml(
+                    statisticsReport.activeMonth ||
+                    "No Data"
+                )
+            }
 
         `;
+
+    }
+
+}
+
+
+/* =========================================================
+   BUILDER SUMMARY
+   ========================================================= */
+
+function renderBuilderSummary() {
+
+    if (
+        !statisticsReport
+    ) {
+
+        return;
+
+    }
+
+
+    const categoryElement =
+        document.getElementById(
+            "statsTotalCategories"
+        );
+
+
+    const peopleElement =
+        document.getElementById(
+            "statsTotalPeople"
+        );
+
+
+    const locationElement =
+        document.getElementById(
+            "statsTotalLocations"
+        );
+
+
+    const favoriteElement =
+        document.getElementById(
+            "statsFavoriteCount"
+        );
+
+
+    if (
+        categoryElement
+    ) {
+
+        categoryElement.textContent =
+            statisticsReport.totalCategories;
+
+    }
+
+
+    if (
+        peopleElement
+    ) {
+
+        peopleElement.textContent =
+            statisticsReport.totalPeople;
+
+    }
+
+
+    if (
+        locationElement
+    ) {
+
+        locationElement.textContent =
+            statisticsReport.totalLocations;
+
+    }
+
+
+    if (
+        favoriteElement
+    ) {
+
+        favoriteElement.textContent =
+            statisticsReport.favoriteCount;
 
     }
 
@@ -542,78 +1465,89 @@ function renderMonthlyChart() {
         );
 
 
-    if (!canvas) {
+    if (
+        !canvas ||
+        !statisticsReport
+    ) {
 
         return;
 
     }
 
 
-    const monthlyCounts =
-        new Array(12).fill(0);
+    const parent =
+        canvas.parentElement;
 
 
-    statisticsMemories.forEach(
-        memory => {
+    /*
+     * Restore canvas if a previous empty state
+     * had hidden it.
+     */
 
-            if (!memory.date) {
-
-                return;
-
-            }
-
-
-            const date =
-                new Date(
-                    memory.date
-                );
+    canvas.style.display =
+        "";
 
 
-            if (
-                Number.isNaN(
-                    date.getTime()
-                )
-            ) {
+    if (
+        parent
+    ) {
 
-                return;
-
-            }
-
-
-            const month =
-                date.getMonth();
+        const oldMessage =
+            parent.querySelector(
+                ".statistics-empty-message"
+            );
 
 
-            monthlyCounts[month]++;
+        if (
+            oldMessage
+        ) {
+
+            oldMessage.remove();
 
         }
-    );
+
+    }
+
+
+    /*
+     * Prevent duplicate Chart.js instances.
+     */
+
+    if (
+        typeof Chart.getChart ===
+        "function"
+    ) {
+
+        const existingChart =
+            Chart.getChart(
+                canvas
+            );
+
+
+        if (
+            existingChart
+        ) {
+
+            existingChart.destroy();
+
+        }
+
+    }
 
 
     new Chart(
         canvas,
         {
 
-            type: "line",
+            type:
+                "line",
+
 
             data: {
 
-                labels: [
+                labels:
+                    statisticsReport.monthLabels,
 
-                    "Jan",
-                    "Feb",
-                    "Mar",
-                    "Apr",
-                    "May",
-                    "Jun",
-                    "Jul",
-                    "Aug",
-                    "Sep",
-                    "Oct",
-                    "Nov",
-                    "Dec"
-
-                ],
 
                 datasets: [
 
@@ -622,23 +1556,30 @@ function renderMonthlyChart() {
                         label:
                             "Your Memories",
 
+
                         data:
-                            monthlyCounts,
+                            statisticsReport.monthlyCounts,
+
 
                         borderColor:
                             "#6366f1",
 
+
                         backgroundColor:
                             "rgba(99, 102, 241, 0.15)",
+
 
                         fill:
                             true,
 
+
                         tension:
                             0.4,
 
+
                         pointBackgroundColor:
                             "#ec4899",
+
 
                         pointRadius:
                             5
@@ -649,13 +1590,16 @@ function renderMonthlyChart() {
 
             },
 
+
             options: {
 
                 responsive:
                     true,
 
+
                 maintainAspectRatio:
-                    true,
+                    false,
+
 
                 plugins: {
 
@@ -672,6 +1616,7 @@ function renderMonthlyChart() {
 
                 },
 
+
                 scales: {
 
                     x: {
@@ -683,6 +1628,7 @@ function renderMonthlyChart() {
 
                         },
 
+
                         ticks: {
 
                             color:
@@ -692,10 +1638,12 @@ function renderMonthlyChart() {
 
                     },
 
+
                     y: {
 
                         beginAtZero:
                             true,
+
 
                         grid: {
 
@@ -703,6 +1651,7 @@ function renderMonthlyChart() {
                                 "rgba(255,255,255,0.05)"
 
                         },
+
 
                         ticks: {
 
@@ -738,76 +1687,78 @@ function renderEmotionChart() {
         );
 
 
-    if (!canvas) {
+    if (
+        !canvas ||
+        !statisticsReport
+    ) {
 
         return;
 
     }
 
 
-    const counts = {};
+    if (
+        typeof Chart.getChart ===
+        "function"
+    ) {
+
+        const existingChart =
+            Chart.getChart(
+                canvas
+            );
 
 
-    statisticsMemories.forEach(
-        memory => {
+        if (
+            existingChart
+        ) {
 
-            const emotion =
-                String(
-                    memory.emotion ||
-                    "Unspecified"
-                ).trim();
-
-
-            counts[emotion] =
-                (
-                    counts[emotion] ||
-                    0
-                ) + 1;
+            existingChart.destroy();
 
         }
-    );
+
+    }
 
 
-    const labels =
-        Object.keys(
-            counts
-        );
-
-
-    const values =
-        Object.values(
-            counts
-        );
-
-
-    if (!labels.length) {
+    if (
+        !statisticsReport.emotionLabels.length
+    ) {
 
         showEmptyChartMessage(
             canvas,
             "No emotion data yet."
         );
 
+
         return;
 
     }
+
+
+    canvas.style.display =
+        "";
 
 
     new Chart(
         canvas,
         {
 
-            type: "doughnut",
+            type:
+                "doughnut",
+
 
             data: {
 
-                labels,
+                labels:
+                    statisticsReport.emotionLabels,
+
 
                 datasets: [
 
                     {
 
                         data:
-                            values,
+                            statisticsReport.emotionValues,
+
 
                         backgroundColor: [
 
@@ -822,6 +1773,7 @@ function renderEmotionChart() {
 
                         ],
 
+
                         borderWidth:
                             0
 
@@ -831,10 +1783,16 @@ function renderEmotionChart() {
 
             },
 
+
             options: {
 
                 responsive:
                     true,
+
+
+                maintainAspectRatio:
+                    true,
+
 
                 plugins: {
 
@@ -842,6 +1800,7 @@ function renderEmotionChart() {
 
                         position:
                             "right",
+
 
                         labels: {
 
@@ -874,70 +1833,70 @@ function renderCategoryChart() {
         );
 
 
-    if (!canvas) {
+    if (
+        !canvas ||
+        !statisticsReport
+    ) {
 
         return;
 
     }
 
 
-    const categoryCounts =
-        {};
+    if (
+        typeof Chart.getChart ===
+        "function"
+    ) {
+
+        const existingChart =
+            Chart.getChart(
+                canvas
+            );
 
 
-    statisticsMemories.forEach(
-        memory => {
+        if (
+            existingChart
+        ) {
 
-            const category =
-                String(
-                    memory.category ||
-                    "Uncategorized"
-                ).trim();
-
-
-            categoryCounts[category] =
-                (
-                    categoryCounts[category] ||
-                    0
-                ) + 1;
+            existingChart.destroy();
 
         }
-    );
+
+    }
 
 
-    const labels =
-        Object.keys(
-            categoryCounts
-        );
-
-
-    const values =
-        Object.values(
-            categoryCounts
-        );
-
-
-    if (!labels.length) {
+    if (
+        !statisticsReport.categoryLabels.length
+    ) {
 
         showEmptyChartMessage(
             canvas,
             "No category data yet."
         );
 
+
         return;
 
     }
+
+
+    canvas.style.display =
+        "";
 
 
     new Chart(
         canvas,
         {
 
-            type: "bar",
+            type:
+                "bar",
+
 
             data: {
 
-                labels,
+                labels:
+                    statisticsReport.categoryLabels,
+
 
                 datasets: [
 
@@ -946,11 +1905,14 @@ function renderCategoryChart() {
                         label:
                             "Your Memories",
 
+
                         data:
-                            values,
+                            statisticsReport.categoryValues,
+
 
                         backgroundColor:
                             "#06b6d4",
+
 
                         borderRadius:
                             6
@@ -961,13 +1923,20 @@ function renderCategoryChart() {
 
             },
 
+
             options: {
 
                 indexAxis:
                     "y",
 
+
                 responsive:
                     true,
+
+
+                maintainAspectRatio:
+                    false,
+
 
                 plugins: {
 
@@ -980,12 +1949,14 @@ function renderCategoryChart() {
 
                 },
 
+
                 scales: {
 
                     x: {
 
                         beginAtZero:
                             true,
+
 
                         ticks: {
 
@@ -997,6 +1968,7 @@ function renderCategoryChart() {
 
                         },
 
+
                         grid: {
 
                             color:
@@ -1006,6 +1978,7 @@ function renderCategoryChart() {
 
                     },
 
+
                     y: {
 
                         ticks: {
@@ -1014,6 +1987,7 @@ function renderCategoryChart() {
                                 "#94a3b8"
 
                         },
+
 
                         grid: {
 
@@ -1035,7 +2009,7 @@ function renderCategoryChart() {
 
 
 /* =========================================================
-   STORAGE BREAKDOWN
+   MEDIA / STORAGE BREAKDOWN
    ========================================================= */
 
 function renderStorageChart() {
@@ -1046,159 +2020,78 @@ function renderStorageChart() {
         );
 
 
-    if (!canvas) {
+    if (
+        !canvas ||
+        !statisticsReport
+    ) {
 
         return;
 
     }
 
 
-    if (!statisticsMemories.length) {
+    if (
+        typeof Chart.getChart ===
+        "function"
+    ) {
+
+        const existingChart =
+            Chart.getChart(
+                canvas
+            );
+
+
+        if (
+            existingChart
+        ) {
+
+            existingChart.destroy();
+
+        }
+
+    }
+
+
+    if (
+        !statisticsReport.mediaLabels.length
+    ) {
 
         showEmptyChartMessage(
             canvas,
             "No storage data yet."
         );
 
-        return;
-
-    }
-
-
-    /*
-     * We currently know the number of
-     * memory/media types, but we do not
-     * calculate actual disk usage yet.
-     *
-     * Therefore this chart shows
-     * media distribution by count,
-     * not fake GB values.
-     */
-
-
-    const photoCount =
-        statisticsMemories.filter(
-            memory =>
-                String(
-                    memory.type || ""
-                ).toLowerCase() ===
-                "photo"
-        ).length;
-
-
-    const videoCount =
-        statisticsMemories.filter(
-            memory =>
-                String(
-                    memory.type || ""
-                ).toLowerCase() ===
-                "video"
-        ).length;
-
-
-    const audioCount =
-        statisticsMemories.filter(
-            memory =>
-                Boolean(
-                    memory.audioNote
-                )
-        ).length;
-
-
-    const textCount =
-        statisticsMemories.filter(
-            memory =>
-                Boolean(
-                    memory.description
-                )
-        ).length;
-
-
-    const labels = [];
-
-    const values = [];
-
-
-    if (photoCount > 0) {
-
-        labels.push(
-            "Photos"
-        );
-
-        values.push(
-            photoCount
-        );
-
-    }
-
-
-    if (videoCount > 0) {
-
-        labels.push(
-            "Videos"
-        );
-
-        values.push(
-            videoCount
-        );
-
-    }
-
-
-    if (audioCount > 0) {
-
-        labels.push(
-            "Audio Notes"
-        );
-
-        values.push(
-            audioCount
-        );
-
-    }
-
-
-    if (textCount > 0) {
-
-        labels.push(
-            "Journal / Text"
-        );
-
-        values.push(
-            textCount
-        );
-
-    }
-
-
-    if (!labels.length) {
-
-        showEmptyChartMessage(
-            canvas,
-            "No media data yet."
-        );
 
         return;
 
     }
+
+
+    canvas.style.display =
+        "";
 
 
     new Chart(
         canvas,
         {
 
-            type: "pie",
+            type:
+                "pie",
+
 
             data: {
 
-                labels,
+                labels:
+                    statisticsReport.mediaLabels,
+
 
                 datasets: [
 
                     {
 
                         data:
-                            values,
+                            statisticsReport.mediaValues,
+
 
                         backgroundColor: [
 
@@ -1209,6 +2102,7 @@ function renderStorageChart() {
 
                         ],
 
+
                         borderWidth:
                             0
 
@@ -1218,10 +2112,12 @@ function renderStorageChart() {
 
             },
 
+
             options: {
 
                 responsive:
                     true,
+
 
                 plugins: {
 
@@ -1229,6 +2125,7 @@ function renderStorageChart() {
 
                         position:
                             "bottom",
+
 
                         labels: {
 
@@ -1258,10 +2155,12 @@ function showStatisticsError(
 ) {
 
     const containers = [
+
         "statsMonthlyLineChart",
         "statsEmotionDoughnutChart",
         "statsCategoryBarChart",
         "statsStoragePieChart"
+
     ];
 
 
@@ -1274,7 +2173,9 @@ function showStatisticsError(
                 );
 
 
-            if (!canvas) {
+            if (
+                !canvas
+            ) {
 
                 return;
 
@@ -1305,9 +2206,38 @@ function showEmptyChartMessage(
         canvas.parentElement;
 
 
-    if (!parent) {
+    if (
+        !parent
+    ) {
 
         return;
+
+    }
+
+
+    /*
+     * Destroy an existing Chart.js instance
+     * before replacing it with the empty message.
+     */
+
+    if (
+        typeof Chart.getChart ===
+        "function"
+    ) {
+
+        const existingChart =
+            Chart.getChart(
+                canvas
+            );
+
+
+        if (
+            existingChart
+        ) {
+
+            existingChart.destroy();
+
+        }
 
     }
 
@@ -1317,7 +2247,7 @@ function showEmptyChartMessage(
 
 
     /*
-     * Prevent duplicate messages
+     * Prevent duplicate messages.
      */
 
     const existing =
@@ -1326,7 +2256,9 @@ function showEmptyChartMessage(
         );
 
 
-    if (existing) {
+    if (
+        existing
+    ) {
 
         existing.remove();
 
@@ -1346,8 +2278,8 @@ function showEmptyChartMessage(
     messageElement.innerHTML = `
 
         <i
-            class="bi bi-bar-chart fs-1 text-muted-custom d-block mb-3">
-        </i>
+            class="bi bi-bar-chart fs-1 text-muted-custom d-block mb-3"
+        ></i>
 
         <p class="mb-0">
 
@@ -1368,7 +2300,7 @@ function showEmptyChartMessage(
 
 
 /* =========================================================
-   ESCAPE HTML
+   HTML SAFETY
    ========================================================= */
 
 function escapeHtml(

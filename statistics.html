@@ -3,60 +3,77 @@
 
 <head>
 
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-  <title>
-    Statistics & Analytics | EchoLife Memory Vault
-  </title>
-
-
-  <!-- Google Fonts -->
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com">
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-    rel="stylesheet">
+    <title>
+        Statistics & Analytics | EchoLife Memory Vault
+    </title>
 
 
-  <!-- Bootstrap -->
+    <!-- =====================================================
+         GOOGLE FONTS
+         ===================================================== -->
 
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet">
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
 
-  <!-- Bootstrap Icons -->
+    <!-- =====================================================
+         BOOTSTRAP
+         ===================================================== -->
 
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 
 
-  <!-- EchoLife CSS -->
+    <!-- =====================================================
+         BOOTSTRAP ICONS
+         ===================================================== -->
 
-  <link
-    rel="stylesheet"
-    href="css/style.css">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet"
+    >
 
-  <link
-    rel="stylesheet"
-    href="css/animations.css">
 
-  <link
-    rel="stylesheet"
-    href="css/responsive.css">
+    <!-- =====================================================
+         ECHOLIFE STYLES
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/animations.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/responsive.css"
+    >
 
 </head>
 
@@ -64,694 +81,1049 @@
 <body>
 
 
-  <div class="app-container">
+    <div class="app-container">
+
+
+        <!-- =================================================
+             SIDEBAR
+             ================================================= -->
+
+        <aside class="app-sidebar">
+
+
+            <div class="sidebar-header">
+
+                <a
+                    class="brand-logo"
+                    href="index.html"
+                >
+
+                    <i class="bi bi-clock-history"></i>
+
+                    <span>
+                        EchoLife
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <div class="sidebar-nav">
+
+
+                <!-- MAIN WORKSPACE -->
+
+                <div class="nav-section-title">
+                    Main Workspace
+                </div>
+
+
+                <a
+                    href="dashboard.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-grid-1x2-fill"></i>
+
+                    Dashboard
+
+                </a>
+
+
+                <a
+                    href="timeline.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-hourglass-split"></i>
+
+                    Timeline
+
+                </a>
+
+
+                <a
+                    href="gallery.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-images"></i>
+
+                    Gallery
+
+                </a>
+
+
+                <a
+                    href="calendar.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-calendar-event"></i>
+
+                    Calendar
+
+                </a>
+
+
+                <a
+                    href="statistics.html"
+                    class="sidebar-link active"
+                >
+
+                    <i class="bi bi-bar-chart-line-fill"></i>
+
+                    Statistics
+
+                </a>
+
+
+
+                <!-- ARCHIVAL TOOLS -->
+
+                <div class="nav-section-title">
+                    Archival Tools
+                </div>
+
+
+                <a
+                    href="add-memory.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-plus-circle-fill"></i>
+
+                    Add Memory
+
+                </a>
+
+
+                <a
+                    href="backup.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-cloud-arrow-down"></i>
+
+                    Backup & Sync
+
+                </a>
+
+
+                <a
+                    href="notifications.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-bell"></i>
+
+                    Notifications
+
+                </a>
+
+
+
+                <!-- ACCOUNT -->
+
+                <div class="nav-section-title">
+                    Account
+                </div>
+
+
+                <a
+                    href="profile.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-person-circle"></i>
+
+                    Profile
+
+                </a>
+
+
+                <a
+                    href="settings.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-gear"></i>
+
+                    Settings
+
+                </a>
+
+
+                <a
+                    href="help.html"
+                    class="sidebar-link"
+                >
+
+                    <i class="bi bi-question-circle"></i>
+
+                    Help & FAQ
+
+                </a>
+
+
+            </div>
+
+
+            <!-- SIDEBAR FOOTER -->
+
+            <div class="sidebar-footer">
+
+                <a
+                    href="index.html"
+                    class="sidebar-link text-danger mb-0"
+                >
+
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    Log Out
+
+                </a>
+
+            </div>
+
+
+        </aside>
+
+
+
+        <!-- =================================================
+             MAIN CONTENT
+             ================================================= -->
+
+        <main class="app-main">
+
+
+            <!-- =================================================
+                 TOPBAR
+                 ================================================= -->
+
+            <header class="app-topbar">
+
+
+                <div class="topbar-left">
+
+
+                    <button
+                        type="button"
+                        class="btn btn-icon sidebar-toggle-btn d-lg-none"
+                        aria-label="Open navigation"
+                    >
+
+                        <i class="bi bi-list fs-4"></i>
+
+                    </button>
+
+
+                    <h5
+                        class="text-white font-heading mb-0"
+                    >
+
+                        Vault Analytics
+
+                    </h5>
+
+
+                </div>
+
+
+
+                <div class="topbar-right">
+
+
+                    <button
+                        type="button"
+                        class="btn btn-icon theme-toggle-btn"
+                        title="Toggle Theme"
+                        aria-label="Toggle theme"
+                    >
+
+                        <i
+                            class="bi bi-moon-stars-fill theme-toggle-icon"
+                        ></i>
+
+                    </button>
+
+
+                    <a
+                        href="profile.html"
+                        class="user-profile-badge"
+                    >
+
+                        <img
+                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+                            class="user-avatar"
+                            alt="Avatar"
+                        >
+
+                    </a>
+
+
+                </div>
+
+
+            </header>
+
+
+
+            <!-- =================================================
+                 PAGE CONTENT
+                 ================================================= -->
+
+            <div class="content-body">
+
+
+                <!-- =================================================
+                     PAGE HEADER
+                     ================================================= -->
+
+                <div
+                    class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3"
+                >
+
+
+                    <div>
+
+                        <h2
+                            class="text-white font-heading mb-1"
+                        >
+
+                            <i
+                                class="bi bi-bar-chart-line-fill me-2 text-gradient"
+                            ></i>
+
+                            Memory Vault Analytics
+
+                        </h2>
+
+
+                        <p
+                            class="text-secondary-custom mb-0"
+                        >
+
+                            Deep Chart.js visualization of your
+                            archival habits and emotional trends.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     BUILDER PATTERN STATUS
+                     ================================================= -->
+
+                <div
+                    class="glass-card p-4 rounded-4 mb-4 border border-glass"
+                >
+
+                    <div
+                        class="d-flex align-items-start gap-3"
+                    >
+
+                        <div
+                            class="d-flex align-items-center justify-content-center rounded-3"
+                            style="
+                                width:48px;
+                                height:48px;
+                                flex-shrink:0;
+                            "
+                        >
+
+                            <i
+                                class="bi bi-tools text-gradient fs-3"
+                            ></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h5
+                                class="text-white font-heading mb-1"
+                            >
+
+                                Personal Statistics Report
+
+                            </h5>
+
+
+                            <p
+                                class="text-secondary-custom small mb-0"
+                            >
+
+                                EchoLife builds this report from
+                                your personal memory archive using
+                                the Statistics Report Builder.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SUMMARY CARDS
+                     These values are populated by statistics.js
+                     ================================================= -->
+
+                <div
+                    class="row g-3 mb-4"
+                >
+
+
+                    <!-- LONGEST STREAK -->
+
+                    <div
+                        class="col-md-3"
+                    >
+
+                        <div
+                            class="glass-card p-3 h-100"
+                        >
+
+                            <span
+                                class="text-secondary-custom small"
+                            >
+
+                                Longest Archiving Streak
+
+                            </span>
+
+
+                            <h3
+                                id="statsLongestStreak"
+                                class="text-white font-heading mb-0 mt-1"
+                            >
+
+                                <i
+                                    class="bi bi-fire text-danger me-2"
+                                ></i>
+
+                                0 Days
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- DOMINANT EMOTION -->
+
+                    <div
+                        class="col-md-3"
+                    >
+
+                        <div
+                            class="glass-card p-3 h-100"
+                        >
+
+                            <span
+                                class="text-secondary-custom small"
+                            >
+
+                                Top Dominant Emotion
+
+                            </span>
+
+
+                            <h3
+                                id="statsDominantEmotion"
+                                class="text-white font-heading mb-0 mt-1"
+                            >
+
+                                <i
+                                    class="bi bi-sun text-warning me-2"
+                                ></i>
+
+                                No Data
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ACTIVE MONTH -->
+
+                    <div
+                        class="col-md-3"
+                    >
+
+                        <div
+                            class="glass-card p-3 h-100"
+                        >
+
+                            <span
+                                class="text-secondary-custom small"
+                            >
+
+                                Most Active Month
+
+                            </span>
+
+
+                            <h3
+                                id="statsActiveMonth"
+                                class="text-white font-heading mb-0 mt-1"
+                            >
+
+                                <i
+                                    class="bi bi-calendar2-check text-primary me-2"
+                                ></i>
+
+                                No Data
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- TOTAL MEDIA -->
+
+                    <div
+                        class="col-md-3"
+                    >
+
+                        <div
+                            class="glass-card p-3 h-100"
+                        >
+
+                            <span
+                                class="text-secondary-custom small"
+                            >
+
+                                Total Archived Media
+
+                            </span>
+
+
+                            <h3
+                                id="statsTotalMedia"
+                                class="text-white font-heading mb-0 mt-1"
+                            >
+
+                                <i
+                                    class="bi bi-file-earmark-image text-info me-2"
+                                ></i>
+
+                                0 Files
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ADDITIONAL BUILDER SUMMARY
+                     ================================================= -->
+
+                <div
+                    class="row g-3 mb-4"
+                >
+
+
+                    <div
+                        class="col-md-3"
+                    >
+
+                        <div
+                            class="glass-card p-3 h-100"
+                        >
+
+                            <span
+                                class="text-secondary-custom small"
+                            >
+
+                                Categories
+
+                            </span>
+
+
+                            <h4
+                                id="statsTotalCategories"
+                                class="text-white font-heading mb-0 mt-1"
+                            >
+
+                                0
+
+                            </h4>
+
+
+                            <small
+                                class="text-muted-custom"
+                            >
+
+                                Different memory categories
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="col-md-3"
+                    >
+
+                        <div
+                            class="glass-card p-3 h-100"
+                        >
+
+                            <span
+                                class="text-secondary-custom small"
+                            >
+
+                                People
+
+                            </span>
+
+
+                            <h4
+                                id="statsTotalPeople"
+                                class="text-white font-heading mb-0 mt-1"
+                            >
+
+                                0
+
+                            </h4>
+
+
+                            <small
+                                class="text-muted-custom"
+                            >
+
+                                Tagged people
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="col-md-3"
+                    >
+
+                        <div
+                            class="glass-card p-3 h-100"
+                        >
+
+                            <span
+                                class="text-secondary-custom small"
+                            >
+
+                                Locations
+
+                            </span>
+
+
+                            <h4
+                                id="statsTotalLocations"
+                                class="text-white font-heading mb-0 mt-1"
+                            >
+
+                                0
+
+                            </h4>
+
+
+                            <small
+                                class="text-muted-custom"
+                            >
+
+                                Recorded locations
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="col-md-3"
+                    >
+
+                        <div
+                            class="glass-card p-3 h-100"
+                        >
+
+                            <span
+                                class="text-secondary-custom small"
+                            >
+
+                                Favorites
+
+                            </span>
+
+
+                            <h4
+                                id="statsFavoriteCount"
+                                class="text-white font-heading mb-0 mt-1"
+                            >
+
+                                0
+
+                            </h4>
+
+
+                            <small
+                                class="text-muted-custom"
+                            >
+
+                                Favorite memories
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ROW 1
+                     MONTHLY + EMOTION
+                     ================================================= -->
+
+                <div
+                    class="row g-4 mb-4"
+                >
+
+
+                    <!-- MONTHLY CHART -->
+
+                    <div
+                        class="col-lg-7"
+                    >
+
+                        <div
+                            class="glass-card p-4 h-100"
+                        >
+
+                            <h5
+                                class="text-white font-heading mb-3"
+                            >
+
+                                <i
+                                    class="bi bi-graph-up-arrow text-gradient me-2"
+                                ></i>
+
+                                Monthly Memory Upload Growth
+
+                            </h5>
+
+
+                            <div
+                                style="
+                                    position:relative;
+                                    height:280px;
+                                "
+                            >
+
+                                <canvas
+                                    id="statsMonthlyLineChart"
+                                ></canvas>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- EMOTION CHART -->
+
+                    <div
+                        class="col-lg-5"
+                    >
+
+                        <div
+                            class="glass-card p-4 h-100"
+                        >
+
+                            <h5
+                                class="text-white font-heading mb-3"
+                            >
+
+                                <i
+                                    class="bi bi-pie-chart-fill text-gradient me-2"
+                                ></i>
+
+                                Emotion Breakdown
+
+                            </h5>
+
+
+                            <div
+                                class="d-flex align-items-center justify-content-center"
+                                style="
+                                    position:relative;
+                                    height:280px;
+                                "
+                            >
+
+                                <canvas
+                                    id="statsEmotionDoughnutChart"
+                                ></canvas>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ROW 2
+                     CATEGORY + MEDIA
+                     ================================================= -->
+
+                <div
+                    class="row g-4 mb-4"
+                >
+
+
+                    <!-- CATEGORY CHART -->
+
+                    <div
+                        class="col-lg-6"
+                    >
+
+                        <div
+                            class="glass-card p-4 h-100"
+                        >
+
+                            <h5
+                                class="text-white font-heading mb-3"
+                            >
+
+                                <i
+                                    class="bi bi-tags-fill text-gradient me-2"
+                                ></i>
+
+                                Top Categories
+
+                            </h5>
+
+
+                            <div
+                                style="
+                                    position:relative;
+                                    height:280px;
+                                "
+                            >
+
+                                <canvas
+                                    id="statsCategoryBarChart"
+                                ></canvas>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- MEDIA BREAKDOWN -->
+
+                    <div
+                        class="col-lg-6"
+                    >
+
+                        <div
+                            class="glass-card p-4 h-100"
+                        >
+
+                            <h5
+                                class="text-white font-heading mb-3"
+                            >
+
+                                <i
+                                    class="bi bi-hdd-fill text-gradient me-2"
+                                ></i>
+
+                                Storage / Media Breakdown
+
+                            </h5>
+
+
+                            <p
+                                class="text-muted-custom small mb-2"
+                            >
+
+                                Distribution of your recorded
+                                media types by count.
+
+                            </p>
+
+
+                            <div
+                                class="d-flex align-items-center justify-content-center"
+                                style="
+                                    position:relative;
+                                    height:250px;
+                                "
+                            >
+
+                                <canvas
+                                    id="statsStoragePieChart"
+                                ></canvas>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     BUILDER PATTERN EXPLANATION
+                     ================================================= -->
+
+                <div
+                    class="glass-card p-4 rounded-4 mb-4"
+                >
+
+                    <div
+                        class="d-flex align-items-start gap-3"
+                    >
+
+                        <i
+                            class="bi bi-diagram-3 text-gradient fs-3"
+                        ></i>
+
+
+                        <div>
+
+                            <h5
+                                class="text-white font-heading mb-2"
+                            >
+
+                                Statistics Report Builder
+
+                            </h5>
+
+
+                            <p
+                                class="text-secondary-custom small mb-0"
+                            >
+
+                                The Builder Pattern incrementally
+                                constructs the Statistics Report from
+                                your memory data. It combines totals,
+                                streaks, emotions, categories,
+                                monthly activity, media distribution,
+                                favorites, people, and locations
+                                into one report.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
 
 
     <!-- =====================================================
-         SIDEBAR
+         BOOTSTRAP
          ===================================================== -->
 
-    <aside class="app-sidebar">
-
-
-      <div class="sidebar-header">
-
-        <a
-          class="brand-logo"
-          href="index.html">
-
-          <i class="bi bi-clock-history"></i>
-
-          <span>
-            EchoLife
-          </span>
-
-        </a>
-
-      </div>
-
-
-      <div class="sidebar-nav">
-
-
-        <div class="nav-section-title">
-          Main Workspace
-        </div>
-
-
-        <a
-          href="dashboard.html"
-          class="sidebar-link">
-
-          <i class="bi bi-grid-1x2-fill"></i>
-
-          Dashboard
-
-        </a>
-
-
-        <a
-          href="timeline.html"
-          class="sidebar-link">
-
-          <i class="bi bi-hourglass-split"></i>
-
-          Timeline
-
-        </a>
-
-
-        <a
-          href="gallery.html"
-          class="sidebar-link">
-
-          <i class="bi bi-images"></i>
-
-          Gallery
-
-        </a>
-
-
-        <a
-          href="calendar.html"
-          class="sidebar-link">
-
-          <i class="bi bi-calendar-event"></i>
-
-          Calendar
-
-        </a>
-
-
-        <a
-          href="statistics.html"
-          class="sidebar-link active">
-
-          <i class="bi bi-bar-chart-line-fill"></i>
-
-          Statistics
-
-        </a>
-
-
-
-        <div class="nav-section-title">
-
-          Archival Tools
-
-        </div>
-
-
-        <a
-          href="add-memory.html"
-          class="sidebar-link">
-
-          <i class="bi bi-plus-circle-fill"></i>
-
-          Add Memory
-
-        </a>
-
-
-        <a
-          href="backup.html"
-          class="sidebar-link">
-
-          <i class="bi bi-cloud-arrow-down"></i>
-
-          Backup & Sync
-
-        </a>
-
-
-        <a
-          href="notifications.html"
-          class="sidebar-link">
-
-          <i class="bi bi-bell"></i>
-
-          Notifications
-
-        </a>
-
-
-
-        <div class="nav-section-title">
-
-          Account
-
-        </div>
-
-
-        <a
-          href="profile.html"
-          class="sidebar-link">
-
-          <i class="bi bi-person-circle"></i>
-
-          Profile
-
-        </a>
-
-
-        <a
-          href="settings.html"
-          class="sidebar-link">
-
-          <i class="bi bi-gear"></i>
-
-          Settings
-
-        </a>
-
-
-        <a
-          href="help.html"
-          class="sidebar-link">
-
-          <i class="bi bi-question-circle"></i>
-
-          Help & FAQ
-
-        </a>
-
-      </div>
-
-    </aside>
-
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    ></script>
 
 
     <!-- =====================================================
-         MAIN CONTENT
+         CHART.JS
          ===================================================== -->
 
-    <main class="app-main">
+    <script
+        src="https://cdn.jsdelivr.net/npm/chart.js"
+    ></script>
 
 
-      <!-- TOP BAR -->
+    <!-- =====================================================
+         ECHOLIFE CORE
+         ===================================================== -->
 
-      <header class="app-topbar">
+    <script
+        src="js/theme.js"
+    ></script>
 
 
-        <div class="topbar-left">
+    <script
+        src="js/app.js"
+    ></script>
 
-          <button
-            class="btn btn-icon sidebar-toggle-btn d-lg-none">
 
-            <i class="bi bi-list fs-4"></i>
+    <!-- =====================================================
+         STATISTICS + BUILDER PATTERN
+         ===================================================== -->
 
-          </button>
-
-
-          <h5
-            class="text-white font-heading mb-0">
-
-            Vault Analytics
-
-          </h5>
-
-        </div>
-
-
-
-        <div class="topbar-right">
-
-
-          <button
-            class="btn btn-icon theme-toggle-btn">
-
-            <i
-              class="bi bi-moon-stars-fill theme-toggle-icon">
-            </i>
-
-          </button>
-
-
-          <a
-            href="profile.html"
-            class="user-profile-badge">
-
-            <img
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
-              class="user-avatar"
-              alt="Avatar">
-
-          </a>
-
-        </div>
-
-      </header>
-
-
-
-      <!-- =====================================================
-           PAGE CONTENT
-           ===================================================== -->
-
-      <div class="content-body">
-
-
-        <!-- PAGE TITLE -->
-
-        <div
-          class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-
-
-          <div>
-
-            <h2
-              class="text-white font-heading mb-1">
-
-              <i
-                class="bi bi-bar-chart-line-fill me-2 text-gradient">
-              </i>
-
-              Memory Vault Analytics
-
-            </h2>
-
-
-            <p
-              class="text-secondary-custom mb-0">
-
-              Deep Chart.js visualization of your
-              archival habits and emotional trends.
-
-            </p>
-
-          </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             USER SUMMARY CARDS
-             IMPORTANT:
-             These values are filled by statistics.js
-             ================================================= -->
-
-        <div
-          class="row g-3 mb-4">
-
-
-          <!-- LONGEST STREAK -->
-
-          <div
-            class="col-md-3">
-
-            <div
-              class="glass-card p-3 h-100">
-
-
-              <span
-                class="text-secondary-custom small">
-
-                Longest Archiving Streak
-
-              </span>
-
-
-              <h3
-                id="statsLongestStreak"
-                class="text-white font-heading mb-0 mt-1">
-
-
-                <i
-                  class="bi bi-fire text-danger me-2">
-                </i>
-
-
-                0 Days
-
-
-              </h3>
-
-
-            </div>
-
-          </div>
-
-
-
-          <!-- DOMINANT EMOTION -->
-
-          <div
-            class="col-md-3">
-
-            <div
-              class="glass-card p-3 h-100">
-
-
-              <span
-                class="text-secondary-custom small">
-
-                Top Dominant Emotion
-
-              </span>
-
-
-              <h3
-                id="statsDominantEmotion"
-                class="text-white font-heading mb-0 mt-1">
-
-
-                <i
-                  class="bi bi-sun text-warning me-2">
-                </i>
-
-
-                No Data
-
-
-              </h3>
-
-
-            </div>
-
-          </div>
-
-
-
-          <!-- ACTIVE MONTH -->
-
-          <div
-            class="col-md-3">
-
-            <div
-              class="glass-card p-3 h-100">
-
-
-              <span
-                class="text-secondary-custom small">
-
-                Most Active Month
-
-              </span>
-
-
-              <h3
-                id="statsActiveMonth"
-                class="text-white font-heading mb-0 mt-1">
-
-
-                <i
-                  class="bi bi-calendar2-check text-primary me-2">
-                </i>
-
-
-                No Data
-
-
-              </h3>
-
-
-            </div>
-
-          </div>
-
-
-
-          <!-- TOTAL MEDIA -->
-
-          <div
-            class="col-md-3">
-
-            <div
-              class="glass-card p-3 h-100">
-
-
-              <span
-                class="text-secondary-custom small">
-
-                Total Archived Media
-
-              </span>
-
-
-              <h3
-                id="statsTotalMedia"
-                class="text-white font-heading mb-0 mt-1">
-
-
-                <i
-                  class="bi bi-file-earmark-image text-info me-2">
-                </i>
-
-
-                0 Files
-
-
-              </h3>
-
-
-            </div>
-
-          </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             ROW 1
-             MONTHLY + EMOTION
-             ================================================= -->
-
-        <div
-          class="row g-4 mb-4">
-
-
-          <!-- MONTHLY CHART -->
-
-          <div
-            class="col-lg-7">
-
-
-            <div
-              class="glass-card p-4 h-100">
-
-
-              <h5
-                class="text-white font-heading mb-3">
-
-
-                <i
-                  class="bi bi-graph-up-arrow text-gradient me-2">
-                </i>
-
-
-                Monthly Memory Upload Growth
-
-
-              </h5>
-
-
-              <canvas
-                id="statsMonthlyLineChart"
-                style="max-height: 280px;">
-              </canvas>
-
-
-            </div>
-
-
-          </div>
-
-
-
-          <!-- EMOTION CHART -->
-
-          <div
-            class="col-lg-5">
-
-
-            <div
-              class="glass-card p-4 h-100">
-
-
-              <h5
-                class="text-white font-heading mb-3">
-
-
-                <i
-                  class="bi bi-pie-chart-fill text-gradient me-2">
-                </i>
-
-
-                Emotion Breakdown
-
-
-              </h5>
-
-
-              <div
-                class="d-flex align-items-center justify-content-center"
-                style="max-height: 280px;">
-
-
-                <canvas
-                  id="statsEmotionDoughnutChart">
-                </canvas>
-
-
-              </div>
-
-
-            </div>
-
-
-          </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             ROW 2
-             CATEGORY + STORAGE
-             ================================================= -->
-
-        <div
-          class="row g-4 mb-4">
-
-
-          <!-- CATEGORY CHART -->
-
-          <div
-            class="col-lg-6">
-
-
-            <div
-              class="glass-card p-4 h-100">
-
-
-              <h5
-                class="text-white font-heading mb-3">
-
-
-                <i
-                  class="bi bi-tags-fill text-gradient me-2">
-                </i>
-
-
-                Top Categories
-
-
-              </h5>
-
-
-              <canvas
-                id="statsCategoryBarChart"
-                style="max-height: 260px;">
-              </canvas>
-
-
-            </div>
-
-
-          </div>
-
-
-
-          <!-- STORAGE CHART -->
-
-          <div
-            class="col-lg-6">
-
-
-            <div
-              class="glass-card p-4 h-100">
-
-
-              <h5
-                class="text-white font-heading mb-3">
-
-
-                <i
-                  class="bi bi-hdd-fill text-gradient me-2">
-                </i>
-
-
-                Storage Breakdown
-
-
-              </h5>
-
-
-              <div
-                class="d-flex align-items-center justify-content-center"
-                style="max-height: 260px;">
-
-
-                <canvas
-                  id="statsStoragePieChart">
-                </canvas>
-
-
-              </div>
-
-
-            </div>
-
-
-          </div>
-
-
-        </div>
-
-
-      </div>
-
-
-    </main>
-
-
-  </div>
-
-
-
-  <!-- =======================================================
-       JAVASCRIPT
-       ======================================================= -->
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
-  </script>
-
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/chart.js">
-  </script>
-
-
-  <!-- Keep data.js because other shared application
-       functionality may still use it. statistics.js
-       does NOT use EchoLifeStore. -->
-
-  <script
-    src="js/data.js">
-  </script>
-
-
-  <script
-    src="js/theme.js">
-  </script>
-
-
-  <script
-    src="js/app.js">
-  </script>
-
-
-  <!-- User-specific Statistics -->
-
-  <script
-    src="js/statistics.js">
-  </script>
+    <script
+        src="js/statistics.js"
+    ></script>
 
 
 </body>
