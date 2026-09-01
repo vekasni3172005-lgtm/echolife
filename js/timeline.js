@@ -1,17 +1,22 @@
 /* ==========================================================================
    EchoLife Interactive Timeline Controller
+
    Database-backed version
 
-   Includes:
+   Features:
    - User-specific memories
    - Search
-   - Year / emotion / media filters
+   - Year filter
+   - Emotion filter
+   - Media type filter
    - Favorite
    - Like
    - Share
    - Edit
    - Delete
    - Memory details modal
+   - Photo preview
+   - Video preview
    - EchoNarrate
    - Strategy Pattern
    - Browser Text-to-Speech
@@ -43,51 +48,46 @@ document.addEventListener(
 
         checkUrlParams();
 
-        initSpeechVoices();
+        initSpeech();
 
     }
 );
 
 
 /* =========================================================
-   SPEECH VOICES
+   SPEECH INITIALIZATION
    ========================================================= */
 
-function initSpeechVoices() {
+function initSpeech() {
 
     if (
         !("speechSynthesis" in window)
     ) {
+
         return;
+
     }
 
 
     /*
-     * Chrome may populate voices asynchronously.
+     * Chrome can load voices asynchronously.
      */
 
     window.speechSynthesis.getVoices();
 
 
-    if (
-        "onvoiceschanged" in
-        window.speechSynthesis
-    ) {
+    window.speechSynthesis.onvoiceschanged =
+        () => {
 
-        window.speechSynthesis.onvoiceschanged =
-            () => {
+            window.speechSynthesis.getVoices();
 
-                window.speechSynthesis.getVoices();
-
-            };
-
-    }
+        };
 
 }
 
 
 /* =========================================================
-   LOAD MEMORIES FROM DATABASE
+   LOAD MEMORIES
    ========================================================= */
 
 async function loadMemories() {
@@ -150,7 +150,7 @@ async function loadMemories() {
 
 
         /*
-         * Normalize values for consistent frontend behavior.
+         * Normalize the data received from the server.
          */
 
         activeMemories =
@@ -164,16 +164,16 @@ async function loadMemories() {
                             memory.id
                         ),
 
-                    date:
-                        memory.date ||
-                        "",
-
                     title:
                         memory.title ||
                         "Untitled Memory",
 
                     description:
                         memory.description ||
+                        "",
+
+                    date:
+                        memory.date ||
                         "",
 
                     location:
@@ -264,13 +264,19 @@ async function loadMemories() {
                         class="bi bi-exclamation-circle fs-1 text-danger mb-3 d-block"
                     ></i>
 
-                    <h5 class="text-white">
+
+                    <h5
+                        class="text-white"
+                    >
 
                         Unable to Load Timeline
 
                     </h5>
 
-                    <p class="text-secondary-custom">
+
+                    <p
+                        class="text-secondary-custom"
+                    >
 
                         ${escapeHtml(
                             error.message ||
@@ -279,6 +285,7 @@ async function loadMemories() {
 
                     </p>
 
+
                     <button
                         type="button"
                         class="btn btn-aurora mt-2"
@@ -286,7 +293,7 @@ async function loadMemories() {
                     >
 
                         <i
-                            class="bi bi-arrow-clockwise"
+                            class="bi bi-arrow-clockwise me-1"
                         ></i>
 
                         Try Again
@@ -305,7 +312,7 @@ async function loadMemories() {
 
 
 /* =========================================================
-   RETRY
+   REFRESH
    ========================================================= */
 
 async function loadMemoriesAndRefresh() {
@@ -327,14 +334,14 @@ async function loadMemoriesAndRefresh() {
 
 function checkUrlParams() {
 
-    const urlParams =
+    const params =
         new URLSearchParams(
             window.location.search
         );
 
 
     const memoryId =
-        urlParams.get(
+        params.get(
             "id"
         );
 
@@ -389,9 +396,11 @@ function initFilterControls() {
         );
 
 
-    /* -------------------------------------------------------
-       YEARS
-       ------------------------------------------------------- */
+    /*
+     * -------------------------------------------------------
+     * YEARS
+     * -------------------------------------------------------
+     */
 
     if (
         yearSelect
@@ -402,19 +411,27 @@ function initFilterControls() {
                 ...new Set(
 
                     activeMemories
-
                         .map(
-                            memory =>
-                                memory.date
-                                    ? String(
-                                        memory.date
-                                    ).substring(
-                                        0,
-                                        4
-                                    )
-                                    : ""
-                        )
+                            memory => {
 
+                                if (
+                                    !memory.date
+                                ) {
+
+                                    return "";
+
+                                }
+
+
+                                return String(
+                                    memory.date
+                                ).substring(
+                                    0,
+                                    4
+                                );
+
+                            }
+                        )
                         .filter(
                             Boolean
                         )
@@ -461,9 +478,11 @@ function initFilterControls() {
     }
 
 
-    /* -------------------------------------------------------
-       APPLY FILTERS
-       ------------------------------------------------------- */
+    /*
+     * -------------------------------------------------------
+     * APPLY FILTERS
+     * -------------------------------------------------------
+     */
 
     const applyFilters =
         () => {
@@ -500,7 +519,9 @@ function initFilterControls() {
                     : "";
 
 
-            /* YEAR */
+            /*
+             * YEAR
+             */
 
             if (
                 selectedYear !==
@@ -521,7 +542,9 @@ function initFilterControls() {
             }
 
 
-            /* EMOTION */
+            /*
+             * EMOTION
+             */
 
             if (
                 selectedEmotion !==
@@ -534,16 +557,20 @@ function initFilterControls() {
                             String(
                                 memory.emotion ||
                                 ""
-                            ).toLowerCase() ===
+                            )
+                                .toLowerCase() ===
                             String(
                                 selectedEmotion
-                            ).toLowerCase()
+                            )
+                                .toLowerCase()
                     );
 
             }
 
 
-            /* TYPE */
+            /*
+             * MEDIA TYPE
+             */
 
             if (
                 selectedType !==
@@ -556,16 +583,20 @@ function initFilterControls() {
                             String(
                                 memory.type ||
                                 ""
-                            ).toLowerCase() ===
+                            )
+                                .toLowerCase() ===
                             String(
                                 selectedType
-                            ).toLowerCase()
+                            )
+                                .toLowerCase()
                     );
 
             }
 
 
-            /* SEARCH */
+            /*
+             * SEARCH
+             */
 
             if (
                 query
@@ -667,14 +698,16 @@ function initFilterControls() {
         };
 
 
+    /*
+     * Avoid duplicate listeners when refreshing.
+     */
+
     if (
         yearSelect
     ) {
 
-        yearSelect.addEventListener(
-            "change",
-            applyFilters
-        );
+        yearSelect.onchange =
+            applyFilters;
 
     }
 
@@ -683,10 +716,8 @@ function initFilterControls() {
         emotionSelect
     ) {
 
-        emotionSelect.addEventListener(
-            "change",
-            applyFilters
-        );
+        emotionSelect.onchange =
+            applyFilters;
 
     }
 
@@ -695,10 +726,8 @@ function initFilterControls() {
         typeSelect
     ) {
 
-        typeSelect.addEventListener(
-            "change",
-            applyFilters
-        );
+        typeSelect.onchange =
+            applyFilters;
 
     }
 
@@ -707,12 +736,223 @@ function initFilterControls() {
         searchInput
     ) {
 
-        searchInput.addEventListener(
-            "input",
-            applyFilters
-        );
+        searchInput.oninput =
+            applyFilters;
 
     }
+
+}
+
+
+/* =========================================================
+   MEDIA HELPERS
+   ========================================================= */
+
+
+/*
+ * Return true when the memory is a video.
+ */
+
+function isVideoMemory(
+    memory
+) {
+
+    return (
+        String(
+            memory.type ||
+            ""
+        )
+            .toLowerCase()
+            .trim() ===
+        "video"
+    );
+
+}
+
+
+/*
+ * Build Timeline media.
+ */
+
+function buildTimelineMedia(
+    memory
+) {
+
+    if (
+        !memory.coverImage
+    ) {
+
+        return `
+
+            <div
+                class="timeline-card-img d-flex align-items-center justify-content-center bg-tertiary"
+                style="
+                    height:250px;
+                "
+            >
+
+                <i
+                    class="bi bi-image fs-1 text-muted-custom"
+                ></i>
+
+            </div>
+
+        `;
+
+    }
+
+
+    if (
+        isVideoMemory(
+            memory
+        )
+    ) {
+
+        return `
+
+            <video
+                class="timeline-card-img"
+                controls
+                playsinline
+                preload="metadata"
+                style="
+                    width:100%;
+                    height:250px;
+                    object-fit:cover;
+                    background:#000;
+                    display:block;
+                "
+                onclick="event.stopPropagation();"
+            >
+
+                <source
+                    src="${escapeAttribute(
+                        memory.coverImage
+                    )}"
+                >
+
+                Your browser does not support
+                video playback.
+
+            </video>
+
+        `;
+
+    }
+
+
+    return `
+
+        <img
+            src="${escapeAttribute(
+                memory.coverImage
+            )}"
+            class="timeline-card-img"
+            alt="${escapeAttribute(
+                memory.title
+            )}"
+            loading="lazy"
+            style="
+                width:100%;
+                height:250px;
+                object-fit:cover;
+                display:block;
+            "
+        >
+
+    `;
+
+}
+
+
+/*
+ * Build Modal media.
+ */
+
+function buildModalMedia(
+    memory
+) {
+
+    if (
+        !memory.coverImage
+    ) {
+
+        return `
+
+            <div
+                class="w-100 d-flex align-items-center justify-content-center bg-tertiary"
+                style="
+                    height:300px;
+                "
+            >
+
+                <i
+                    class="bi bi-image fs-1 text-muted-custom"
+                ></i>
+
+            </div>
+
+        `;
+
+    }
+
+
+    if (
+        isVideoMemory(
+            memory
+        )
+    ) {
+
+        return `
+
+            <video
+                class="w-100"
+                controls
+                playsinline
+                preload="metadata"
+                style="
+                    max-height:450px;
+                    min-height:250px;
+                    object-fit:contain;
+                    background:#000;
+                    display:block;
+                "
+            >
+
+                <source
+                    src="${escapeAttribute(
+                        memory.coverImage
+                    )}"
+                >
+
+                Your browser does not support
+                video playback.
+
+            </video>
+
+        `;
+
+    }
+
+
+    return `
+
+        <img
+            src="${escapeAttribute(
+                memory.coverImage
+            )}"
+            class="w-100"
+            style="
+                max-height:450px;
+                object-fit:cover;
+                display:block;
+            "
+            alt="${escapeAttribute(
+                memory.title
+            )}"
+        >
+
+    `;
 
 }
 
@@ -741,9 +981,7 @@ function renderTimeline(
 
 
     if (
-        !Array.isArray(
-            memories
-        ) ||
+        !memories ||
         memories.length ===
             0
     ) {
@@ -758,22 +996,30 @@ function renderTimeline(
                     class="bi bi-journal-x fs-1 text-muted-custom mb-3 d-block"
                 ></i>
 
-                <h5 class="text-white">
+
+                <h5
+                    class="text-white"
+                >
 
                     No Memories Found
 
                 </h5>
 
-                <p class="text-secondary-custom">
+
+                <p
+                    class="text-secondary-custom"
+                >
 
                     Try clearing your filters
                     or add a new memory.
 
                 </p>
 
-                <a
-                    href="add-memory.html"
+
+                <button
+                    type="button"
                     class="btn btn-aurora mt-2"
+                    onclick="window.location.href='add-memory.html'"
                 >
 
                     <i
@@ -782,11 +1028,12 @@ function renderTimeline(
 
                     Add Memory
 
-                </a>
+                </button>
 
             </div>
 
         `;
+
 
         return;
 
@@ -794,13 +1041,14 @@ function renderTimeline(
 
 
     /*
-     * Never permanently reorder activeMemories.
+     * Sort a copy.
      */
 
     const sortedMemories =
         [
             ...memories
-        ].sort(
+        ]
+        .sort(
             (a, b) =>
                 new Date(
                     b.date
@@ -825,12 +1073,6 @@ function renderTimeline(
                         0;
 
 
-                    const favoriteClass =
-                        memory.isFavorite
-                            ? "bi-star-fill text-warning"
-                            : "bi-star";
-
-
                     const emotionClass =
                         String(
                             memory.emotion ||
@@ -841,6 +1083,12 @@ function renderTimeline(
                                 /\s+/g,
                                 "-"
                             );
+
+
+                    const isVideo =
+                        isVideoMemory(
+                            memory
+                        );
 
 
                     return `
@@ -868,47 +1116,43 @@ function renderTimeline(
                             >
 
 
-                                <!-- IMAGE -->
+                                <!-- =================================================
+                                     MEDIA
+                                     ================================================= -->
 
                                 <div
                                     class="position-relative"
                                 >
 
-                                    ${
-                                        memory.coverImage
+                                    ${buildTimelineMedia(
+                                        memory
+                                    )}
 
-                                            ? `
 
-                                                <img
-                                                    src="${escapeAttribute(
-                                                        memory.coverImage
-                                                    )}"
-                                                    class="timeline-card-img"
-                                                    alt="${escapeAttribute(
-                                                        memory.title
-                                                    )}"
-                                                    loading="lazy"
-                                                >
+                                    <!-- MEDIA TYPE -->
 
-                                            `
+                                    <span
+                                        class="position-absolute top-0 start-50 translate-middle-x mt-3 badge bg-dark bg-opacity-75 text-white"
+                                    >
 
-                                            :
+                                        <i
+                                            class="bi ${
+                                                isVideo
+                                                    ? "bi-camera-video-fill"
+                                                    : "bi-image-fill"
+                                            } me-1"
+                                        ></i>
 
-                                            `
+                                        ${
+                                            isVideo
+                                                ? "Video"
+                                                : "Photo"
+                                        }
 
-                                                <div
-                                                    class="timeline-card-img d-flex align-items-center justify-content-center bg-tertiary"
-                                                >
+                                    </span>
 
-                                                    <i
-                                                        class="bi bi-image fs-1 text-muted-custom"
-                                                    ></i>
 
-                                                </div>
-
-                                            `
-                                    }
-
+                                    <!-- EMOTION -->
 
                                     <span
                                         class="position-absolute top-0 end-0 m-3 badge-emotion badge-${escapeAttribute(
@@ -927,7 +1171,7 @@ function renderTimeline(
 
                                     <button
                                         type="button"
-                                        class="btn btn-sm btn-icon position-absolute top-0 start-0 m-3 glass-card"
+                                        class="btn btn-sm btn-icon position-absolute bottom-0 start-0 m-3 glass-card"
                                         title="${
                                             memory.isFavorite
                                                 ? "Remove from favorites"
@@ -939,22 +1183,29 @@ function renderTimeline(
                                     >
 
                                         <i
-                                            class="bi ${favoriteClass}"
+                                            class="bi ${
+                                                memory.isFavorite
+                                                    ? "bi-star-fill text-warning"
+                                                    : "bi-star"
+                                            }"
                                         ></i>
 
                                     </button>
-
 
                                 </div>
 
 
 
-                                <!-- CONTENT -->
+                                <!-- =================================================
+                                     CONTENT
+                                     ================================================= -->
 
                                 <div
                                     class="p-4"
                                 >
 
+
+                                    <!-- DATE + LOCATION -->
 
                                     <div
                                         class="d-flex align-items-center justify-content-between text-muted-custom small mb-2 flex-wrap gap-2"
@@ -989,6 +1240,8 @@ function renderTimeline(
 
 
 
+                                    <!-- TITLE -->
+
                                     <h5
                                         class="text-white font-heading mb-2"
                                     >
@@ -1000,6 +1253,8 @@ function renderTimeline(
                                     </h5>
 
 
+
+                                    <!-- DESCRIPTION -->
 
                                     <p
                                         class="text-secondary-custom small mb-3"
@@ -1053,7 +1308,6 @@ function renderTimeline(
 
                                     ${
                                         memory.audioNote
-
                                             ? `
 
                                                 <div
@@ -1064,8 +1318,9 @@ function renderTimeline(
                                                         class="bi bi-mic-fill text-accent"
                                                     ></i>
 
+
                                                     <span
-                                                        class="small text-white"
+                                                        class="small text-white text-truncate"
                                                     >
 
                                                         ${escapeHtml(
@@ -1073,19 +1328,6 @@ function renderTimeline(
                                                         )}
 
                                                     </span>
-
-                                                    <button
-                                                        type="button"
-                                                        class="btn btn-sm btn-icon ms-auto"
-                                                        onclick="event.stopPropagation(); playAudioSim()"
-                                                        title="Play audio note"
-                                                    >
-
-                                                        <i
-                                                            class="bi bi-play-circle-fill text-gradient"
-                                                        ></i>
-
-                                                    </button>
 
                                                 </div>
 
@@ -1102,10 +1344,11 @@ function renderTimeline(
                                     >
 
 
+                                        <!-- LEFT ACTIONS -->
+
                                         <div
                                             class="d-flex align-items-center gap-2"
                                         >
-
 
                                             <!-- LIKE -->
 
@@ -1120,6 +1363,7 @@ function renderTimeline(
                                                 <i
                                                     class="bi bi-heart-fill text-danger me-1"
                                                 ></i>
+
 
                                                 <span
                                                     class="like-count"
@@ -1156,10 +1400,11 @@ function renderTimeline(
 
 
 
+                                        <!-- RIGHT ACTIONS -->
+
                                         <div
                                             class="d-flex align-items-center gap-2"
                                         >
-
 
                                             <!-- EDIT -->
 
@@ -1219,7 +1464,9 @@ function renderTimeline(
 
                                 </div>
 
+
                             </div>
+
 
                         </div>
 
@@ -1231,11 +1478,12 @@ function renderTimeline(
 
 
     /*
-     * Refresh AOS after dynamic rendering.
+     * Refresh AOS if available.
      */
 
     if (
-        typeof AOS !== "undefined"
+        typeof AOS !==
+        "undefined"
     ) {
 
         AOS.refresh();
@@ -1356,7 +1604,7 @@ async function toggleFavorite(
         showToast(
             "Favorite Updated",
             data.message ||
-            "Favorite status updated.",
+            "Favorite updated successfully.",
             data.isFavorite
                 ? "success"
                 : "info"
@@ -1467,7 +1715,8 @@ async function handleLike(
 
             memory.likes =
                 Number(
-                    data.likes
+                    data.likes ||
+                    0
                 );
 
         }
@@ -1485,7 +1734,8 @@ async function handleLike(
 
             count.textContent =
                 Number(
-                    data.likes
+                    data.likes ||
+                    0
                 );
 
         }
@@ -1561,7 +1811,7 @@ async function handleShare(
 
             showToast(
                 "Link Copied",
-                "Memory shareable link copied to your clipboard.",
+                "Memory link copied to your clipboard.",
                 "success"
             );
 
@@ -1578,7 +1828,7 @@ async function handleShare(
     } catch (error) {
 
         console.error(
-            "Clipboard error:",
+            "Share error:",
             error
         );
 
@@ -1604,7 +1854,7 @@ async function handleDelete(
 
     const confirmed =
         window.confirm(
-            "Are you sure you want to delete this memory from your life archive?"
+            "Are you sure you want to delete this memory?"
         );
 
 
@@ -1726,24 +1976,8 @@ function handleEdit(
 
 
 /* =========================================================
-   AUDIO NOTE SIMULATION
-   ========================================================= */
-
-function playAudioSim() {
-
-    showToast(
-        "Audio Note",
-        "This memory contains an audio note.",
-        "info"
-    );
-
-}
-
-
-/* =========================================================
-   =========================================================
-   ECHONARRATE - STRATEGY PATTERN
-   =========================================================
+   ECHONARRATE
+   STRATEGY PATTERN
    ========================================================= */
 
 
@@ -1753,7 +1987,7 @@ function playAudioSim() {
  * ---------------------------------------------------------
  */
 
-class TimelineNarrationStrategy {
+class NarrationStrategy {
 
     narrate(
         memory
@@ -1774,8 +2008,8 @@ class TimelineNarrationStrategy {
  * ---------------------------------------------------------
  */
 
-class TimelinePersonalNarration
-    extends TimelineNarrationStrategy {
+class PersonalNarration
+    extends NarrationStrategy {
 
     narrate(
         memory
@@ -1808,8 +2042,8 @@ class TimelinePersonalNarration
  * ---------------------------------------------------------
  */
 
-class TimelineEmotionalNarration
-    extends TimelineNarrationStrategy {
+class EmotionalNarration
+    extends NarrationStrategy {
 
     narrate(
         memory
@@ -1840,10 +2074,11 @@ class TimelineEmotionalNarration
 /*
  * ---------------------------------------------------------
  * Documentary Strategy
- * --------------------------------------------------------- */
+ * ---------------------------------------------------------
+ */
 
-class TimelineDocumentaryNarration
-    extends TimelineNarrationStrategy {
+class DocumentaryNarration
+    extends NarrationStrategy {
 
     narrate(
         memory
@@ -1857,7 +2092,7 @@ class TimelineDocumentaryNarration
             ${memory.location || "an unspecified location"}.
             The associated emotion was
             ${memory.emotion || "not specified"}.
-            The recorded story states:
+            The recorded description states:
             ${memory.description || "No description was provided."}
 
         `
@@ -1878,8 +2113,8 @@ class TimelineDocumentaryNarration
  * ---------------------------------------------------------
  */
 
-class TimelineStorytellingNarration
-    extends TimelineNarrationStrategy {
+class StorytellingNarration
+    extends NarrationStrategy {
 
     narrate(
         memory
@@ -1911,11 +2146,11 @@ class TimelineStorytellingNarration
 
 /*
  * ---------------------------------------------------------
- * Strategy Context
+ * Context
  * ---------------------------------------------------------
  */
 
-class TimelineStoryNarrator {
+class StoryNarrator {
 
     constructor(
         strategy
@@ -1946,7 +2181,7 @@ class TimelineStoryNarrator {
         ) {
 
             throw new Error(
-                "Narration strategy is missing."
+                "No narration strategy selected."
             );
 
         }
@@ -1967,7 +2202,7 @@ class TimelineStoryNarrator {
  * ---------------------------------------------------------
  */
 
-function createTimelineNarrationStrategy(
+function createNarrationStrategy(
     type
 ) {
 
@@ -1982,27 +2217,27 @@ function createTimelineNarrationStrategy(
 
         case "personal":
 
-            return new TimelinePersonalNarration();
+            return new PersonalNarration();
 
 
         case "emotional":
 
-            return new TimelineEmotionalNarration();
+            return new EmotionalNarration();
 
 
         case "documentary":
 
-            return new TimelineDocumentaryNarration();
+            return new DocumentaryNarration();
 
 
         case "storytelling":
 
-            return new TimelineStorytellingNarration();
+            return new StorytellingNarration();
 
 
         default:
 
-            return new TimelinePersonalNarration();
+            return new PersonalNarration();
 
     }
 
@@ -2033,7 +2268,7 @@ function generateTimelineNarration(
 
         showToast(
             "Memory Not Found",
-            "Unable to generate narration for this memory.",
+            "Unable to generate narration.",
             "danger"
         );
 
@@ -2043,7 +2278,7 @@ function generateTimelineNarration(
     }
 
 
-    const select =
+    const styleSelect =
         document.getElementById(
             `timelineNarrationStyle-${id}`
         );
@@ -2061,28 +2296,28 @@ function generateTimelineNarration(
         );
 
 
-    const selectedStyle =
-        select
-            ? select.value
+    const style =
+        styleSelect
+            ? styleSelect.value
             : "personal";
 
 
     /*
-     * Strategy selected here.
+     * Create selected Strategy.
      */
 
     const strategy =
-        createTimelineNarrationStrategy(
-            selectedStyle
+        createNarrationStrategy(
+            style
         );
 
 
     /*
-     * Context uses the selected Strategy.
+     * Give Strategy to Context.
      */
 
     const narrator =
-        new TimelineStoryNarrator(
+        new StoryNarrator(
             strategy
         );
 
@@ -2119,9 +2354,9 @@ function generateTimelineNarration(
 
     showToast(
         "Story Generated",
-        `${formatTimelineNarrationStyle(
-            selectedStyle
-        )} narration generated successfully.`,
+        `${formatNarrationStyle(
+            style
+        )} narration generated.`,
         "success"
     );
 
@@ -2139,13 +2374,15 @@ function playTimelineNarration(
     id
 ) {
 
-    /*
-     * Check browser support.
-     */
-
     if (
-        !("speechSynthesis" in window) ||
-        !("SpeechSynthesisUtterance" in window)
+        !(
+            "speechSynthesis"
+            in window
+        ) ||
+        !(
+            "SpeechSynthesisUtterance"
+            in window
+        )
     ) {
 
         showToast(
@@ -2189,13 +2426,13 @@ function playTimelineNarration(
     if (
         !text ||
         text.includes(
-            "Choose a style and click"
+            "Choose a narration style"
         )
     ) {
 
         showToast(
             "No Narration",
-            "Click Generate Story before playing the narration.",
+            "Click Generate Story first.",
             "warning"
         );
 
@@ -2206,7 +2443,7 @@ function playTimelineNarration(
 
 
     /*
-     * Cancel any currently speaking narration.
+     * Stop anything already speaking.
      */
 
     window.speechSynthesis.cancel();
@@ -2235,7 +2472,7 @@ function playTimelineNarration(
 
 
     /*
-     * Choose a suitable English voice.
+     * Select a voice.
      */
 
     const voices =
@@ -2243,26 +2480,29 @@ function playTimelineNarration(
 
 
     if (
-        voices.length > 0
+        voices.length >
+        0
     ) {
 
-        const preferredVoice =
+        const selectedVoice =
             voices.find(
                 voice =>
                     voice.lang ===
                     "en-US"
             ) ||
+
             voices.find(
                 voice =>
                     voice.lang.startsWith(
                         "en"
                     )
             ) ||
+
             voices[0];
 
 
         speech.voice =
-            preferredVoice;
+            selectedVoice;
 
     }
 
@@ -2317,11 +2557,11 @@ function playTimelineNarration(
 
 
     speech.onerror =
-        event => {
+        error => {
 
             console.error(
-                "Speech synthesis error:",
-                event
+                "Speech error:",
+                error
             );
 
 
@@ -2332,16 +2572,12 @@ function playTimelineNarration(
 
             showToast(
                 "Narration Error",
-                "The browser could not play the narration.",
+                "Unable to play narration.",
                 "danger"
             );
 
         };
 
-
-    /*
-     * Speak.
-     */
 
     window.speechSynthesis.speak(
         speech
@@ -2397,7 +2633,8 @@ function resetTimelineNarrationButton(
 function stopTimelineNarration() {
 
     if (
-        "speechSynthesis" in window
+        "speechSynthesis"
+        in window
     ) {
 
         window.speechSynthesis.cancel();
@@ -2429,21 +2666,14 @@ function stopTimelineNarration() {
             }
         );
 
-
-    showToast(
-        "Narration Stopped",
-        "Voice playback has been stopped.",
-        "info"
-    );
-
 }
 
 
 /* =========================================================
-   FORMAT NARRATION STYLE
+   NARRATION STYLE LABEL
    ========================================================= */
 
-function formatTimelineNarrationStyle(
+function formatNarrationStyle(
     style
 ) {
 
@@ -2515,10 +2745,7 @@ function openMemoryDetailsModal(
 
 
     /*
-     * Create modal once.
-     *
-     * The body is vertically scrollable so the
-     * entire memory card can be viewed.
+     * Create modal if it doesn't exist.
      */
 
     if (
@@ -2538,7 +2765,9 @@ function openMemoryDetailsModal(
 
                     <div
                         class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable"
-                        style="max-height:95vh;"
+                        style="
+                            max-height:95vh;
+                        "
                     >
 
                         <div
@@ -2592,92 +2821,84 @@ function openMemoryDetailsModal(
 
 
     /*
-     * Stop existing narration whenever a new
-     * memory modal is opened.
+     * Stop previous narration.
      */
 
-    if (
-        "speechSynthesis" in window
-    ) {
-
-        window.speechSynthesis.cancel();
-
-    }
+    stopTimelineNarration();
 
 
-    /*
-     * Modal content.
-     */
+    const emotionClass =
+        String(
+            memory.emotion ||
+            "serenity"
+        )
+            .toLowerCase()
+            .replace(
+                /\s+/g,
+                "-"
+            );
+
+
+    const isVideo =
+        isVideoMemory(
+            memory
+        );
+
 
     detailsBody.innerHTML = `
 
         <!-- =================================================
-             IMAGE
+             MEDIA
              ================================================= -->
 
         <div
             class="position-relative"
         >
 
-            ${
-                memory.coverImage
+            ${buildModalMedia(
+                memory
+            )}
 
-                    ? `
 
-                        <img
-                            src="${escapeAttribute(
-                                memory.coverImage
-                            )}"
-                            class="w-100"
-                            style="
-                                max-height:350px;
-                                object-fit:cover;
-                            "
-                            alt="${escapeAttribute(
-                                memory.title
-                            )}"
-                        >
-
-                    `
-
-                    :
-
-                    `
-
-                        <div
-                            class="w-100 d-flex align-items-center justify-content-center bg-tertiary"
-                            style="height:250px;"
-                        >
-
-                            <i
-                                class="bi bi-image fs-1 text-muted-custom"
-                            ></i>
-
-                        </div>
-
-                    `
-            }
-
+            <!-- CLOSE BUTTON -->
 
             <button
                 type="button"
                 class="btn-close btn-close-white position-absolute top-0 end-0 m-3 p-2 bg-dark rounded-circle"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                onclick="stopTimelineNarration()"
             ></button>
 
 
+            <!-- MEDIA TYPE -->
+
+            <span
+                class="position-absolute top-0 start-0 m-3 badge bg-dark bg-opacity-75 text-white"
+            >
+
+                <i
+                    class="bi ${
+                        isVideo
+                            ? "bi-camera-video-fill"
+                            : "bi-image-fill"
+                    } me-1"
+                ></i>
+
+                ${
+                    isVideo
+                        ? "Video"
+                        : "Photo"
+                }
+
+            </span>
+
+
+            <!-- EMOTION -->
+
             <span
                 class="position-absolute bottom-0 start-0 m-3 badge-emotion badge-${escapeAttribute(
-                    String(
-                        memory.emotion ||
-                        "serenity"
-                    )
-                        .toLowerCase()
-                        .replace(
-                            /\s+/g,
-                            "-"
-                        )
+                    emotionClass
                 )}"
             >
 
@@ -2742,8 +2963,6 @@ function openMemoryDetailsModal(
                         memory.privacy
                     )}
 
-                    Scope
-
                 </span>
 
             </div>
@@ -2784,7 +3003,7 @@ function openMemoryDetailsModal(
 
 
                 <p
-                    class="text-secondary-custom fs-6 leading-relaxed mb-0"
+                    class="text-secondary-custom fs-6 mb-0"
                 >
 
                     ${escapeHtml(
@@ -2835,7 +3054,6 @@ function openMemoryDetailsModal(
 
                             ${
                                 memory.people.length
-
                                     ? memory.people
                                         .map(
                                             person => `
@@ -2856,10 +3074,13 @@ function openMemoryDetailsModal(
 
                                     :
 
-                                    `<span class="text-secondary-custom small">
-                                        None
-                                    </span>`
-
+                                    `
+                                        <span
+                                            class="text-secondary-custom small"
+                                        >
+                                            None
+                                        </span>
+                                    `
                             }
 
                         </div>
@@ -2870,7 +3091,7 @@ function openMemoryDetailsModal(
 
 
 
-                <!-- TAGS -->
+                <!-- CATEGORY + TAGS -->
 
                 <div
                     class="col-md-6"
@@ -2899,7 +3120,6 @@ function openMemoryDetailsModal(
 
                             ${
                                 memory.category
-
                                     ? `
 
                                         <span
@@ -2913,15 +3133,12 @@ function openMemoryDetailsModal(
                                         </span>
 
                                     `
-
                                     : ""
-
                             }
 
 
                             ${
                                 memory.tags.length
-
                                     ? memory.tags
                                         .map(
                                             tag => `
@@ -2942,10 +3159,13 @@ function openMemoryDetailsModal(
 
                                     :
 
-                                    `<span class="text-secondary-custom small">
-                                        No tags
-                                    </span>`
-
+                                    `
+                                        <span
+                                            class="text-secondary-custom small"
+                                        >
+                                            No tags
+                                        </span>
+                                    `
                             }
 
                         </div>
@@ -2960,66 +3180,11 @@ function openMemoryDetailsModal(
 
 
             <!-- =================================================
-                 AUDIO NOTE
-                 ================================================= -->
-
-            ${
-                memory.audioNote
-
-                    ? `
-
-                        <div
-                            class="glass-card p-3 rounded-3 mb-4"
-                        >
-
-                            <div
-                                class="d-flex align-items-center gap-2"
-                            >
-
-                                <i
-                                    class="bi bi-mic-fill text-gradient fs-4"
-                                ></i>
-
-                                <div>
-
-                                    <h6
-                                        class="text-white mb-1"
-                                    >
-
-                                        Voice Note
-
-                                    </h6>
-
-                                    <p
-                                        class="text-secondary-custom small mb-0"
-                                    >
-
-                                        ${escapeHtml(
-                                            memory.audioNote
-                                        )}
-
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    `
-
-                    : ""
-            }
-
-
-
-            <!-- =================================================
                  ECHONARRATE
-                 STRATEGY PATTERN
                  ================================================= -->
 
             <div
-                class="glass-card p-4 rounded-3 mb-4 border border-glass"
+                class="glass-card p-4 rounded-4 mb-4 border border-glass"
                 style="
                     background:rgba(255,255,255,0.04);
                 "
@@ -3073,7 +3238,7 @@ function openMemoryDetailsModal(
 
 
 
-                <!-- STRATEGY SELECT -->
+                <!-- NARRATION STYLE -->
 
                 <label
                     for="timelineNarrationStyle-${escapeAttribute(
@@ -3176,7 +3341,7 @@ function openMemoryDetailsModal(
 
 
 
-                <!-- GENERATED STORY -->
+                <!-- RESULT -->
 
                 <div
                     id="timelineNarrationResult-${escapeAttribute(
@@ -3196,7 +3361,9 @@ function openMemoryDetailsModal(
                     >
 
                         Choose a narration style and click
-                        <strong class="text-white">
+                        <strong
+                            class="text-white"
+                        >
                             Generate Story
                         </strong>
                         to create the narration.
@@ -3206,12 +3373,11 @@ function openMemoryDetailsModal(
                 </div>
 
 
-
                 <small
                     class="text-muted-custom d-block mt-2"
                 >
 
-                    The narration is generated from the
+                    The narration is created from the
                     information stored in this memory.
 
                 </small>
@@ -3266,7 +3432,7 @@ function openMemoryDetailsModal(
 
 
     /*
-     * Show modal.
+     * Bootstrap modal.
      */
 
     const bsModal =
@@ -3281,7 +3447,47 @@ function openMemoryDetailsModal(
 
 
 /* =========================================================
-   SHOW TOAST
+   STOP VIDEO WHEN MODAL CLOSES
+   ========================================================= */
+
+document.addEventListener(
+    "hidden.bs.modal",
+    event => {
+
+        if (
+            event.target &&
+            event.target.id ===
+            "memoryDetailsModal"
+        ) {
+
+            const videos =
+                event.target.querySelectorAll(
+                    "video"
+                );
+
+
+            videos.forEach(
+                video => {
+
+                    video.pause();
+
+                    video.currentTime =
+                        0;
+
+                }
+            );
+
+
+            stopTimelineNarration();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TOAST
    ========================================================= */
 
 function showToast(
@@ -3291,13 +3497,11 @@ function showToast(
 ) {
 
     /*
-     * Use the application's existing showToast()
-     * if app.js has already provided it.
+     * Use application-level Toast if it already exists.
      */
 
     if (
-        typeof window.showToast ===
-        "function" &&
+        window.showToast &&
         window.showToast !==
             showToast
     ) {
@@ -3315,7 +3519,7 @@ function showToast(
 
     let container =
         document.querySelector(
-            ".toast-container-custom"
+            ".echolife-toast-container"
         );
 
 
@@ -3330,7 +3534,7 @@ function showToast(
 
 
         container.className =
-            "toast-container-custom";
+            "echolife-toast-container";
 
 
         container.style.position =
@@ -3347,6 +3551,10 @@ function showToast(
 
         container.style.zIndex =
             "99999";
+
+
+        container.style.width =
+            "320px";
 
 
         document.body.appendChild(
@@ -3366,8 +3574,8 @@ function showToast(
         "glass-card p-3 mb-2";
 
 
-    toast.style.minWidth =
-        "280px";
+    toast.style.border =
+        "1px solid rgba(255,255,255,0.15)";
 
 
     toast.innerHTML = `
@@ -3380,6 +3588,7 @@ function showToast(
                 class="bi bi-info-circle-fill text-primary fs-5"
             ></i>
 
+
             <div>
 
                 <strong
@@ -3391,6 +3600,7 @@ function showToast(
                     )}
 
                 </strong>
+
 
                 <span
                     class="text-secondary-custom small"

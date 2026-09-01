@@ -1,6 +1,16 @@
 /* ==========================================================================
    EchoLife Add / Edit Memory Controller
-   Database-backed version + Strategy Pattern (EchoNarrate)
+
+   Features:
+   - Create memory
+   - Edit memory
+   - Photo upload
+   - Video upload
+   - Photo preview
+   - Video preview
+   - EchoNarrate
+   - Strategy Pattern
+   - Browser Text-to-Speech
    ========================================================================== */
 
 
@@ -12,21 +22,30 @@ let editingMemoryId = null;
 
 
 /*
- * Default image used when the user has not selected one.
+ * Data URL of selected photo/video.
  */
-let currentPreviewImage =
-    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80";
+let currentMediaData = "";
+
+
+/*
+ * Memory media type.
+ *
+ * Possible values:
+ * Photo
+ * Video
+ */
+let currentMediaType = "Photo";
 
 
 /* =========================================================
    STRATEGY PATTERN - ECHONARRATE
    ========================================================= */
 
+
 /*
  * Strategy interface.
- *
- * Every narration strategy must implement narrate().
  */
+
 class NarrationStrategy {
 
     narrate(memory) {
@@ -40,9 +59,9 @@ class NarrationStrategy {
 }
 
 
-/* =========================================================
-   PERSONAL NARRATION STRATEGY
-   ========================================================= */
+/*
+ * Personal narration.
+ */
 
 class PersonalNarration
     extends NarrationStrategy {
@@ -93,9 +112,9 @@ class PersonalNarration
 }
 
 
-/* =========================================================
-   EMOTIONAL NARRATION STRATEGY
-   ========================================================= */
+/*
+ * Emotional narration.
+ */
 
 class EmotionalNarration
     extends NarrationStrategy {
@@ -146,9 +165,9 @@ class EmotionalNarration
 }
 
 
-/* =========================================================
-   DOCUMENTARY NARRATION STRATEGY
-   ========================================================= */
+/*
+ * Documentary narration.
+ */
 
 class DocumentaryNarration
     extends NarrationStrategy {
@@ -200,9 +219,9 @@ class DocumentaryNarration
 }
 
 
-/* =========================================================
-   STORYTELLING NARRATION STRATEGY
-   ========================================================= */
+/*
+ * Storytelling narration.
+ */
 
 class StorytellingNarration
     extends NarrationStrategy {
@@ -253,9 +272,9 @@ class StorytellingNarration
 }
 
 
-/* =========================================================
-   STORY NARRATOR - STRATEGY CONTEXT
-   ========================================================= */
+/*
+ * Strategy Context.
+ */
 
 class StoryNarrator {
 
@@ -269,9 +288,6 @@ class StoryNarrator {
     }
 
 
-    /*
-     * Change narration behavior at runtime.
-     */
     setStrategy(
         strategy
     ) {
@@ -282,9 +298,6 @@ class StoryNarrator {
     }
 
 
-    /*
-     * Generate the story using the selected strategy.
-     */
     generate(
         memory
     ) {
@@ -309,16 +322,10 @@ class StoryNarrator {
 }
 
 
-/* =========================================================
-   NARRATION STRATEGY CREATION
-   ========================================================= */
-
 /*
- * This function creates the appropriate strategy.
- *
- * It keeps the UI independent from the concrete
- * narration classes.
+ * Strategy creator.
  */
+
 function createNarrationStrategy(
     type
 ) {
@@ -362,7 +369,7 @@ function createNarrationStrategy(
 
 
 /* =========================================================
-   INITIALIZE
+   INITIALIZATION
    ========================================================= */
 
 document.addEventListener(
@@ -399,9 +406,9 @@ async function checkEditMode() {
         );
 
 
-    /* -------------------------------------------------------
-       NEW MEMORY
-       ------------------------------------------------------- */
+    /*
+     * New memory.
+     */
 
     if (
         !editingMemoryId
@@ -431,9 +438,9 @@ async function checkEditMode() {
     }
 
 
-    /* -------------------------------------------------------
-       EDIT MEMORY
-       ------------------------------------------------------- */
+    /*
+     * Edit mode.
+     */
 
     try {
 
@@ -449,10 +456,6 @@ async function checkEditMode() {
                 }
             );
 
-
-        /*
-         * Session expired
-         */
 
         if (
             response.status ===
@@ -646,10 +649,6 @@ function populateEditForm(
     );
 
 
-    /*
-     * Existing favorite state.
-     */
-
     const favorite =
         document.getElementById(
             "memoryFavorite"
@@ -669,52 +668,27 @@ function populateEditForm(
 
 
     /*
-     * Existing image.
+     * Load existing media.
      */
 
     if (
         memory.coverImage
     ) {
 
-        currentPreviewImage =
+        currentMediaData =
             memory.coverImage;
 
 
-        const previewImg =
-            document.getElementById(
-                "uploadPreviewImg"
+        currentMediaType =
+            String(
+                memory.type ||
+                "Photo"
             );
 
 
-        if (
-            previewImg
-        ) {
-
-            previewImg.src =
-                memory.coverImage;
-
-
-            previewImg.style.display =
-                "block";
-
-        }
-
-    }
-
-
-    /*
-     * Existing audio note, if the form has
-     * an audio-note input.
-     */
-
-    if (
-        typeof memory.audioNote !==
-        "undefined"
-    ) {
-
-        setValue(
-            "memoryAudioNote",
-            memory.audioNote
+        displayMediaPreview(
+            currentMediaData,
+            currentMediaType
         );
 
     }
@@ -746,6 +720,12 @@ function initFileUpload() {
         );
 
 
+    const previewVideo =
+        document.getElementById(
+            "uploadPreviewVideo"
+        );
+
+
     if (
         !dropZone ||
         !fileInput
@@ -756,25 +736,22 @@ function initFileUpload() {
     }
 
 
-    /* -------------------------------------------------------
-       CLICK UPLOAD AREA
-       ------------------------------------------------------- */
+    /*
+     * Clicking the drop zone opens the file selector.
+     */
 
     dropZone.addEventListener(
         "click",
         event => {
 
             /*
-             * Prevent nested buttons/inputs from triggering
-             * the file dialog twice.
+             * Don't reopen the selector if the input
+             * itself is clicked.
              */
 
             if (
                 event.target ===
-                    fileInput ||
-                event.target.closest(
-                    "button"
-                )
+                fileInput
             ) {
 
                 return;
@@ -788,9 +765,9 @@ function initFileUpload() {
     );
 
 
-    /* -------------------------------------------------------
-       DRAG OVER
-       ------------------------------------------------------- */
+    /*
+     * Drag over.
+     */
 
     dropZone.addEventListener(
         "dragover",
@@ -807,9 +784,9 @@ function initFileUpload() {
     );
 
 
-    /* -------------------------------------------------------
-       DRAG LEAVE
-       ------------------------------------------------------- */
+    /*
+     * Drag leave.
+     */
 
     dropZone.addEventListener(
         "dragleave",
@@ -823,9 +800,9 @@ function initFileUpload() {
     );
 
 
-    /* -------------------------------------------------------
-       DROP
-       ------------------------------------------------------- */
+    /*
+     * Drop file.
+     */
 
     dropZone.addEventListener(
         "drop",
@@ -859,9 +836,9 @@ function initFileUpload() {
     );
 
 
-    /* -------------------------------------------------------
-       NORMAL FILE INPUT
-       ------------------------------------------------------- */
+    /*
+     * Normal file selection.
+     */
 
     fileInput.addEventListener(
         "change",
@@ -886,9 +863,9 @@ function initFileUpload() {
     );
 
 
-    /* -------------------------------------------------------
-       PROCESS FILE
-       ------------------------------------------------------- */
+    /*
+     * Handle selected media.
+     */
 
     function handleFileSelect(
         file
@@ -904,19 +881,31 @@ function initFileUpload() {
 
 
         /*
-         * Only images are accepted.
+         * Supported types.
          */
 
-        if (
-            !file.type ||
-            !file.type.startsWith(
+        const isImage =
+            file.type &&
+            file.type.startsWith(
                 "image/"
-            )
+            );
+
+
+        const isVideo =
+            file.type &&
+            file.type.startsWith(
+                "video/"
+            );
+
+
+        if (
+            !isImage &&
+            !isVideo
         ) {
 
             showToast(
                 "Invalid File",
-                "Please select an image file.",
+                "Please select a photo or video file.",
                 "danger"
             );
 
@@ -927,11 +916,15 @@ function initFileUpload() {
 
 
         /*
-         * Maximum size: 10 MB.
+         * Maximum size: 50 MB.
+         *
+         * Base64/data URLs are used by the current
+         * application architecture, so video files
+         * should remain reasonably small.
          */
 
         const maxSize =
-            10 *
+            50 *
             1024 *
             1024;
 
@@ -942,8 +935,8 @@ function initFileUpload() {
         ) {
 
             showToast(
-                "Image Too Large",
-                "Please choose an image smaller than 10 MB.",
+                "File Too Large",
+                "Please choose a photo or video smaller than 50 MB.",
                 "danger"
             );
 
@@ -953,6 +946,20 @@ function initFileUpload() {
         }
 
 
+        /*
+         * Save type.
+         */
+
+        currentMediaType =
+            isVideo
+                ? "Video"
+                : "Photo";
+
+
+        /*
+         * Read file as Data URL.
+         */
+
         const reader =
             new FileReader();
 
@@ -960,27 +967,23 @@ function initFileUpload() {
         reader.onload =
             event => {
 
-                currentPreviewImage =
+                currentMediaData =
                     event.target.result;
 
 
-                if (
-                    previewImg
-                ) {
-
-                    previewImg.src =
-                        currentPreviewImage;
-
-
-                    previewImg.style.display =
-                        "block";
-
-                }
+                displayMediaPreview(
+                    currentMediaData,
+                    currentMediaType,
+                    file.name
+                );
 
 
                 showToast(
-                    "File Uploaded",
-                    "Image preview generated successfully.",
+                    currentMediaType ===
+                        "Video"
+                        ? "Video Uploaded"
+                        : "Photo Uploaded",
+                    `${file.name} is ready to be saved.`,
                     "success"
                 );
 
@@ -992,7 +995,7 @@ function initFileUpload() {
 
                 showToast(
                     "Upload Failed",
-                    "Unable to read the selected image.",
+                    "Unable to read the selected file.",
                     "danger"
                 );
 
@@ -1005,6 +1008,205 @@ function initFileUpload() {
 
     }
 
+
+    /*
+     * Display image/video preview.
+     */
+
+    function displayMediaPreview(
+        data,
+        type,
+        fileName = ""
+    ) {
+
+        const selectedInfo =
+            document.getElementById(
+                "selectedMediaInfo"
+            );
+
+
+        const selectedType =
+            document.getElementById(
+                "selectedMediaType"
+            );
+
+
+        const selectedName =
+            document.getElementById(
+                "selectedMediaName"
+            );
+
+
+        const uploadIcon =
+            document.getElementById(
+                "uploadIcon"
+            );
+
+
+        const uploadTitle =
+            document.getElementById(
+                "uploadTitle"
+            );
+
+
+        /*
+         * Hide both previews first.
+         */
+
+        if (
+            previewImg
+        ) {
+
+            previewImg.style.display =
+                "none";
+
+            previewImg.removeAttribute(
+                "src"
+            );
+
+        }
+
+
+        if (
+            previewVideo
+        ) {
+
+            previewVideo.pause();
+
+            previewVideo.style.display =
+                "none";
+
+            previewVideo.removeAttribute(
+                "src"
+            );
+
+            previewVideo.load();
+
+        }
+
+
+        /*
+         * Display selected media.
+         */
+
+        if (
+            type ===
+            "Video"
+        ) {
+
+            if (
+                previewVideo
+            ) {
+
+                previewVideo.src =
+                    data;
+
+
+                previewVideo.style.display =
+                    "block";
+
+
+                previewVideo.load();
+
+            }
+
+
+            if (
+                uploadIcon
+            ) {
+
+                uploadIcon.className =
+                    "bi bi-camera-video-fill display-4 text-gradient mb-2 d-block";
+
+            }
+
+
+            if (
+                uploadTitle
+            ) {
+
+                uploadTitle.textContent =
+                    "Video selected successfully";
+
+            }
+
+        } else {
+
+            if (
+                previewImg
+            ) {
+
+                previewImg.src =
+                    data;
+
+
+                previewImg.style.display =
+                    "block";
+
+            }
+
+
+            if (
+                uploadIcon
+            ) {
+
+                uploadIcon.className =
+                    "bi bi-image-fill display-4 text-gradient mb-2 d-block";
+
+            }
+
+
+            if (
+                uploadTitle
+            ) {
+
+                uploadTitle.textContent =
+                    "Photo selected successfully";
+
+            }
+
+        }
+
+
+        /*
+         * Show selected information.
+         */
+
+        if (
+            selectedInfo
+        ) {
+
+            selectedInfo.style.display =
+                "block";
+
+        }
+
+
+        if (
+            selectedType
+        ) {
+
+            selectedType.textContent =
+                type === "Video"
+                    ? "🎥 Video"
+                    : "📷 Photo";
+
+        }
+
+
+        if (
+            selectedName
+        ) {
+
+            selectedName.textContent =
+                fileName
+                    ? fileName
+                    : type;
+
+        }
+
+    }
+
 }
 
 
@@ -1013,14 +1215,6 @@ function initFileUpload() {
    ========================================================= */
 
 function initNarrationControls() {
-
-    /*
-     * The HTML controls are optional.
-     *
-     * This means the Add/Edit Memory page will
-     * continue working even before EchoNarrate UI
-     * is added to add-memory.html.
-     */
 
     const generateButton =
         document.getElementById(
@@ -1031,6 +1225,12 @@ function initNarrationControls() {
     const playButton =
         document.getElementById(
             "playNarrationButton"
+        );
+
+
+    const stopButton =
+        document.getElementById(
+            "stopNarrationButton"
         );
 
 
@@ -1062,6 +1262,17 @@ function initNarrationControls() {
     }
 
 
+    if (
+        stopButton
+    ) {
+
+        stopButton.addEventListener(
+            "click",
+            stopMemoryNarration
+        );
+
+    }
+
 }
 
 
@@ -1071,49 +1282,14 @@ function initNarrationControls() {
 
 function generateMemoryNarration() {
 
-    /*
-     * Read memory information directly from the
-     * current Add/Edit Memory form.
-     */
+    const memory =
+        readMemoryForNarration();
 
-    const title =
-        getValue(
-            "memoryTitle"
-        ).trim();
-
-
-    const date =
-        getValue(
-            "memoryDate"
-        );
-
-
-    const location =
-        getValue(
-            "memoryLocation"
-        ).trim();
-
-
-    const emotion =
-        getValue(
-            "memoryEmotion"
-        );
-
-
-    const description =
-        getValue(
-            "memoryDescription"
-        ).trim();
-
-
-    /*
-     * Minimum data required.
-     */
 
     if (
-        !title ||
-        !date ||
-        !description
+        !memory.title ||
+        !memory.date ||
+        !memory.description
     ) {
 
         showToast(
@@ -1128,10 +1304,6 @@ function generateMemoryNarration() {
     }
 
 
-    /*
-     * Read selected strategy.
-     */
-
     const styleElement =
         document.getElementById(
             "narrationStyle"
@@ -1145,7 +1317,8 @@ function generateMemoryNarration() {
 
 
     /*
-     * Create concrete Strategy.
+     * Strategy Pattern:
+     * create the selected strategy.
      */
 
     const strategy =
@@ -1155,7 +1328,7 @@ function generateMemoryNarration() {
 
 
     /*
-     * Create Strategy Context.
+     * Context.
      */
 
     const narrator =
@@ -1165,26 +1338,7 @@ function generateMemoryNarration() {
 
 
     /*
-     * Create temporary memory object.
-     */
-
-    const memory = {
-
-        title,
-
-        date,
-
-        location,
-
-        emotion,
-
-        description
-
-    };
-
-
-    /*
-     * Generate narration.
+     * Generate story.
      */
 
     const narration =
@@ -1192,10 +1346,6 @@ function generateMemoryNarration() {
             memory
         );
 
-
-    /*
-     * Display generated story.
-     */
 
     const result =
         document.getElementById(
@@ -1213,10 +1363,6 @@ function generateMemoryNarration() {
     }
 
 
-    /*
-     * Enable Play button.
-     */
-
     const playButton =
         document.getElementById(
             "playNarrationButton"
@@ -1233,20 +1379,98 @@ function generateMemoryNarration() {
     }
 
 
+    showToast(
+        "Story Generated",
+        `${formatNarrationStyle(
+            selectedStyle
+        )} narration generated successfully.`,
+        "success"
+    );
+
+
     return narration;
 
 }
 
 
 /* =========================================================
-   PLAY GENERATED NARRATION
+   READ MEMORY FOR NARRATION
+   ========================================================= */
+
+function readMemoryForNarration() {
+
+    return {
+
+        title:
+            getValue(
+                "memoryTitle"
+            ).trim(),
+
+        date:
+            getValue(
+                "memoryDate"
+            ),
+
+        location:
+            getValue(
+                "memoryLocation"
+            ).trim(),
+
+        emotion:
+            getValue(
+                "memoryEmotion"
+            ),
+
+        description:
+            getValue(
+                "memoryDescription"
+            ).trim()
+
+    };
+
+}
+
+
+/* =========================================================
+   FORMAT STYLE
+   ========================================================= */
+
+function formatNarrationStyle(
+    style
+) {
+
+    const labels = {
+
+        personal:
+            "Personal",
+
+        emotional:
+            "Emotional",
+
+        documentary:
+            "Documentary",
+
+        storytelling:
+            "Storytelling"
+
+    };
+
+
+    return (
+        labels[
+            style
+        ] ||
+        "Personal"
+    );
+
+}
+
+
+/* =========================================================
+   PLAY NARRATION
    ========================================================= */
 
 function playMemoryNarration() {
-
-    /*
-     * Browser must support Speech Synthesis.
-     */
 
     if (
         !(
@@ -1275,7 +1499,10 @@ function playMemoryNarration() {
 
     if (
         !result ||
-        !result.textContent.trim()
+        !result.textContent.trim() ||
+        result.textContent.includes(
+            "Your generated memory story"
+        )
     ) {
 
         showToast(
@@ -1303,6 +1530,10 @@ function playMemoryNarration() {
         );
 
 
+    speech.lang =
+        "en-US";
+
+
     speech.rate =
         0.95;
 
@@ -1315,46 +1546,72 @@ function playMemoryNarration() {
         1;
 
 
-    speech.onstart =
-        () => {
+    /*
+     * Pick English voice if available.
+     */
 
-            const playButton =
-                document.getElementById(
-                    "playNarrationButton"
-                );
+    const voices =
+        window.speechSynthesis.getVoices();
 
 
-            if (
-                playButton
-            ) {
+    if (
+        voices.length
+    ) {
 
-                playButton.classList.add(
-                    "active"
-                );
+        const selectedVoice =
+            voices.find(
+                voice =>
+                    voice.lang ===
+                    "en-US"
+            ) ||
 
-            }
+            voices.find(
+                voice =>
+                    voice.lang.startsWith(
+                        "en"
+                    )
+            ) ||
 
-        };
+            voices[0];
+
+
+        speech.voice =
+            selectedVoice;
+
+    }
+
+
+    const playButton =
+        document.getElementById(
+            "playNarrationButton"
+        );
+
+
+    if (
+        playButton
+    ) {
+
+        playButton.disabled =
+            true;
+
+
+        playButton.innerHTML = `
+
+            <i
+                class="bi bi-pause-circle me-1">
+            </i>
+
+            Playing...
+
+        `;
+
+    }
 
 
     speech.onend =
         () => {
 
-            const playButton =
-                document.getElementById(
-                    "playNarrationButton"
-                );
-
-
-            if (
-                playButton
-            ) {
-
-                playButton.classList.remove(
-                    "active"
-                );
-
-            }
+            resetNarrationButton();
 
         };
 
@@ -1368,26 +1625,12 @@ function playMemoryNarration() {
             );
 
 
-            const playButton =
-                document.getElementById(
-                    "playNarrationButton"
-                );
-
-
-            if (
-                playButton
-            ) {
-
-                playButton.classList.remove(
-                    "active"
-                );
-
-            }
+            resetNarrationButton();
 
 
             showToast(
                 "Narration Error",
-                "Unable to play the generated narration.",
+                "Unable to play the narration.",
                 "danger"
             );
 
@@ -1408,8 +1651,7 @@ function playMemoryNarration() {
 function stopMemoryNarration() {
 
     if (
-        "speechSynthesis"
-        in window
+        "speechSynthesis" in window
     ) {
 
         window.speechSynthesis.cancel();
@@ -1417,19 +1659,40 @@ function stopMemoryNarration() {
     }
 
 
-    const playButton =
+    resetNarrationButton();
+
+}
+
+
+/* =========================================================
+   RESET NARRATION BUTTON
+   ========================================================= */
+
+function resetNarrationButton() {
+
+    const button =
         document.getElementById(
             "playNarrationButton"
         );
 
 
     if (
-        playButton
+        button
     ) {
 
-        playButton.classList.remove(
-            "active"
-        );
+        button.disabled =
+            false;
+
+
+        button.innerHTML = `
+
+            <i
+                class="bi bi-volume-up me-1">
+            </i>
+
+            Play Narration
+
+        `;
 
     }
 
@@ -1469,9 +1732,9 @@ function initFormSubmit() {
             event.preventDefault();
 
 
-            /* ------------------------------------------------
+            /* ---------------------------------------------
                FORM VALUES
-               ------------------------------------------------ */
+               --------------------------------------------- */
 
             const title =
                 getValue(
@@ -1527,12 +1790,6 @@ function initFormSubmit() {
                 );
 
 
-            const audioNote =
-                getValue(
-                    "memoryAudioNote"
-                ).trim();
-
-
             const favorite =
                 document.getElementById(
                     "memoryFavorite"
@@ -1545,9 +1802,9 @@ function initFormSubmit() {
                     : false;
 
 
-            /* ------------------------------------------------
-               VALIDATION
-               ------------------------------------------------ */
+            /* ---------------------------------------------
+               REQUIRED VALIDATION
+               --------------------------------------------- */
 
             if (
                 !title ||
@@ -1567,10 +1824,6 @@ function initFormSubmit() {
             }
 
 
-            /*
-             * Title length.
-             */
-
             if (
                 title.length >
                 200
@@ -1587,10 +1840,6 @@ function initFormSubmit() {
 
             }
 
-
-            /*
-             * Description length.
-             */
 
             if (
                 description.length >
@@ -1609,9 +1858,31 @@ function initFormSubmit() {
             }
 
 
-            /* ------------------------------------------------
+            /*
+             * Require media.
+             *
+             * This preserves the original Cover Media behavior.
+             */
+
+            if (
+                !currentMediaData
+            ) {
+
+                showToast(
+                    "Media Required",
+                    "Please select a photo or video for this memory.",
+                    "warning"
+                );
+
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
                TAGS
-               ------------------------------------------------ */
+               --------------------------------------------- */
 
             const tags =
                 tagsRaw
@@ -1627,9 +1898,9 @@ function initFormSubmit() {
                     : [];
 
 
-            /* ------------------------------------------------
+            /* ---------------------------------------------
                PEOPLE
-               ------------------------------------------------ */
+               --------------------------------------------- */
 
             const people =
                 peopleRaw
@@ -1645,9 +1916,9 @@ function initFormSubmit() {
                     : [];
 
 
-            /* ------------------------------------------------
+            /* ---------------------------------------------
                SUBMIT BUTTON
-               ------------------------------------------------ */
+               --------------------------------------------- */
 
             const submitButton =
                 form.querySelector(
@@ -1728,10 +1999,10 @@ function initFormSubmit() {
                                         category,
 
                                         type:
-                                            "Photo",
+                                            currentMediaType,
 
                                         coverImage:
-                                            currentPreviewImage,
+                                            currentMediaData,
 
                                         tags,
 
@@ -1739,17 +2010,13 @@ function initFormSubmit() {
 
                                         privacy,
 
-                                        audioNote
+                                        isFavorite
 
                                     })
 
                             }
                         );
 
-
-                    /*
-                     * Session expired.
-                     */
 
                     if (
                         response.status ===
@@ -1800,10 +2067,6 @@ function initFormSubmit() {
                         "success"
                     );
 
-
-                    /*
-                     * Return to Timeline.
-                     */
 
                     setTimeout(
                         () => {
@@ -1884,10 +2147,15 @@ function initFormSubmit() {
                                     category,
 
                                     type:
-                                        "Photo",
+                                        currentMediaType,
 
                                     coverImage:
-                                        currentPreviewImage,
+                                        currentMediaData,
+
+                                    media:
+                                        [
+                                            currentMediaData
+                                        ],
 
                                     tags,
 
@@ -1900,17 +2168,14 @@ function initFormSubmit() {
 
                                     privacy,
 
-                                    audioNote
+                                    audioNote:
+                                        ""
 
                                 })
 
                         }
                     );
 
-
-                /*
-                 * Session expired.
-                 */
 
                 if (
                     response.status ===
@@ -1975,15 +2240,14 @@ function initFormSubmit() {
 
 
                 showToast(
-                    "Memory Archived",
+                    currentMediaType ===
+                        "Video"
+                        ? "Video Memory Archived"
+                        : "Memory Archived",
                     "Your memory was saved to your personal archive.",
                     "success"
                 );
 
-
-                /*
-                 * Return to Timeline after saving.
-                 */
 
                 setTimeout(
                     () => {

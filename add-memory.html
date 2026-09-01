@@ -81,1012 +81,1027 @@
 <body>
 
 
-    <div class="app-container">
+<div class="app-container">
+
+
+    <!-- =================================================
+         SIDEBAR
+         ================================================= -->
+
+    <aside class="app-sidebar">
+
+        <div class="sidebar-header">
+
+            <a
+                class="brand-logo"
+                href="index.html"
+            >
+
+                <i class="bi bi-clock-history"></i>
+
+                <span>
+                    EchoLife
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-nav">
+
+
+            <div class="nav-section-title">
+                Main Workspace
+            </div>
+
+
+            <a
+                href="dashboard.html"
+                class="sidebar-link"
+            >
+
+                <i class="bi bi-grid-1x2-fill"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="timeline.html"
+                class="sidebar-link"
+            >
+
+                <i class="bi bi-hourglass-split"></i>
+
+                Timeline
+
+            </a>
+
+
+            <a
+                href="gallery.html"
+                class="sidebar-link"
+            >
+
+                <i class="bi bi-images"></i>
+
+                Gallery
+
+            </a>
+
+
+            <a
+                href="calendar.html"
+                class="sidebar-link"
+            >
+
+                <i class="bi bi-calendar-event"></i>
+
+                Calendar
+
+            </a>
+
+
+            <a
+                href="statistics.html"
+                class="sidebar-link"
+            >
+
+                <i class="bi bi-bar-chart-line-fill"></i>
+
+                Statistics
+
+            </a>
+
+
+
+            <div class="nav-section-title">
+                Archival Tools
+            </div>
+
+
+            <a
+                href="add-memory.html"
+                class="sidebar-link active"
+            >
+
+                <i class="bi bi-plus-circle-fill"></i>
+
+                Add Memory
+
+            </a>
+
+
+            <a
+                href="backup.html"
+                class="sidebar-link"
+            >
+
+                <i class="bi bi-cloud-arrow-down"></i>
+
+                Backup & Sync
+
+            </a>
+
+
+            <a
+                href="notifications.html"
+                class="sidebar-link"
+            >
+
+                <i class="bi bi-bell"></i>
+
+                Notifications
+
+            </a>
+
+
+
+            <div class="nav-section-title">
+                Account
+            </div>
+
+
+            <a
+                href="profile.html"
+                class="sidebar-link"
+            >
+
+                <i class="bi bi-person-circle"></i>
+
+                Profile
+
+            </a>
+
+
+            <a
+                href="settings.html"
+                class="sidebar-link"
+            >
+
+                <i class="bi bi-gear"></i>
+
+                Settings
+
+            </a>
+
+
+            <a
+                href="help.html"
+                class="sidebar-link"
+            >
+
+                <i class="bi bi-question-circle"></i>
+
+                Help & FAQ
+
+            </a>
+
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =================================================
+         MAIN CONTENT
+         ================================================= -->
+
+    <main class="app-main">
 
 
         <!-- =================================================
-             SIDEBAR
+             TOPBAR
              ================================================= -->
 
-        <aside class="app-sidebar">
+        <header class="app-topbar">
 
 
-            <div class="sidebar-header">
+            <div class="topbar-left">
 
-                <a
-                    class="brand-logo"
-                    href="index.html"
+                <button
+                    type="button"
+                    class="btn btn-icon sidebar-toggle-btn d-lg-none"
                 >
 
-                    <i class="bi bi-clock-history"></i>
+                    <i class="bi bi-list fs-4"></i>
 
-                    <span>
-                        EchoLife
-                    </span>
+                </button>
 
-                </a>
+
+                <h5
+                    id="pageFormTitle"
+                    class="text-white font-heading mb-0"
+                >
+
+                    Add New Memory
+
+                </h5>
 
             </div>
 
 
-            <div class="sidebar-nav">
+
+            <div class="topbar-right">
 
 
-                <!-- MAIN WORKSPACE -->
-
-                <div class="nav-section-title">
-                    Main Workspace
-                </div>
-
-
-                <a
-                    href="dashboard.html"
-                    class="sidebar-link"
+                <button
+                    type="button"
+                    class="btn btn-icon theme-toggle-btn"
+                    title="Toggle Theme"
                 >
 
-                    <i class="bi bi-grid-1x2-fill"></i>
+                    <i
+                        class="bi bi-moon-stars-fill theme-toggle-icon"
+                    ></i>
 
-                    Dashboard
-
-                </a>
-
-
-                <a
-                    href="timeline.html"
-                    class="sidebar-link"
-                >
-
-                    <i class="bi bi-hourglass-split"></i>
-
-                    Timeline
-
-                </a>
-
-
-                <a
-                    href="gallery.html"
-                    class="sidebar-link"
-                >
-
-                    <i class="bi bi-images"></i>
-
-                    Gallery
-
-                </a>
-
-
-                <a
-                    href="calendar.html"
-                    class="sidebar-link"
-                >
-
-                    <i class="bi bi-calendar-event"></i>
-
-                    Calendar
-
-                </a>
-
-
-                <a
-                    href="statistics.html"
-                    class="sidebar-link"
-                >
-
-                    <i class="bi bi-bar-chart-line-fill"></i>
-
-                    Statistics
-
-                </a>
-
-
-                <!-- ARCHIVAL TOOLS -->
-
-                <div class="nav-section-title">
-                    Archival Tools
-                </div>
-
-
-                <a
-                    href="add-memory.html"
-                    class="sidebar-link active"
-                >
-
-                    <i class="bi bi-plus-circle-fill"></i>
-
-                    Add Memory
-
-                </a>
-
-
-                <a
-                    href="backup.html"
-                    class="sidebar-link"
-                >
-
-                    <i class="bi bi-cloud-arrow-down"></i>
-
-                    Backup & Sync
-
-                </a>
-
-
-                <a
-                    href="notifications.html"
-                    class="sidebar-link"
-                >
-
-                    <i class="bi bi-bell"></i>
-
-                    Notifications
-
-                </a>
-
-
-                <!-- ACCOUNT -->
-
-                <div class="nav-section-title">
-                    Account
-                </div>
+                </button>
 
 
                 <a
                     href="profile.html"
-                    class="sidebar-link"
+                    class="user-profile-badge"
                 >
 
-                    <i class="bi bi-person-circle"></i>
-
-                    Profile
-
-                </a>
-
-
-                <a
-                    href="settings.html"
-                    class="sidebar-link"
-                >
-
-                    <i class="bi bi-gear"></i>
-
-                    Settings
-
-                </a>
-
-
-                <a
-                    href="help.html"
-                    class="sidebar-link"
-                >
-
-                    <i class="bi bi-question-circle"></i>
-
-                    Help & FAQ
+                    <img
+                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+                        class="user-avatar"
+                        alt="Avatar"
+                    >
 
                 </a>
 
 
             </div>
 
-
-        </aside>
+        </header>
 
 
 
         <!-- =================================================
-             MAIN CONTENT
+             CONTENT
              ================================================= -->
 
-        <main class="app-main">
+        <div class="content-body">
 
 
-            <!-- =================================================
-                 TOPBAR
-                 ================================================= -->
-
-            <header class="app-topbar">
+            <div
+                class="max-w-900 mx-auto"
+            >
 
 
-                <div class="topbar-left">
-
-
-                    <button
-                        type="button"
-                        class="btn btn-icon sidebar-toggle-btn d-lg-none"
-                    >
-
-                        <i class="bi bi-list fs-4"></i>
-
-                    </button>
-
-
-                    <h5
-                        id="pageFormTitle"
-                        class="text-white font-heading mb-0"
-                    >
-
-                        Add New Memory
-
-                    </h5>
-
-
-                </div>
-
-
-                <div class="topbar-right">
-
-
-                    <button
-                        type="button"
-                        class="btn btn-icon theme-toggle-btn"
-                        title="Toggle Theme"
-                    >
-
-                        <i
-                            class="bi bi-moon-stars-fill theme-toggle-icon"
-                        ></i>
-
-                    </button>
-
-
-                    <a
-                        href="profile.html"
-                        class="user-profile-badge"
-                    >
-
-                        <img
-                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
-                            class="user-avatar"
-                            alt="Avatar"
-                        >
-
-                    </a>
-
-
-                </div>
-
-
-            </header>
-
-
-
-            <!-- =================================================
-                 CONTENT
-                 ================================================= -->
-
-            <div class="content-body">
-
-
-                <div
-                    class="max-w-900 mx-auto"
+                <form
+                    id="addMemoryForm"
+                    class="glass-card p-4 p-md-5 rounded-4"
                 >
 
 
-                    <form
-                        id="addMemoryForm"
-                        class="glass-card p-4 p-md-5 rounded-4"
+                    <!-- =================================================
+                         MEDIA
+                         ================================================= -->
+
+                    <div
+                        class="mb-4"
                     >
 
+                        <label
+                            class="form-label text-white fw-bold"
+                        >
 
-                        <!-- =================================================
-                             MEDIA
-                             ================================================= -->
+                            Memory Media
+
+                        </label>
+
 
                         <div
-                            class="mb-4"
+                            id="dropZone"
+                            class="border border-2 border-dashed border-glass rounded-4 p-4 text-center cursor-pointer hover-lift"
+                        >
+
+                            <i
+                                id="uploadIcon"
+                                class="bi bi-cloud-arrow-up display-4 text-gradient mb-2 d-block"
+                            ></i>
+
+
+                            <h6
+                                id="uploadTitle"
+                                class="text-white"
+                            >
+
+                                Drag & drop your photo or video here,
+                                or browse
+
+                            </h6>
+
+
+                            <p
+                                id="uploadSubtitle"
+                                class="text-muted-custom small mb-0"
+                            >
+
+                                Supports JPG, PNG, WEBP, MP4, WEBM and MOV
+                                up to 50MB
+
+                            </p>
+
+
+                            <input
+                                type="file"
+                                id="coverFileInput"
+                                accept="image/*,video/*"
+                                class="d-none"
+                            >
+
+                        </div>
+
+
+
+                        <!-- PHOTO PREVIEW -->
+
+                        <img
+                            id="uploadPreviewImg"
+                            src=""
+                            class="img-fluid rounded-4 mt-3 shadow-md"
+                            style="
+                                display:none;
+                                max-height:350px;
+                                object-fit:cover;
+                                width:100%;
+                            "
+                            alt="Memory Image Preview"
+                        >
+
+
+                        <!-- VIDEO PREVIEW -->
+
+                        <video
+                            id="uploadPreviewVideo"
+                            class="img-fluid rounded-4 mt-3 shadow-md"
+                            style="
+                                display:none;
+                                width:100%;
+                                max-height:350px;
+                                object-fit:contain;
+                                background:#000;
+                            "
+                            controls
+                            playsinline
+                            preload="metadata"
+                        ></video>
+
+
+                        <!-- SELECTED TYPE -->
+
+                        <div
+                            id="selectedMediaInfo"
+                            class="mt-2"
+                            style="display:none;"
+                        >
+
+                            <span
+                                class="badge bg-primary bg-opacity-20 text-white"
+                                id="selectedMediaType"
+                            ></span>
+
+                            <span
+                                class="text-muted-custom small ms-2"
+                                id="selectedMediaName"
+                            ></span>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         TITLE + DATE
+                         ================================================= -->
+
+                    <div
+                        class="row g-3 mb-3"
+                    >
+
+                        <div
+                            class="col-md-8"
                         >
 
                             <label
-                                class="form-label text-white fw-bold"
-                            >
-
-                                Cover Photo / Media
-
-                            </label>
-
-
-                            <div
-                                id="dropZone"
-                                class="border border-2 border-dashed border-glass rounded-4 p-4 text-center cursor-pointer hover-lift"
-                            >
-
-                                <i
-                                    class="bi bi-cloud-arrow-up display-4 text-gradient mb-2 d-block"
-                                ></i>
-
-
-                                <h6
-                                    class="text-white"
-                                >
-
-                                    Drag & drop your cover photo here,
-                                    or browse
-
-                                </h6>
-
-
-                                <p
-                                    class="text-muted-custom small mb-0"
-                                >
-
-                                    Supports JPG, PNG, WEBP up to 10MB
-
-                                </p>
-
-
-                                <input
-                                    type="file"
-                                    id="coverFileInput"
-                                    accept="image/*"
-                                    class="d-none"
-                                >
-
-                            </div>
-
-
-                            <img
-                                id="uploadPreviewImg"
-                                src=""
-                                class="img-fluid rounded-4 mt-3 shadow-md"
-                                style="
-                                    display:none;
-                                    max-height:250px;
-                                    object-fit:cover;
-                                    width:100%;
-                                "
-                                alt="Memory Preview"
-                            >
-
-                        </div>
-
-
-
-                        <!-- =================================================
-                             TITLE + DATE
-                             ================================================= -->
-
-                        <div
-                            class="row g-3 mb-3"
-                        >
-
-                            <div
-                                class="col-md-8"
-                            >
-
-                                <label
-                                    for="memoryTitle"
-                                    class="form-label text-white fw-semibold"
-                                >
-
-                                    Memory Title *
-
-                                </label>
-
-
-                                <input
-                                    type="text"
-                                    id="memoryTitle"
-                                    class="form-control form-control-custom"
-                                    placeholder="e.g. Sunset Over Kyoto Shrines"
-                                    maxlength="200"
-                                    required
-                                >
-
-                            </div>
-
-
-                            <div
-                                class="col-md-4"
-                            >
-
-                                <label
-                                    for="memoryDate"
-                                    class="form-label text-white fw-semibold"
-                                >
-
-                                    Date *
-
-                                </label>
-
-
-                                <input
-                                    type="date"
-                                    id="memoryDate"
-                                    class="form-control form-control-custom"
-                                    required
-                                >
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- =================================================
-                             LOCATION + EMOTION
-                             ================================================= -->
-
-                        <div
-                            class="row g-3 mb-3"
-                        >
-
-                            <div
-                                class="col-md-6"
-                            >
-
-                                <label
-                                    for="memoryLocation"
-                                    class="form-label text-white fw-semibold"
-                                >
-
-                                    Location
-
-                                </label>
-
-
-                                <input
-                                    type="text"
-                                    id="memoryLocation"
-                                    class="form-control form-control-custom"
-                                    placeholder="e.g. Kyoto, Japan"
-                                    maxlength="100"
-                                >
-
-                            </div>
-
-
-                            <div
-                                class="col-md-6"
-                            >
-
-                                <label
-                                    for="memoryEmotion"
-                                    class="form-label text-white fw-semibold"
-                                >
-
-                                    Primary Emotion
-
-                                </label>
-
-
-                                <select
-                                    id="memoryEmotion"
-                                    class="form-select form-control-custom"
-                                >
-
-                                    <option value="Joy">
-                                        Joy ☀️
-                                    </option>
-
-                                    <option value="Nostalgia">
-                                        Nostalgia 🌌
-                                    </option>
-
-                                    <option value="Adventure">
-                                        Adventure 🏕️
-                                    </option>
-
-                                    <option value="Gratitude">
-                                        Gratitude 💖
-                                    </option>
-
-                                    <option value="Serenity">
-                                        Serenity 🌿
-                                    </option>
-
-                                    <option value="Milestone">
-                                        Milestone 🏆
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- =================================================
-                             CATEGORY + PRIVACY
-                             ================================================= -->
-
-                        <div
-                            class="row g-3 mb-3"
-                        >
-
-                            <div
-                                class="col-md-6"
-                            >
-
-                                <label
-                                    for="memoryCategory"
-                                    class="form-label text-white fw-semibold"
-                                >
-
-                                    Category
-
-                                </label>
-
-
-                                <select
-                                    id="memoryCategory"
-                                    class="form-select form-control-custom"
-                                >
-
-                                    <option value="Travel">
-                                        Travel
-                                    </option>
-
-                                    <option value="Family">
-                                        Family
-                                    </option>
-
-                                    <option value="Friends">
-                                        Friends
-                                    </option>
-
-                                    <option value="Birthday">
-                                        Birthday
-                                    </option>
-
-                                    <option value="Graduation">
-                                        Graduation
-                                    </option>
-
-                                    <option value="College">
-                                        College
-                                    </option>
-
-                                    <option value="Festivals">
-                                        Festivals
-                                    </option>
-
-                                    <option value="Achievements">
-                                        Achievements
-                                    </option>
-
-                                    <option value="Work">
-                                        Work
-                                    </option>
-
-                                    <option value="Vacations">
-                                        Vacations
-                                    </option>
-
-                                    <option value="Journal">
-                                        Journal Entry
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <div
-                                class="col-md-6"
-                            >
-
-                                <label
-                                    for="memoryPrivacy"
-                                    class="form-label text-white fw-semibold"
-                                >
-
-                                    Privacy Scope
-
-                                </label>
-
-
-                                <select
-                                    id="memoryPrivacy"
-                                    class="form-select form-control-custom"
-                                >
-
-                                    <option value="Private">
-                                        Private (Only Me)
-                                    </option>
-
-                                    <option value="Shared">
-                                        Shared with Family
-                                    </option>
-
-                                    <option value="Public">
-                                        Public Timeline
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- =================================================
-                             TAGS + PEOPLE
-                             ================================================= -->
-
-                        <div
-                            class="row g-3 mb-3"
-                        >
-
-                            <div
-                                class="col-md-6"
-                            >
-
-                                <label
-                                    for="memoryTags"
-                                    class="form-label text-white fw-semibold"
-                                >
-
-                                    Tags
-                                    (comma-separated)
-
-                                </label>
-
-
-                                <input
-                                    type="text"
-                                    id="memoryTags"
-                                    class="form-control form-control-custom"
-                                    placeholder="Japan, Sunset, SoloTrip"
-                                >
-
-                            </div>
-
-
-                            <div
-                                class="col-md-6"
-                            >
-
-                                <label
-                                    for="memoryPeople"
-                                    class="form-label text-white fw-semibold"
-                                >
-
-                                    Tagged People
-                                    (comma-separated)
-
-                                </label>
-
-
-                                <input
-                                    type="text"
-                                    id="memoryPeople"
-                                    class="form-control form-control-custom"
-                                    placeholder="Elena, Mom, Self"
-                                >
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- =================================================
-                             STORY
-                             ================================================= -->
-
-                        <div
-                            class="mb-4"
-                        >
-
-                            <label
-                                for="memoryDescription"
+                                for="memoryTitle"
                                 class="form-label text-white fw-semibold"
                             >
 
-                                Journal Description / Story *
+                                Memory Title *
 
                             </label>
 
 
-                            <textarea
-                                id="memoryDescription"
+                            <input
+                                type="text"
+                                id="memoryTitle"
                                 class="form-control form-control-custom"
-                                rows="5"
-                                maxlength="5000"
-                                placeholder="Write about what made this moment special..."
+                                placeholder="e.g. Sunset Over Kyoto Shrines"
+                                maxlength="200"
                                 required
-                            ></textarea>
+                            >
 
                         </div>
 
 
+                        <div
+                            class="col-md-4"
+                        >
 
-                        <!-- =================================================
-                             ECHONARRATE - STRATEGY PATTERN
-                             ================================================= -->
+                            <label
+                                for="memoryDate"
+                                class="form-label text-white fw-semibold"
+                            >
+
+                                Date *
+
+                            </label>
+
+
+                            <input
+                                type="date"
+                                id="memoryDate"
+                                class="form-control form-control-custom"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         LOCATION + EMOTION
+                         ================================================= -->
+
+                    <div
+                        class="row g-3 mb-3"
+                    >
 
                         <div
-                            class="glass-card p-4 rounded-4 mb-4 border border-glass"
+                            class="col-md-6"
                         >
+
+                            <label
+                                for="memoryLocation"
+                                class="form-label text-white fw-semibold"
+                            >
+
+                                Location
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="memoryLocation"
+                                class="form-control form-control-custom"
+                                placeholder="e.g. Kyoto, Japan"
+                                maxlength="100"
+                            >
+
+                        </div>
+
+
+                        <div
+                            class="col-md-6"
+                        >
+
+                            <label
+                                for="memoryEmotion"
+                                class="form-label text-white fw-semibold"
+                            >
+
+                                Primary Emotion
+
+                            </label>
+
+
+                            <select
+                                id="memoryEmotion"
+                                class="form-select form-control-custom"
+                            >
+
+                                <option value="Joy">
+                                    Joy ☀️
+                                </option>
+
+                                <option value="Nostalgia">
+                                    Nostalgia 🌌
+                                </option>
+
+                                <option value="Adventure">
+                                    Adventure 🏕️
+                                </option>
+
+                                <option value="Gratitude">
+                                    Gratitude 💖
+                                </option>
+
+                                <option value="Serenity">
+                                    Serenity 🌿
+                                </option>
+
+                                <option value="Milestone">
+                                    Milestone 🏆
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         CATEGORY + PRIVACY
+                         ================================================= -->
+
+                    <div
+                        class="row g-3 mb-3"
+                    >
+
+                        <div
+                            class="col-md-6"
+                        >
+
+                            <label
+                                for="memoryCategory"
+                                class="form-label text-white fw-semibold"
+                            >
+
+                                Category
+
+                            </label>
+
+
+                            <select
+                                id="memoryCategory"
+                                class="form-select form-control-custom"
+                            >
+
+                                <option value="Travel">
+                                    Travel
+                                </option>
+
+                                <option value="Family">
+                                    Family
+                                </option>
+
+                                <option value="Friends">
+                                    Friends
+                                </option>
+
+                                <option value="Birthday">
+                                    Birthday
+                                </option>
+
+                                <option value="Graduation">
+                                    Graduation
+                                </option>
+
+                                <option value="College">
+                                    College
+                                </option>
+
+                                <option value="Festivals">
+                                    Festivals
+                                </option>
+
+                                <option value="Achievements">
+                                    Achievements
+                                </option>
+
+                                <option value="Work">
+                                    Work
+                                </option>
+
+                                <option value="Vacations">
+                                    Vacations
+                                </option>
+
+                                <option value="Journal">
+                                    Journal Entry
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div
+                            class="col-md-6"
+                        >
+
+                            <label
+                                for="memoryPrivacy"
+                                class="form-label text-white fw-semibold"
+                            >
+
+                                Privacy Scope
+
+                            </label>
+
+
+                            <select
+                                id="memoryPrivacy"
+                                class="form-select form-control-custom"
+                            >
+
+                                <option value="Private">
+                                    Private (Only Me)
+                                </option>
+
+                                <option value="Shared">
+                                    Shared with Family
+                                </option>
+
+                                <option value="Public">
+                                    Public Timeline
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         TAGS + PEOPLE
+                         ================================================= -->
+
+                    <div
+                        class="row g-3 mb-3"
+                    >
+
+                        <div
+                            class="col-md-6"
+                        >
+
+                            <label
+                                for="memoryTags"
+                                class="form-label text-white fw-semibold"
+                            >
+
+                                Tags
+                                (comma-separated)
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="memoryTags"
+                                class="form-control form-control-custom"
+                                placeholder="Japan, Sunset, SoloTrip"
+                            >
+
+                        </div>
+
+
+                        <div
+                            class="col-md-6"
+                        >
+
+                            <label
+                                for="memoryPeople"
+                                class="form-label text-white fw-semibold"
+                            >
+
+                                Tagged People
+                                (comma-separated)
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="memoryPeople"
+                                class="form-control form-control-custom"
+                                placeholder="Elena, Mom, Self"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         STORY
+                         ================================================= -->
+
+                    <div
+                        class="mb-4"
+                    >
+
+                        <label
+                            for="memoryDescription"
+                            class="form-label text-white fw-semibold"
+                        >
+
+                            Journal Description / Story *
+
+                        </label>
+
+
+                        <textarea
+                            id="memoryDescription"
+                            class="form-control form-control-custom"
+                            rows="5"
+                            maxlength="5000"
+                            placeholder="Write about what made this moment special..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         ECHONARRATE
+                         ================================================= -->
+
+                    <div
+                        class="glass-card p-4 rounded-4 mb-4 border border-glass"
+                    >
+
+
+                        <div
+                            class="d-flex align-items-center gap-3 mb-2"
+                        >
+
+                            <div
+                                class="feature-icon-box"
+                                style="
+                                    width:48px;
+                                    height:48px;
+                                "
+                            >
+
+                                <i
+                                    class="bi bi-mic-fill"
+                                ></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <h5
+                                    class="text-white font-heading mb-1"
+                                >
+
+                                    EchoNarrate
+
+                                </h5>
+
+
+                                <p
+                                    class="text-secondary-custom small mb-0"
+                                >
+
+                                    Transform your memory into
+                                    a narrated story.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="mt-3"
+                        >
+
+                            <label
+                                for="narrationStyle"
+                                class="form-label text-white small"
+                            >
+
+                                Narration Style
+
+                            </label>
+
+
+                            <select
+                                id="narrationStyle"
+                                class="form-select form-control-custom mb-3"
+                            >
+
+                                <option value="personal">
+                                    Personal
+                                </option>
+
+                                <option value="emotional">
+                                    Emotional
+                                </option>
+
+                                <option value="documentary">
+                                    Documentary
+                                </option>
+
+                                <option value="storytelling">
+                                    Storytelling
+                                </option>
+
+                            </select>
 
 
                             <div
-                                class="d-flex align-items-center gap-3 mb-2"
+                                class="d-flex gap-2 flex-wrap"
                             >
 
-                                <div
-                                    class="feature-icon-box"
-                                    style="
-                                        width:48px;
-                                        height:48px;
-                                    "
+                                <button
+                                    type="button"
+                                    id="generateNarrationButton"
+                                    class="btn btn-aurora"
                                 >
 
                                     <i
-                                        class="bi bi-mic-fill"
+                                        class="bi bi-stars me-1"
                                     ></i>
 
-                                </div>
+                                    Generate Story
+
+                                </button>
 
 
-                                <div>
+                                <button
+                                    type="button"
+                                    id="playNarrationButton"
+                                    class="btn btn-glass"
+                                    disabled
+                                >
 
-                                    <h5
-                                        class="text-white font-heading mb-1"
-                                    >
+                                    <i
+                                        class="bi bi-volume-up me-1"
+                                    ></i>
 
-                                        EchoNarrate
+                                    Play Narration
 
-                                    </h5>
+                                </button>
 
 
-                                    <p
-                                        class="text-secondary-custom small mb-0"
-                                    >
+                                <button
+                                    type="button"
+                                    id="stopNarrationButton"
+                                    class="btn btn-glass"
+                                >
 
-                                        Transform your memory into
-                                        a narrated story.
+                                    <i
+                                        class="bi bi-stop-circle me-1"
+                                    ></i>
 
-                                    </p>
+                                    Stop
 
-                                </div>
+                                </button>
 
                             </div>
-
 
 
                             <div
-                                class="mt-3"
+                                id="narrationResult"
+                                class="glass-card p-3 mt-3"
+                                aria-live="polite"
                             >
 
-                                <label
-                                    for="narrationStyle"
-                                    class="form-label text-white small"
+                                <p
+                                    class="text-secondary-custom small mb-0"
                                 >
 
-                                    Narration Style
+                                    Your generated memory story
+                                    will appear here.
 
-                                </label>
-
-
-                                <select
-                                    id="narrationStyle"
-                                    class="form-select form-control-custom mb-3"
-                                >
-
-                                    <option value="personal">
-                                        Personal
-                                    </option>
-
-                                    <option value="emotional">
-                                        Emotional
-                                    </option>
-
-                                    <option value="documentary">
-                                        Documentary
-                                    </option>
-
-                                    <option value="storytelling">
-                                        Storytelling
-                                    </option>
-
-                                </select>
-
-
-                                <div
-                                    class="d-flex gap-2 flex-wrap"
-                                >
-
-                                    <button
-                                        type="button"
-                                        id="generateNarrationButton"
-                                        class="btn btn-aurora"
-                                    >
-
-                                        <i
-                                            class="bi bi-stars me-1"
-                                        ></i>
-
-                                        Generate Story
-
-                                    </button>
-
-
-                                    <button
-                                        type="button"
-                                        id="playNarrationButton"
-                                        class="btn btn-glass"
-                                        disabled
-                                    >
-
-                                        <i
-                                            class="bi bi-volume-up me-1"
-                                        ></i>
-
-                                        Play Narration
-
-                                    </button>
-
-
-                                    <button
-                                        type="button"
-                                        id="stopNarrationButton"
-                                        class="btn btn-glass"
-                                    >
-
-                                        <i
-                                            class="bi bi-stop-circle me-1"
-                                        ></i>
-
-                                        Stop
-
-                                    </button>
-
-                                </div>
-
-
-                                <div
-                                    id="narrationResult"
-                                    class="glass-card p-3 mt-3"
-                                    aria-live="polite"
-                                >
-
-                                    <p
-                                        class="text-secondary-custom small mb-0"
-                                    >
-
-                                        Your generated memory story
-                                        will appear here.
-
-                                    </p>
-
-                                </div>
-
-
-                                <div
-                                    class="mt-2"
-                                >
-
-                                    <small
-                                        class="text-muted-custom"
-                                    >
-
-                                        Choose a narration style and
-                                        generate your story. You can
-                                        then listen to it using
-                                        browser text-to-speech.
-
-                                    </small>
-
-                                </div>
+                                </p>
 
                             </div>
 
+
                         </div>
 
+                    </div>
 
 
-                        <!-- =================================================
-                             FAVORITE
-                             ================================================= -->
 
-                        <div
-                            class="form-check mb-4"
+                    <!-- =================================================
+                         FAVORITE
+                         ================================================= -->
+
+                    <div
+                        class="form-check mb-4"
+                    >
+
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="memoryFavorite"
                         >
 
-                            <input
-                                class="form-check-input"
-                                type="checkbox"
-                                id="memoryFavorite"
-                            >
 
-
-                            <label
-                                class="form-check-label text-white fw-semibold"
-                                for="memoryFavorite"
-                            >
-
-                                <i
-                                    class="bi bi-star-fill text-warning me-1"
-                                ></i>
-
-                                Add to Favorite Memories
-
-                            </label>
-
-                        </div>
-
-
-
-                        <!-- =================================================
-                             ACTIONS
-                             ================================================= -->
-
-                        <div
-                            class="d-flex justify-content-end gap-3 border-top border-glass pt-4"
+                        <label
+                            class="form-check-label text-white fw-semibold"
+                            for="memoryFavorite"
                         >
 
-                            <a
-                                href="timeline.html"
-                                class="btn btn-glass px-4"
-                            >
+                            <i
+                                class="bi bi-star-fill text-warning me-1"
+                            ></i>
 
-                                Cancel
+                            Add to Favorite Memories
 
-                            </a>
+                        </label>
 
-
-                            <button
-                                type="submit"
-                                class="btn btn-aurora px-4 py-2"
-                            >
-
-                                <i
-                                    class="bi bi-cloud-arrow-up-fill me-1"
-                                ></i>
-
-                                Save to Timeline Archive
-
-                            </button>
-
-                        </div>
+                    </div>
 
 
-                    </form>
+
+                    <!-- =================================================
+                         ACTIONS
+                         ================================================= -->
+
+                    <div
+                        class="d-flex justify-content-end gap-3 border-top border-glass pt-4"
+                    >
+
+                        <a
+                            href="timeline.html"
+                            class="btn btn-glass px-4"
+                        >
+
+                            Cancel
+
+                        </a>
 
 
-                </div>
+                        <button
+                            type="submit"
+                            class="btn btn-aurora px-4 py-2"
+                        >
+
+                            <i
+                                class="bi bi-cloud-arrow-up-fill me-1"
+                            ></i>
+
+                            Save to Timeline Archive
+
+                        </button>
+
+                    </div>
+
+
+                </form>
 
 
             </div>
 
 
-        </main>
+        </div>
 
 
-    </div>
+    </main>
+
+
+</div>
 
 
 
-    <!-- =====================================================
-         BOOTSTRAP
-         ===================================================== -->
+<!-- =====================================================
+     BOOTSTRAP
+     ===================================================== -->
 
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    ></script>
-
-
-    <!-- IMPORTANT:
-         data.js is intentionally NOT loaded here.
-         This is a real user page, not the demo page.
-    -->
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+></script>
 
 
-    <script
-        src="js/theme.js"
-    ></script>
+<script
+    src="js/theme.js"
+></script>
 
 
-    <script
-        src="js/app.js"
-    ></script>
+<script
+    src="js/app.js"
+></script>
 
 
-    <script
-        src="js/add-memory.js"
-    ></script>
+<script
+    src="js/add-memory.js"
+></script>
 
 
 </body>
