@@ -1,16 +1,41 @@
 /* ==========================================================================
    EchoLife Dashboard Controller
-   Uses the logged-in user's database memories
+
+   Database-backed dashboard
+
+   Supports:
+   - Current user's memories
+   - Photo and video media
+   - Dashboard statistics
+   - Memory streak
+   - Years archived
+   - Throwback
+   - Emotion chart
+   - Monthly chart
+   - Recent memories
+   - Correct video rendering
    ========================================================================== */
+
+
+/* =========================================================
+   GLOBAL STATE
+   ========================================================= */
 
 let dashboardMemories = [];
 
 
-document.addEventListener("DOMContentLoaded", async () => {
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
 
-    await loadDashboardMemories();
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
 
-});
+        await loadDashboardMemories();
+
+    }
+);
 
 
 /* =========================================================
@@ -21,40 +46,144 @@ async function loadDashboardMemories() {
 
     try {
 
-        const response = await fetch(
-            "/api/memories",
-            {
-                method: "GET",
-                credentials: "include"
-            }
-        );
+        const response =
+            await fetch(
+                "/api/memories",
+                {
+                    method:
+                        "GET",
+
+                    credentials:
+                        "include"
+                }
+            );
 
 
-        if (response.status === 401) {
+        /*
+         * Session expired.
+         */
 
-            window.location.href = "login.html";
+        if (
+            response.status ===
+            401
+        ) {
+
+            window.location.href =
+                "login.html";
+
             return;
 
         }
 
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
 
-        if (!response.ok || !data.success) {
+        if (
+            !response.ok ||
+            !data.success
+        ) {
 
             throw new Error(
-                data.message || "Unable to load memories."
+                data.message ||
+                "Unable to load memories."
             );
 
         }
 
 
         dashboardMemories =
-            Array.isArray(data.memories)
+            Array.isArray(
+                data.memories
+            )
                 ? data.memories
                 : [];
 
+
+        /*
+         * Normalize memory objects.
+         */
+
+        dashboardMemories =
+            dashboardMemories.map(
+                memory => ({
+
+                    ...memory,
+
+                    id:
+                        String(
+                            memory.id
+                        ),
+
+                    title:
+                        memory.title ||
+                        "Untitled Memory",
+
+                    description:
+                        memory.description ||
+                        "",
+
+                    location:
+                        memory.location ||
+                        "",
+
+                    date:
+                        memory.date ||
+                        "",
+
+                    emotion:
+                        memory.emotion ||
+                        "Memory",
+
+                    category:
+                        memory.category ||
+                        "General",
+
+                    type:
+                        memory.type ||
+                        "Photo",
+
+                    coverImage:
+                        memory.coverImage ||
+                        "",
+
+                    tags:
+                        Array.isArray(
+                            memory.tags
+                        )
+                            ? memory.tags
+                            : [],
+
+                    people:
+                        Array.isArray(
+                            memory.people
+                        )
+                            ? memory.people
+                            : [],
+
+                    isFavorite:
+                        Boolean(
+                            memory.isFavorite
+                        ),
+
+                    likes:
+                        Number(
+                            memory.likes ||
+                            0
+                        ),
+
+                    privacy:
+                        memory.privacy ||
+                        "Private"
+
+                })
+            );
+
+
+        /*
+         * Render dashboard.
+         */
 
         renderDashboardMetrics();
 
@@ -72,13 +201,169 @@ async function loadDashboardMemories() {
             error
         );
 
+
+        showDashboardError(
+            error.message ||
+            "Unable to load dashboard."
+        );
+
     }
 
 }
 
 
 /* =========================================================
-   METRICS
+   MEDIA TYPE
+   ========================================================= */
+
+function isVideoMemory(
+    memory
+) {
+
+    return (
+        String(
+            memory.type ||
+            ""
+        )
+            .toLowerCase()
+            .trim() ===
+        "video"
+    );
+
+}
+
+
+/* =========================================================
+   BUILD DASHBOARD MEDIA
+   ========================================================= */
+
+function buildDashboardMedia(
+    memory
+) {
+
+    /*
+     * No media.
+     */
+
+    if (
+        !memory.coverImage
+    ) {
+
+        return `
+
+            <div
+                class="dashboard-empty-media"
+            >
+
+                <i
+                    class="bi bi-image fs-1 text-muted-custom"
+                ></i>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /*
+     * Video.
+     */
+
+    if (
+        isVideoMemory(
+            memory
+        )
+    ) {
+
+        return `
+
+            <div
+                class="position-relative"
+            >
+
+                <video
+                    class="dashboard-memory-media dashboard-memory-video"
+                    controls
+                    playsinline
+                    preload="metadata"
+                    onclick="event.stopPropagation();"
+                >
+
+                    <source
+                        src="${escapeHtml(
+                            memory.coverImage
+                        )}"
+                    >
+
+                    Your browser does not support
+                    video playback.
+
+                </video>
+
+
+                <span
+                    class="dashboard-media-badge"
+                >
+
+                    <i
+                        class="bi bi-camera-video-fill me-1"
+                    ></i>
+
+                    Video
+
+                </span>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /*
+     * Photo.
+     */
+
+    return `
+
+        <div
+            class="position-relative"
+        >
+
+            <img
+                src="${escapeHtml(
+                    memory.coverImage
+                )}"
+                class="dashboard-memory-media"
+                alt="${escapeHtml(
+                    memory.title
+                )}"
+                loading="lazy"
+            >
+
+
+            <span
+                class="dashboard-media-badge"
+            >
+
+                <i
+                    class="bi bi-image-fill me-1"
+                ></i>
+
+                Photo
+
+            </span>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   DASHBOARD METRICS
    ========================================================= */
 
 function renderDashboardMetrics() {
@@ -87,39 +372,87 @@ function renderDashboardMetrics() {
         dashboardMemories;
 
 
+    /*
+     * Total memories.
+     */
+
     const totalMemories =
         memories.length;
 
 
+    /*
+     * Photos.
+     */
+
     const totalPhotos =
         memories.filter(
             memory =>
-                memory.type === "Photo" ||
-                memory.coverImage
+                String(
+                    memory.type ||
+                    ""
+                )
+                    .toLowerCase() ===
+                "photo"
         ).length;
 
+
+    /*
+     * Videos.
+     */
 
     const totalVideos =
         memories.filter(
             memory =>
-                memory.type === "Video"
+                String(
+                    memory.type ||
+                    ""
+                )
+                    .toLowerCase() ===
+                "video"
         ).length;
 
+
+    /*
+     * Journals.
+     */
 
     const totalJournals =
         memories.filter(
             memory =>
-                memory.type === "Journal" ||
-                memory.category === "Journal"
+                String(
+                    memory.type ||
+                    ""
+                )
+                    .toLowerCase() ===
+                    "journal"
+
+                ||
+
+                String(
+                    memory.category ||
+                    ""
+                )
+                    .toLowerCase() ===
+                    "journal"
         ).length;
 
+
+    /*
+     * Favorites.
+     */
 
     const totalFavorites =
         memories.filter(
             memory =>
-                memory.isFavorite
+                Boolean(
+                    memory.isFavorite
+                )
         ).length;
 
+
+    /*
+     * Counters.
+     */
 
     animateCounter(
         "statTotalMemories",
@@ -152,38 +485,54 @@ function renderDashboardMetrics() {
 
 
     /*
-     * No demo streak or years data.
-     * Show values based on the user's actual memories.
+     * Streak.
      */
 
     const streakElement =
-        document.getElementById("statStreak");
+        document.getElementById(
+            "statStreak"
+        );
 
 
-    if (streakElement) {
+    if (
+        streakElement
+    ) {
 
         streakElement.textContent =
-            calculateMemoryStreak(memories);
-
-    }
-
-
-    const yearsElement =
-        document.getElementById("statYears");
-
-
-    if (yearsElement) {
-
-        yearsElement.textContent =
-            calculateYearsArchived(memories);
+            calculateMemoryStreak(
+                memories
+            );
 
     }
 
 
     /*
-     * We don't yet have real file-storage
-     * measurement, so show 0 GB until it
-     * is implemented.
+     * Years.
+     */
+
+    const yearsElement =
+        document.getElementById(
+            "statYears"
+        );
+
+
+    if (
+        yearsElement
+    ) {
+
+        yearsElement.textContent =
+            calculateYearsArchived(
+                memories
+            );
+
+    }
+
+
+    /*
+     * Storage.
+     *
+     * Actual file storage calculation has not been
+     * implemented in the current database API.
      */
 
     const storageProgress =
@@ -198,7 +547,9 @@ function renderDashboardMetrics() {
         );
 
 
-    if (storageProgress) {
+    if (
+        storageProgress
+    ) {
 
         storageProgress.style.width =
             "0%";
@@ -206,7 +557,9 @@ function renderDashboardMetrics() {
     }
 
 
-    if (storageText) {
+    if (
+        storageText
+    ) {
 
         storageText.textContent =
             "0 GB of 10 GB (0%)";
@@ -217,68 +570,102 @@ function renderDashboardMetrics() {
 
 
 /* =========================================================
-   STREAK
+   MEMORY STREAK
    ========================================================= */
 
-function calculateMemoryStreak(memories) {
+function calculateMemoryStreak(
+    memories
+) {
 
-    if (!memories.length) {
+    if (
+        !memories.length
+    ) {
+
         return "0 Days";
+
     }
 
 
     const uniqueDates =
         [
             ...new Set(
+
                 memories
-                    .map(memory => memory.date)
-                    .filter(Boolean)
+                    .map(
+                        memory =>
+                            memory.date
+                    )
+                    .filter(
+                        Boolean
+                    )
+
             )
         ]
         .sort(
             (a, b) =>
-                new Date(b) - new Date(a)
+                new Date(b) -
+                new Date(a)
         );
 
 
-    if (!uniqueDates.length) {
+    if (
+        !uniqueDates.length
+    ) {
+
         return "0 Days";
+
     }
 
 
-    let streak = 1;
+    let streak =
+        1;
 
 
     for (
-        let i = 1;
-        i < uniqueDates.length;
-        i++
+        let index = 1;
+        index <
+        uniqueDates.length;
+        index++
     ) {
 
         const previous =
             new Date(
-                uniqueDates[i - 1]
+                uniqueDates[
+                    index - 1
+                ]
             );
 
 
         const current =
             new Date(
-                uniqueDates[i]
+                uniqueDates[
+                    index
+                ]
             );
 
 
         const difference =
             Math.round(
+
                 (
-                    previous - current
-                ) /
-                (
-                    1000 * 60 * 60 * 24
+                    previous -
+                    current
                 )
+                /
+                (
+                    1000 *
+                    60 *
+                    60 *
+                    24
+                )
+
             );
 
 
-        if (difference === 1) {
+        if (
+            difference ===
+            1
+        ) {
 
             streak++;
 
@@ -300,10 +687,16 @@ function calculateMemoryStreak(memories) {
    YEARS ARCHIVED
    ========================================================= */
 
-function calculateYearsArchived(memories) {
+function calculateYearsArchived(
+    memories
+) {
 
-    if (!memories.length) {
+    if (
+        !memories.length
+    ) {
+
         return "0 Yrs";
+
     }
 
 
@@ -317,17 +710,25 @@ function calculateYearsArchived(memories) {
             )
             .filter(
                 year =>
-                    !Number.isNaN(year)
+                    !Number.isNaN(
+                        year
+                    )
             );
 
 
-    if (!years.length) {
+    if (
+        !years.length
+    ) {
+
         return "0 Yrs";
+
     }
 
 
     const oldest =
-        Math.min(...years);
+        Math.min(
+            ...years
+        );
 
 
     const currentYear =
@@ -337,7 +738,9 @@ function calculateYearsArchived(memories) {
     const totalYears =
         Math.max(
             1,
-            currentYear - oldest + 1
+            currentYear -
+            oldest +
+            1
         );
 
 
@@ -347,7 +750,7 @@ function calculateYearsArchived(memories) {
 
 
 /* =========================================================
-   COUNTER
+   COUNTER ANIMATION
    ========================================================= */
 
 function animateCounter(
@@ -361,60 +764,90 @@ function animateCounter(
         );
 
 
-    if (!element) {
-        return;
-    }
-
-
-    if (targetValue === 0) {
-
-        element.textContent = "0";
+    if (
+        !element
+    ) {
 
         return;
 
     }
 
 
-    let current = 0;
+    if (
+        targetValue ===
+        0
+    ) {
 
-    const duration = 700;
+        element.textContent =
+            "0";
 
-    const stepTime = 30;
+
+        return;
+
+    }
+
+
+    let current =
+        0;
+
+
+    const duration =
+        700;
+
+
+    const stepTime =
+        30;
+
 
     const steps =
-        duration / stepTime;
+        duration /
+        stepTime;
+
 
     const increment =
-        targetValue / steps;
+        targetValue /
+        steps;
 
 
     const timer =
-        setInterval(() => {
+        setInterval(
+            () => {
 
-            current += increment;
+                current +=
+                    increment;
 
 
-            if (current >= targetValue) {
+                if (
+                    current >=
+                    targetValue
+                ) {
 
-                element.textContent =
-                    targetValue;
+                    element.textContent =
+                        targetValue;
 
-                clearInterval(timer);
 
-            } else {
+                    clearInterval(
+                        timer
+                    );
 
-                element.textContent =
-                    Math.floor(current);
+                } else {
 
-            }
+                    element.textContent =
+                        Math.floor(
+                            current
+                        );
 
-        }, stepTime);
+                }
+
+            },
+            stepTime
+        );
 
 }
 
 
 /* =========================================================
-   THROWBACK
+   ON THIS DAY THROWBACK
    ========================================================= */
 
 function renderOnThisDayWidget() {
@@ -425,39 +858,66 @@ function renderOnThisDayWidget() {
         );
 
 
-    if (!container) {
+    if (
+        !container
+    ) {
+
         return;
+
     }
 
 
-    if (!dashboardMemories.length) {
+    if (
+        !dashboardMemories.length
+    ) {
 
         container.innerHTML = `
-            <div class="text-center py-5">
+
+            <div
+                class="text-center py-5"
+            >
 
                 <i
-                    class="bi bi-clock-history fs-1 text-muted-custom mb-3 d-block">
-                </i>
+                    class="bi bi-clock-history fs-1 text-muted-custom mb-3 d-block"
+                ></i>
 
-                <h6 class="text-white">
+
+                <h6
+                    class="text-white"
+                >
+
                     No memories yet
+
                 </h6>
 
-                <p class="text-secondary-custom small">
-                    Create your first memory to see your personal throwbacks here.
+
+                <p
+                    class="text-secondary-custom small"
+                >
+
+                    Create your first memory to see
+                    personal throwbacks here.
+
                 </p>
+
 
                 <a
                     href="add-memory.html"
-                    class="btn btn-aurora btn-sm">
+                    class="btn btn-aurora btn-sm"
+                >
 
-                    <i class="bi bi-plus-circle me-1"></i>
+                    <i
+                        class="bi bi-plus-circle me-1"
+                    ></i>
+
                     Add Your First Memory
 
                 </a>
 
             </div>
+
         `;
+
 
         return;
 
@@ -466,89 +926,171 @@ function renderOnThisDayWidget() {
 
     const currentMonth =
         String(
-            new Date().getMonth() + 1
-        ).padStart(2, "0");
+            new Date()
+                .getMonth() +
+            1
+        )
+            .padStart(
+                2,
+                "0"
+            );
 
 
     const currentDay =
         String(
-            new Date().getDate()
-        ).padStart(2, "0");
+            new Date()
+                .getDate()
+        )
+            .padStart(
+                2,
+                "0"
+            );
 
 
-    const throwback =
+    /*
+     * Try to find a true anniversary.
+     */
+
+    let throwback =
         dashboardMemories.find(
             memory =>
                 memory.date &&
-                memory.date.endsWith(
+                String(
+                    memory.date
+                ).endsWith(
                     `-${currentMonth}-${currentDay}`
                 )
         );
 
 
-    if (!throwback) {
+    /*
+     * If there is no anniversary today,
+     * show the newest memory so the widget is
+     * still useful.
+     */
 
-        container.innerHTML = `
-            <div class="text-center py-5">
+    if (
+        !throwback
+    ) {
 
-                <i
-                    class="bi bi-calendar-heart fs-1 text-muted-custom mb-3 d-block">
-                </i>
-
-                <h6 class="text-white">
-                    No throwbacks for today
-                </h6>
-
-                <p class="text-secondary-custom small">
-                    Your future memories will appear here on their anniversaries.
-                </p>
-
-            </div>
-        `;
-
-        return;
+        throwback =
+            dashboardMemories[0];
 
     }
+
+
+    const video =
+        isVideoMemory(
+            throwback
+        );
+
+
+    const mediaHTML =
+        throwback.coverImage
+
+            ? video
+
+                ? `
+
+                    <video
+                        class="dashboard-throwback-media"
+                        controls
+                        playsinline
+                        preload="metadata"
+                        onclick="event.stopPropagation();"
+                    >
+
+                        <source
+                            src="${escapeHtml(
+                                throwback.coverImage
+                            )}"
+                        >
+
+                    </video>
+
+                `
+
+                : `
+
+                    <img
+                        src="${escapeHtml(
+                            throwback.coverImage
+                        )}"
+                        class="dashboard-throwback-media"
+                        alt="${escapeHtml(
+                            throwback.title
+                        )}"
+                    >
+
+                `
+
+            : `
+
+                <div
+                    class="dashboard-throwback-media d-flex align-items-center justify-content-center"
+                >
+
+                    <i
+                        class="bi bi-image fs-1 text-muted-custom"
+                    ></i>
+
+                </div>
+
+            `;
 
 
     container.innerHTML = `
 
         <div
-            class="position-relative rounded-4 overflow-hidden border border-glass">
+            class="position-relative rounded-4 overflow-hidden border border-glass"
+        >
 
-            <img
-                src="${escapeHtml(
-                    throwback.coverImage || ""
-                )}"
-                class="w-100"
-                style="height: 220px; object-fit: cover;"
-                alt="${escapeHtml(
-                    throwback.title
-                )}"
-            >
+            ${mediaHTML}
+
 
             <div
                 class="position-absolute top-0 start-0 end-0 bottom-0 p-4 d-flex flex-column justify-content-between"
-                style="background: linear-gradient(to top, rgba(11,15,25,.95), rgba(0,0,0,.15));">
+                style="
+                    background:
+                        linear-gradient(
+                            to top,
+                            rgba(11,15,25,.95),
+                            rgba(0,0,0,.15)
+                        );
+                    pointer-events:none;
+                "
+            >
 
                 <div>
 
                     <span
-                        class="badge bg-danger rounded-pill">
+                        class="badge bg-danger rounded-pill"
+                    >
 
                         <i
-                            class="bi bi-clock-history me-1">
-                        </i>
+                            class="bi bi-clock-history me-1"
+                        ></i>
 
-                        Your Throwback
+                        ${
+                            String(
+                                throwback.date
+                            ).endsWith(
+                                `-${currentMonth}-${currentDay}`
+                            )
+                                ? "Your Throwback"
+                                : "Featured Memory"
+                        }
 
                     </span>
 
                 </div>
 
+
                 <div>
 
-                    <h5 class="text-white mb-1">
+                    <h5
+                        class="text-white mb-1"
+                    >
 
                         ${escapeHtml(
                             throwback.title
@@ -556,26 +1098,52 @@ function renderOnThisDayWidget() {
 
                     </h5>
 
+
                     <p
-                        class="text-secondary-custom small mb-2">
+                        class="text-secondary-custom small mb-2"
+                    >
 
                         ${escapeHtml(
-                            throwback.location || ""
+                            throwback.location ||
+                            ""
                         )}
 
                         •
 
                         ${escapeHtml(
-                            throwback.date || ""
+                            throwback.date ||
+                            ""
                         )}
 
                     </p>
+
+
+                    <span
+                        class="badge bg-dark bg-opacity-75 text-white"
+                    >
+
+                        <i
+                            class="bi ${
+                                video
+                                    ? "bi-camera-video-fill"
+                                    : "bi-image-fill"
+                            } me-1"
+                        ></i>
+
+                        ${
+                            video
+                                ? "Video"
+                                : "Photo"
+                        }
+
+                    </span>
 
                 </div>
 
             </div>
 
         </div>
+
     `;
 
 }
@@ -593,143 +1161,8 @@ function renderRecentMemories() {
         );
 
 
-    if (!container) {
-        return;
-    }
-
-
-    const memories =
-        dashboardMemories.slice(0, 4);
-
-
-    if (!memories.length) {
-
-        container.innerHTML = `
-            <div class="col-12">
-
-                <div
-                    class="glass-card p-5 text-center">
-
-                    <i
-                        class="bi bi-journal-x fs-1 text-muted-custom mb-3 d-block">
-                    </i>
-
-                    <h5 class="text-white">
-                        Your archive is empty
-                    </h5>
-
-                    <p class="text-secondary-custom">
-                        Your memories will appear here after you create them.
-                    </p>
-
-                    <a
-                        href="add-memory.html"
-                        class="btn btn-aurora">
-
-                        <i class="bi bi-plus-circle me-1"></i>
-
-                        Create Memory
-
-                    </a>
-
-                </div>
-
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        memories.map(memory => `
-
-            <div
-                class="col-md-6 col-lg-3 mb-4">
-
-                <div
-                    class="glass-card glass-card-hover h-100 d-flex flex-column overflow-hidden">
-
-                    ${
-                        memory.coverImage
-                        ? `
-                        <img
-                            src="${escapeHtml(
-                                memory.coverImage
-                            )}"
-                            class="w-100"
-                            style="height:160px; object-fit:cover;"
-                            alt="${escapeHtml(
-                                memory.title
-                            )}">
-                        `
-                        : ""
-                    }
-
-                    <div
-                        class="p-3 d-flex flex-column flex-grow-1">
-
-                        <h6
-                            class="text-white mb-1 text-truncate">
-
-                            ${escapeHtml(
-                                memory.title
-                            )}
-
-                        </h6>
-
-                        <p
-                            class="text-secondary-custom small mb-2">
-
-                            ${escapeHtml(
-                                memory.location || ""
-                            )}
-
-                        </p>
-
-                        <p
-                            class="text-muted-custom small mb-3">
-
-                            ${escapeHtml(
-                                memory.description || ""
-                            )}
-
-                        </p>
-
-                        <div
-                            class="mt-auto border-top border-glass pt-2">
-
-                            <span
-                                class="small text-muted-custom">
-
-                                ${escapeHtml(
-                                    memory.date || ""
-                                )}
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        `).join("");
-
-}
-
-
-/* =========================================================
-   CHARTS
-   ========================================================= */
-
-function initDashboardCharts() {
-
     if (
-        typeof Chart === "undefined"
+        !container
     ) {
 
         return;
@@ -738,201 +1171,462 @@ function initDashboardCharts() {
 
 
     /*
-     * Emotion chart
+     * Newest first.
      */
 
-    const emotionCanvas =
+    const memories =
+        [
+            ...dashboardMemories
+        ]
+        .sort(
+            (a, b) =>
+                new Date(
+                    b.date
+                ) -
+                new Date(
+                    a.date
+                )
+        )
+        .slice(
+            0,
+            4
+        );
+
+
+    if (
+        !memories.length
+    ) {
+
+        container.innerHTML = `
+
+            <div
+                class="col-12"
+            >
+
+                <div
+                    class="glass-card p-5 text-center"
+                >
+
+                    <i
+                        class="bi bi-journal-x fs-1 text-muted-custom mb-3 d-block"
+                    ></i>
+
+
+                    <h5
+                        class="text-white"
+                    >
+
+                        Your archive is empty
+
+                    </h5>
+
+
+                    <p
+                        class="text-secondary-custom"
+                    >
+
+                        Your memories will appear here
+                        after you create them.
+
+                    </p>
+
+
+                    <a
+                        href="add-memory.html"
+                        class="btn btn-aurora"
+                    >
+
+                        <i
+                            class="bi bi-plus-circle me-1"
+                        ></i>
+
+                        Create Memory
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        memories
+            .map(
+                memory => `
+
+                    <div
+                        class="col-md-6 col-lg-3 mb-4"
+                    >
+
+                        <div
+                            class="glass-card glass-card-hover h-100 d-flex flex-column overflow-hidden dashboard-memory-clickable"
+                            onclick="openDashboardMemory('${escapeHtml(
+                                memory.id
+                            )}')"
+                        >
+
+                            ${
+                                buildDashboardMedia(
+                                    memory
+                                )
+                            }
+
+
+                            <div
+                                class="p-3 d-flex flex-column flex-grow-1"
+                            >
+
+
+                                <!-- TITLE -->
+
+                                <h6
+                                    class="text-white mb-1 text-truncate"
+                                >
+
+                                    ${escapeHtml(
+                                        memory.title
+                                    )}
+
+                                </h6>
+
+
+                                <!-- LOCATION -->
+
+                                <p
+                                    class="text-secondary-custom small mb-2"
+                                >
+
+                                    <i
+                                        class="bi bi-geo-alt me-1"
+                                    ></i>
+
+                                    ${escapeHtml(
+                                        memory.location ||
+                                        ""
+                                    )}
+
+                                </p>
+
+
+                                <!-- DESCRIPTION -->
+
+                                <p
+                                    class="text-muted-custom small mb-3"
+                                    style="
+                                        display:-webkit-box;
+                                        -webkit-line-clamp:2;
+                                        -webkit-box-orient:vertical;
+                                        overflow:hidden;
+                                    "
+                                >
+
+                                    ${escapeHtml(
+                                        memory.description ||
+                                        ""
+                                    )}
+
+                                </p>
+
+
+                                <!-- FOOTER -->
+
+                                <div
+                                    class="mt-auto border-top border-glass pt-2 d-flex justify-content-between align-items-center"
+                                >
+
+                                    <span
+                                        class="small text-muted-custom"
+                                    >
+
+                                        ${escapeHtml(
+                                            memory.date ||
+                                            ""
+                                        )}
+
+                                    </span>
+
+
+                                    <span
+                                        class="small text-secondary-custom"
+                                    >
+
+                                        <i
+                                            class="bi bi-heart-fill text-danger me-1"
+                                        ></i>
+
+                                        ${Number(
+                                            memory.likes ||
+                                            0
+                                        )}
+
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                `
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   OPEN DASHBOARD MEMORY
+   ========================================================= */
+
+function openDashboardMemory(
+    id
+) {
+
+    /*
+     * Open Timeline details because Timeline already
+     * contains the full memory modal and EchoNarrate.
+     */
+
+    window.location.href =
+        `timeline.html?id=${encodeURIComponent(
+            id
+        )}`;
+
+}
+
+
+/* =========================================================
+   DASHBOARD CHARTS
+   ========================================================= */
+
+function initDashboardCharts() {
+
+    if (
+        typeof Chart ===
+        "undefined"
+    ) {
+
+        console.error(
+            "Chart.js is not loaded."
+        );
+
+
+        return;
+
+    }
+
+
+    renderEmotionChart();
+
+    renderMonthlyChart();
+
+}
+
+
+/* =========================================================
+   EMOTION CHART
+   ========================================================= */
+
+function renderEmotionChart() {
+
+    const canvas =
         document.getElementById(
             "dashboardEmotionChart"
         );
 
 
-    if (emotionCanvas) {
+    if (
+        !canvas
+    ) {
 
-        const counts = {};
+        return;
 
-
-        dashboardMemories.forEach(
-            memory => {
-
-                const emotion =
-                    memory.emotion ||
-                    "Other";
-
-                counts[emotion] =
-                    (
-                        counts[emotion] ||
-                        0
-                    ) + 1;
-
-            }
-        );
+    }
 
 
-        const labels =
-            Object.keys(counts);
+    /*
+     * Destroy old chart.
+     */
 
+    if (
+        typeof Chart.getChart ===
+        "function"
+    ) {
 
-        const values =
-            Object.values(counts);
-
-
-        if (!labels.length) {
-
-            emotionCanvas.parentElement.innerHTML = `
-                <div class="text-center py-4">
-                    <i class="bi bi-pie-chart fs-1 text-muted-custom"></i>
-                    <p class="text-secondary-custom small mt-2 mb-0">
-                        Emotion analytics will appear after you add memories.
-                    </p>
-                </div>
-            `;
-
-        } else {
-
-            new Chart(
-                emotionCanvas,
-                {
-                    type: "doughnut",
-
-                    data: {
-
-                        labels,
-
-                        datasets: [
-                            {
-                                data: values,
-
-                                backgroundColor: [
-                                    "#f59e0b",
-                                    "#c084fc",
-                                    "#34d399",
-                                    "#f472b6",
-                                    "#22d3ee",
-                                    "#818cf8"
-                                ],
-
-                                borderWidth: 0
-                            }
-                        ]
-
-                    },
-
-                    options: {
-
-                        responsive: true,
-
-                        plugins: {
-
-                            legend: {
-                                position: "bottom"
-                            }
-
-                        },
-
-                        cutout: "70%"
-
-                    }
-
-                }
+        const existing =
+            Chart.getChart(
+                canvas
             );
+
+
+        if (
+            existing
+        ) {
+
+            existing.destroy();
 
         }
 
     }
 
 
-    /*
-     * Monthly chart
-     */
+    const counts =
+        {};
 
-    const uploadCanvas =
-        document.getElementById(
-            "dashboardUploadChart"
+
+    dashboardMemories.forEach(
+        memory => {
+
+            const emotion =
+                memory.emotion ||
+                "Other";
+
+
+            counts[
+                emotion
+            ] =
+                (
+                    counts[
+                        emotion
+                    ] ||
+                    0
+                ) + 1;
+
+        }
+    );
+
+
+    const labels =
+        Object.keys(
+            counts
         );
 
 
-    if (uploadCanvas) {
-
-        const monthlyCounts =
-            new Array(12).fill(0);
-
-
-        dashboardMemories.forEach(
-            memory => {
-
-                if (!memory.date) {
-                    return;
-                }
-
-
-                const month =
-                    new Date(
-                        memory.date
-                    ).getMonth();
-
-
-                if (
-                    month >= 0 &&
-                    month < 12
-                ) {
-
-                    monthlyCounts[month]++;
-
-                }
-
-            }
+    const values =
+        Object.values(
+            counts
         );
 
 
-        new Chart(
-            uploadCanvas,
-            {
-                type: "bar",
+    if (
+        !labels.length
+    ) {
 
-                data: {
+        canvas.parentElement.innerHTML = `
 
-                    labels: [
-                        "Jan",
-                        "Feb",
-                        "Mar",
-                        "Apr",
-                        "May",
-                        "Jun",
-                        "Jul",
-                        "Aug",
-                        "Sep",
-                        "Oct",
-                        "Nov",
-                        "Dec"
-                    ],
+            <div
+                class="text-center py-4"
+            >
 
-                    datasets: [
-                        {
-                            label:
-                                "Your Memories",
+                <i
+                    class="bi bi-pie-chart fs-1 text-muted-custom"
+                ></i>
 
-                            data:
-                                monthlyCounts,
 
-                            backgroundColor:
-                                "rgba(99, 102, 241, 0.75)",
+                <p
+                    class="text-secondary-custom small mt-2 mb-0"
+                >
 
-                            borderRadius: 8
+                    Emotion analytics will appear
+                    after you add memories.
 
-                        }
-                    ]
+                </p>
 
-                },
+            </div>
 
-                options: {
+        `;
 
-                    responsive: true,
 
-                    plugins: {
+        return;
 
-                        legend: {
-                            display: false
+    }
+
+
+    new Chart(
+        canvas,
+        {
+
+            type:
+                "doughnut",
+
+
+            data: {
+
+                labels:
+
+
+                    labels,
+
+
+                datasets: [
+
+                    {
+
+                        data:
+                            values,
+
+
+                        backgroundColor: [
+
+                            "#f59e0b",
+                            "#c084fc",
+                            "#34d399",
+                            "#f472b6",
+                            "#22d3ee",
+                            "#818cf8",
+                            "#fb7185",
+                            "#a3e635"
+
+                        ],
+
+
+                        borderWidth:
+                            0
+
+                    }
+
+                ]
+
+            },
+
+
+            options: {
+
+                responsive:
+                    true,
+
+
+                maintainAspectRatio:
+                    false,
+
+
+                cutout:
+                    "70%",
+
+
+                plugins: {
+
+                    legend: {
+
+                        position:
+                            "bottom",
+
+
+                        labels: {
+
+                            color:
+                                "#94a3b8"
+
                         }
 
                     }
@@ -940,7 +1634,323 @@ function initDashboardCharts() {
                 }
 
             }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   MONTHLY CHART
+   ========================================================= */
+
+function renderMonthlyChart() {
+
+    const canvas =
+        document.getElementById(
+            "dashboardUploadChart"
         );
+
+
+    if (
+        !canvas
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+     * Destroy previous chart.
+     */
+
+    if (
+        typeof Chart.getChart ===
+        "function"
+    ) {
+
+        const existing =
+            Chart.getChart(
+                canvas
+            );
+
+
+        if (
+            existing
+        ) {
+
+            existing.destroy();
+
+        }
+
+    }
+
+
+    const monthlyCounts =
+        new Array(
+            12
+        ).fill(
+            0
+        );
+
+
+    dashboardMemories.forEach(
+        memory => {
+
+            if (
+                !memory.date
+            ) {
+
+                return;
+
+            }
+
+
+            const date =
+                new Date(
+                    memory.date
+                );
+
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            const month =
+                date.getMonth();
+
+
+            if (
+                month >= 0 &&
+                month <
+                12
+            ) {
+
+                monthlyCounts[
+                    month
+                ]++;
+
+            }
+
+        }
+    );
+
+
+    new Chart(
+        canvas,
+        {
+
+            type:
+                "bar",
+
+
+            data: {
+
+                labels: [
+
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec"
+
+                ],
+
+
+                datasets: [
+
+                    {
+
+                        label:
+                            "Your Memories",
+
+
+                        data:
+                            monthlyCounts,
+
+
+                        backgroundColor:
+                            "rgba(99,102,241,.75)",
+
+
+                        borderRadius:
+                            8
+
+                    }
+
+                ]
+
+            },
+
+
+            options: {
+
+                responsive:
+                    true,
+
+
+                maintainAspectRatio:
+                    false,
+
+
+                plugins: {
+
+                    legend: {
+
+                        display:
+                            false
+
+                    }
+
+                },
+
+
+                scales: {
+
+                    x: {
+
+                        ticks: {
+
+                            color:
+                                "#94a3b8"
+
+                        },
+
+
+                        grid: {
+
+                            color:
+                                "rgba(255,255,255,.05)"
+
+                        }
+
+                    },
+
+
+                    y: {
+
+                        beginAtZero:
+                            true,
+
+
+                        ticks: {
+
+                            color:
+                                "#94a3b8",
+
+                            precision:
+                                0
+
+                        },
+
+
+                        grid: {
+
+                            color:
+                                "rgba(255,255,255,.05)"
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+function showDashboardError(
+    message
+) {
+
+    const recent =
+        document.getElementById(
+            "recentMemoriesContainer"
+        );
+
+
+    if (
+        recent
+    ) {
+
+        recent.innerHTML = `
+
+            <div
+                class="col-12"
+            >
+
+                <div
+                    class="glass-card p-5 text-center"
+                >
+
+                    <i
+                        class="bi bi-exclamation-circle fs-1 text-danger mb-3 d-block"
+                    ></i>
+
+
+                    <h5
+                        class="text-white"
+                    >
+
+                        Unable to Load Dashboard
+
+                    </h5>
+
+
+                    <p
+                        class="text-secondary-custom"
+                    >
+
+                        ${escapeHtml(
+                            message
+                        )}
+
+                    </p>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-aurora"
+                        onclick="loadDashboardMemories()"
+                    >
+
+                        <i
+                            class="bi bi-arrow-clockwise me-1"
+                        ></i>
+
+                        Try Again
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
 
     }
 
@@ -948,16 +1958,35 @@ function initDashboardCharts() {
 
 
 /* =========================================================
-   HTML ESCAPING
+   HTML SAFETY
    ========================================================= */
 
-function escapeHtml(value) {
+function escapeHtml(
+    value
+) {
 
-    return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    return String(
+        value ?? ""
+    )
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 
 }
