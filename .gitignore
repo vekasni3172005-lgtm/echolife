@@ -1,0 +1,7 @@
+node_modules/
+.env
+.env.*
+!.env.example
+prod-ca-2021.crt
+test-storage.js
+test-supabase.js
